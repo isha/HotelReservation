@@ -28,6 +28,12 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
+    autoprefixer-rails (5.1.7)
+      execjs
+      json
+    bootstrap-sass (3.3.4)
+      autoprefixer-rails (>= 5.0.0.1)
+      sass (>= 3.2.19)
     builder (3.1.4)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -115,6 +121,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgresql-adapter
+  bootstrap-sass (~> 3.3.4)
   byebug
   coffee-rails (~> 4.0.0)
   composite_primary_keys (= 6.0)

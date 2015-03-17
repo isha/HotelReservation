@@ -1,13 +1,23 @@
-<p>
-  <strong>Customer Name:</strong>
-  <%= @customer.name %>
-</p>
- 
-<p>
-  <strong>Phone number:</strong>
-  <%= @customer.phone_number %>
-</p>
+<div class="row">
+  <h1 class="page-header text-center">Showing Customer <%= @customer.id %></h1>
+</div>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">Customer Information</div>
+    <div class="panel-body">
+      <p>
+        <strong>Customer Name:</strong>
+        <%= @customer.name %>
+      </p>
 
-<%= link_to 'Back', customers_path %>
+      <p>
+        <strong>Phone number:</strong>
+        <%= @customer.phone_number %>
+      </p>
+    </div>
+  </div>
+  <%= link_to 'Back', employees_path %>
+</div>
+
 
 
