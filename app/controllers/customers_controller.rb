@@ -25,10 +25,9 @@ class CustomersController < ApplicationController
     @customer = Customer.find(pk)
   end
 
-  def update
-    @customer = Customer.find(pk)
- 
-    if @customer.update(customer_params)
+  def update 
+    if Customer.where(name: pk[0], phone_number: pk[1]).update_all(customer_params)
+      @customer = Customer.find([customer_params[:name], customer_params[:phone_number]])
       redirect_to @customer
     else
       render 'edit'
