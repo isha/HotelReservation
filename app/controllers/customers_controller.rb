@@ -48,7 +48,7 @@ class CustomersController < ApplicationController
   end
 
   def pk
-    matchdata = params[:id].match(/(\w+),(\w+)*/)
+    matchdata = params[:id].match(/(.+), *(\w+)*/)
     [matchdata[1], matchdata[2]]
   end
 end
