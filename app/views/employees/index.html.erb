@@ -1,0 +1,15 @@
+<h1>Listing employees</h1>
+ 
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+ 
+  <% @employees.each do |employee| %>
+    <tr>
+      <td><%= employee.id %></td>
+      <td><%= employee.name %></td>
+    </tr>
+  <% end %>
+</table>
