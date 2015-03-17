@@ -44,4 +44,4 @@ gem 'composite_primary_keys', '=6.0'
 # gem 'capistrano', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'byebug', group: [:development, :test]
