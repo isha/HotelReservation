@@ -1,13 +1,19 @@
-<p>
-  <strong>Employee ID:</strong>
-  <%= @employee.id %>
-</p>
- 
-<p>
-  <strong>Name:</strong>
-  <%= @employee.name %>
-</p>
-
-<%= link_to 'Back', employees_path %>
-
-
+<div class="row">
+  <h1 class="page-header text-center">Showing Employee <%= @employee.id %></h1>
+</div>
+<div class="row">
+  <div class="panel panel-default">
+    <div class="panel-heading">Employee Information</div>
+    <div class="panel-body">
+      <p>
+        <strong>Employee ID:</strong>
+        <%= @employee.id %>
+      </p>
+      <p>
+        <strong>Name:</strong>
+        <%= @employee.name %>
+      </p>
+    </div>
+  </div>
+  <%= link_to 'Back', employees_path %>
+</div>

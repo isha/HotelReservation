@@ -1,13 +1,19 @@
-<h1>Listing room types</h1>
-<%= link_to 'New room type', new_room_type_path %>
-<table>
+<div class="row">
+  <h1 class="page-header text-center">Listing Room Types</h1>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <%= link_to 'New Room Type', new_room_type_path, class: "btn btn-primary" %>
+  </div>
+  <div class="col-md-10">
+    <table class="table table-striped">
   <tr>
     <th>Type</th>
     <th>Daily Rate</th>
     <th>Security Deposit</th>
     <th colspan="3"></th>
   </tr>
- 
+
   <% @room_types.each do |room_type| %>
     <tr>
       <td><%= room_type.rtype %></td>
