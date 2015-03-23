@@ -3,6 +3,7 @@ HotelReservation::Application.routes.draw do
   resources :room_types, param: :rtype
 
   resources :customers
+  resources :rooms, param: :r_number
   # get 'customers/show/:id', id: /\w+(,\w+)*/, controller: :customers, action: :show
   
   # The priority is based upon order of creation: first created -> highest priority.
