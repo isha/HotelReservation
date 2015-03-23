@@ -48,6 +48,7 @@ gem 'byebug', group: [:development, :test]
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'mysql2'
 end
 
 group :production do
@@ -55,4 +56,5 @@ group :production do
   gem "activerecord-postgresql-adapter"
 end
 
+gem 'yaml_db'
 
