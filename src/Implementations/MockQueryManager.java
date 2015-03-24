@@ -1,5 +1,7 @@
 package Implementations;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -57,12 +59,47 @@ public class MockQueryManager implements IQueryManager{
 	}
 
 	public void updateCustomerPassword(Customer customer, String newPassword) {
-		// TODO Auto-generated method stub
-		
+		Connection conn = null;
+		try {
+			conn = DatabaseManager.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+		}
+
+		try {
+		    String createString =
+			        "Update Customer SET password='"+newPassword+"' WHERE name='"+
+			        customer.getName()+"' AND phone_number='"+customer.getPhoneNumber()+"';";
+			DatabaseManager.executeUpdate(conn, createString);
+			System.out.println("Updated Customer password");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not update Customer password");
+			e.printStackTrace();
+		}
 	}
 
 	public void updateEmployeePassword(Employee employee, String newPassword) {
-		// TODO Auto-generated method stub
+		Connection conn = null;
+		try {
+			conn = DatabaseManager.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+		}
+
+		try {
+		    String createString =
+			        "Update Employee SET password='"+newPassword+"' WHERE eid='"+
+			        employee.getId()+"';";
+			DatabaseManager.executeUpdate(conn, createString);
+			System.out.println("Updated Employee password");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not update Employee password");
+			e.printStackTrace();
+		}
 		
 	}
 

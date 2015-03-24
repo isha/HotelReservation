@@ -1,3 +1,4 @@
+package Implementations;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -18,12 +19,12 @@ import data_classes.RoomType;
 
 public class DatabaseManager {
 	/** DB settings */
-	private final String userName = "hotel_user";
-	private final String password = "hotel_pass";
-	private final String serverName = "localhost";
-	private final int portNumber = 3306;
-	private final String dbName = "test";
-	private final String tableName = "JDBC_TEST";
+	private static final String userName = "hotel_user";
+	private static final String password = "hotel_pass";
+	private static final String serverName = "localhost";
+	private static final int portNumber = 3306;
+	private static final String dbName = "test";
+	private static final String tableName = "JDBC_TEST";
 	
 	/**
 	 * Get a new database connection
@@ -31,14 +32,14 @@ public class DatabaseManager {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Connection getConnection() throws SQLException {
+	public static Connection getConnection() throws SQLException {
 		Connection conn = null;
 		Properties connectionProps = new Properties();
-		connectionProps.put("user", this.userName);
-		connectionProps.put("password", this.password);
+		connectionProps.put("user", userName);
+		connectionProps.put("password", password);
 
 		conn = DriverManager.getConnection("jdbc:mysql://"
-				+ this.serverName + ":" + this.portNumber + "/" + this.dbName,
+				+ serverName + ":" + portNumber + "/" + dbName,
 				connectionProps);
 
 		return conn;
@@ -50,7 +51,7 @@ public class DatabaseManager {
 	 * 
 	 * @throws SQLException If something goes wrong
 	 */
-	public boolean executeUpdate(Connection conn, String command) throws SQLException {
+	public static boolean executeUpdate(Connection conn, String command) throws SQLException {
 	    Statement stmt = null;
 	    try {
 	        stmt = conn.createStatement();
