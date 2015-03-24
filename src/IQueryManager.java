@@ -7,7 +7,7 @@ import data_classes.Room;
 import data_classes.RoomType;
 
 
-public interface IDatabaseManager {
+public interface IQueryManager {
 	List<Room> getOccupiedRooms(String date);
 	
 	List<Customer> getCurrentCustomers(String date);
