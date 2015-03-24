@@ -13,6 +13,10 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Main extends JFrame {
 
@@ -55,6 +59,11 @@ public class Main extends JFrame {
 		menuBar.add(mnCustomers);
 		
 		JMenuItem mntmAddCustomer = new JMenuItem("Add Customer");
+		mntmAddCustomer.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		mnCustomers.add(mntmAddCustomer);
 		
 		JMenuItem mntmShowCustomer = new JMenuItem("Show Customer");
@@ -79,6 +88,11 @@ public class Main extends JFrame {
 		mnRooms.add(mntmShowRoom);
 		
 		JMenu mnAbout = new JMenu("About");
+		mnAbout.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("We made this! <3 Isha, Denise, Mackenzie, Jonathan");
+			}
+		});
 		menuBar.add(mnAbout);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
