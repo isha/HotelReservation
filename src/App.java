@@ -16,7 +16,7 @@ public class App {
 		/** Example Create Runs */
 		db.createCustomer("Isha", "7865652831", "MySuperSecretPassword");
 		db.createEmployee(345, "Aaron J", "employeeyuhhkb");
-		db.createRoomType("single", 130, 345);
+		db.createRoomType("single-1", 130, 345);
 		
 		/** Example Selects */
 		
