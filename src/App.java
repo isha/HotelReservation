@@ -38,23 +38,12 @@ import java.util.Properties;
  * java.net.ConnectException: Connection refused
  */
 public class App {
-
-	/** The name of the MySQL account to use (or empty for anonymous) */
+	/** DB settings */
 	private final String userName = "hotel_user";
-
-	/** The password for the MySQL account (or empty for anonymous) */
 	private final String password = "hotel_pass";
-
-	/** The name of the computer running MySQL */
 	private final String serverName = "localhost";
-
-	/** The port of the MySQL server (default is 3306) */
 	private final int portNumber = 3306;
-
-	/** The name of the database we are testing with (this default is installed with MySQL) */
 	private final String dbName = "test";
-	
-	/** The name of the table we are testing with */
 	private final String tableName = "JDBC_TEST";
 	
 	/**
