@@ -11,6 +11,9 @@ import java.util.Properties;
 import org.apache.ibatis.jdbc.ScriptRunner;
 
 import data_classes.Customer;
+import data_classes.Employee;
+import data_classes.Room;
+import data_classes.RoomType;
 
 
 public class DatabaseManager {
@@ -100,6 +103,82 @@ public class DatabaseManager {
 		runner.runScript(reader);
 		reader.close();
 		conn.close();
+		
+	}
+
+	public Employee createEmployee(int id, String name, String password) {
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return null;
+		}
+		
+		try {
+		    String createString =
+			        "INSERT INTO Employee VALUES ("+id+", '"+name
+			        +"', '"+password+"');";
+			this.executeUpdate(conn, createString);
+			System.out.println("Inserted Employee record");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not insert record");
+			e.printStackTrace();
+			return null;
+		}
+		return new Employee(id, name, password);
+		
+	}
+
+	public RoomType createRoomType(String type, int sec_deposit, int daily_rate) {
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+			return null;
+		}
+		
+		try {
+		    String createString =
+			        "INSERT INTO RoomType VALUES ('"+type+"', "+sec_deposit
+			        +", "+daily_rate+");";
+			this.executeUpdate(conn, createString);
+			System.out.println("Inserted RoomType record");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not insert record");
+			e.printStackTrace();
+			return null;
+		}
+		return new RoomType(type, sec_deposit, daily_rate);
+		
+	}
+
+	public void createRoom(int r_number, String type, int address_no, String street,
+			String postal_code) {
+		Connection conn = null;
+		try {
+			conn = this.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+		}
+		
+		try {
+		    String createString =
+			        "INSERT INTO Room VALUES ("+r_number+", '"+type
+			        +"', "+address_no+", '"+street+"', '"+postal_code+"');";
+			this.executeUpdate(conn, createString);
+			System.out.println("Inserted Room record");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not insert record");
+			e.printStackTrace();
+		}
 		
 	}
 
