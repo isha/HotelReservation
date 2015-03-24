@@ -1,17 +1,19 @@
 package data_classes;
 
+import java.util.Calendar;
+
 public class Reservation {
 
 	private int _conf_no;
-	private String _checkin_date;
-	private String _checkout_date;
+	private Calendar _checkin_date;
+	private Calendar _checkout_date;
 	private String _comments;
 	private Room _room;
 	private Customer _customer;
 	private CreditCard _credit_card;
 	private Employee _employee;
 	
-	public Reservation(int conf_no, String checkin_date, String checkout_date, String comments, Room room, Customer customer, CreditCard credit_card, Employee employee){
+	public Reservation(int conf_no, Calendar checkin_date, Calendar checkout_date, String comments, Room room, Customer customer, CreditCard credit_card, Employee employee){
 		_conf_no = conf_no;
 		_checkin_date = checkin_date;
 		_checkout_date = checkout_date;
@@ -26,11 +28,11 @@ public class Reservation {
 		return _conf_no;
 	}
 	
-	public String getCheckinDate(){
+	public Calendar getCheckinDate(){
 		return _checkin_date;
 	}
 	
-	public String getCheckoutDate(){
+	public Calendar getCheckoutDate(){
 		return _checkout_date;
 	}
 	

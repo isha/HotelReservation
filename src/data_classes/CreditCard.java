@@ -1,22 +1,24 @@
 package data_classes;
 
+import java.util.Calendar;
+
 public class CreditCard {
 
-	private int _cc_number;
-	private String _expiry_date;
+	private String _cc_number;
+	private Calendar _expiry_date;
 	private Location _location;
 	
-	public CreditCard(int cc_number, String expiry_date, Location location){
+	public CreditCard(String cc_number, Calendar expiry_date, Location location){
 		_cc_number = cc_number;
 		_expiry_date = expiry_date;
 		_location = location;
 	}
 	
-	public int getCreditCardNumber(){
+	public String getCreditCardNumber(){
 		return _cc_number;
 	}
 	
-	public String getExpiryDate(){
+	public Calendar getExpiryDate(){
 		return _expiry_date;
 	}
 	

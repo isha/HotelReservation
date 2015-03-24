@@ -17,10 +17,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Main extends JFrame {
 
 	private JPanel contentPane;
+	private final Action action = new SwingAction();
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,7 @@ public class Main extends JFrame {
 	 * Create the frame.
 	 */
 	public Main() {
-		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/resources/8652.png")));
+		
 		setTitle("Hotel Reservation");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 780, 526);
@@ -59,6 +62,7 @@ public class Main extends JFrame {
 		menuBar.add(mnCustomers);
 		
 		JMenuItem mntmAddCustomer = new JMenuItem("Add Customer");
+
 		mntmAddCustomer.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				
@@ -109,4 +113,12 @@ public class Main extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }
