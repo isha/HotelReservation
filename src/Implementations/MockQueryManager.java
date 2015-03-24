@@ -54,8 +54,24 @@ public class MockQueryManager implements IQueryManager{
 	}
 
 	public void deleteReservation(Reservation reservationToDelete) {
-		// TODO Auto-generated method stub
-		
+		Connection conn = null;
+		try {
+			conn = DatabaseManager.getConnection();
+			System.out.println("Connected to database");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not connect to the database");
+			e.printStackTrace();
+		}
+
+		try {
+		    String createString =
+			        "DELETE FROM Reservation WHERE conf_no="+reservationToDelete.getConfirmationNumber()+";";
+			DatabaseManager.executeUpdate(conn, createString);
+			System.out.println("Deleted Reservation");
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not delete Reservation");
+			e.printStackTrace();
+		}
 	}
 
 	public void updateCustomerPassword(Customer customer, String newPassword) {
