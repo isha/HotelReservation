@@ -15,8 +15,6 @@ public class App {
 		db.createCustomer("Isha", "7865652831", "MySuperSecretPassword");
 		db.createEmployee(345, "Aaron J", "employeeyuhhkb");
 		db.createRoomType("single", 130, 345);
-		// TODO: Below don't work!
-		db.createRoom(101, "single", 2987, "Hudwell St.", "V67 G6H");
 		
 		/** Example Selects */
 		
