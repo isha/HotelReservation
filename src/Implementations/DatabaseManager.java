@@ -51,9 +51,10 @@ public class DatabaseManager {
 	 * 
 	 * @throws SQLException If something goes wrong
 	 */
-	public static boolean executeUpdate(Connection conn, String command) throws SQLException {
+	public static boolean executeUpdate(String command) throws SQLException {
 	    Statement stmt = null;
 	    try {
+	    	Connection conn = DatabaseManager.getConnection();
 	        stmt = conn.createStatement();
 	        stmt.executeUpdate(command); // This will throw a SQLException if it fails
 	        return true;
@@ -65,21 +66,11 @@ public class DatabaseManager {
 	}
 	
 	public Customer createCustomer(String name, String phone_number, String password) {
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return null;
-		}
-		
 		try {
 		    String createString =
 			        "INSERT INTO Customer VALUES ('"+name+"', '"+phone_number
 			        +"', '"+password+"');";
-			this.executeUpdate(conn, createString);
+			DatabaseManager.executeUpdate(createString);
 			System.out.println("Inserted Customer record");
 	    } catch (SQLException e) {
 			System.out.println("ERROR: Could not insert record");
@@ -92,7 +83,7 @@ public class DatabaseManager {
 	public void runSQLScript(String filename) throws Exception {
 		Connection conn = null;
 		try {
-			conn = this.getConnection();
+			conn = DatabaseManager.getConnection();
 			System.out.println("Connected to database");
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not connect to the database");
@@ -108,21 +99,11 @@ public class DatabaseManager {
 	}
 
 	public Employee createEmployee(int id, String name, String password) {
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return null;
-		}
-		
 		try {
 		    String createString =
 			        "INSERT INTO Employee VALUES ("+id+", '"+name
 			        +"', '"+password+"');";
-			this.executeUpdate(conn, createString);
+			DatabaseManager.executeUpdate(createString);
 			System.out.println("Inserted Employee record");
 	    } catch (SQLException e) {
 			System.out.println("ERROR: Could not insert record");
@@ -134,21 +115,11 @@ public class DatabaseManager {
 	}
 
 	public RoomType createRoomType(String type, int sec_deposit, int daily_rate) {
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-			return null;
-		}
-		
 		try {
 		    String createString =
 			        "INSERT INTO RoomType VALUES ('"+type+"', "+sec_deposit
 			        +", "+daily_rate+");";
-			this.executeUpdate(conn, createString);
+			DatabaseManager.executeUpdate(createString);
 			System.out.println("Inserted RoomType record");
 	    } catch (SQLException e) {
 			System.out.println("ERROR: Could not insert record");
@@ -161,20 +132,11 @@ public class DatabaseManager {
 
 	public void createRoom(int r_number, String type, int address_no, String street,
 			String postal_code) {
-		Connection conn = null;
-		try {
-			conn = this.getConnection();
-			System.out.println("Connected to database");
-		} catch (SQLException e) {
-			System.out.println("ERROR: Could not connect to the database");
-			e.printStackTrace();
-		}
-		
 		try {
 		    String createString =
 			        "INSERT INTO Room VALUES ("+r_number+", '"+type
 			        +"', "+address_no+", '"+street+"', '"+postal_code+"');";
-			this.executeUpdate(conn, createString);
+		    DatabaseManager.executeUpdate(createString);
 			System.out.println("Inserted Room record");
 	    } catch (SQLException e) {
 			System.out.println("ERROR: Could not insert record");
