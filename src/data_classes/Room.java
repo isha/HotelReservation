@@ -23,4 +23,8 @@ public class Room {
 	public Location getLocation(){
 		return _location;
 	}
+	
+	public void setRoomType(RoomType roomType) { 
+		_room_type = roomType;
+	}
 }

@@ -231,7 +231,7 @@ public class EmployeePage extends JFrame {
 		room_number_select.setBounds(442, 33, 109, 23);
 		panel_1.add(room_number_select);
 		
-		final JRadioButton room_deposit_select = new JRadioButton("Deposit");
+		final JRadioButton room_deposit_select = new JRadioButton("Conf #");
 		room_deposit_select.setBounds(442, 66, 109, 23);
 		panel_1.add(room_deposit_select);
 		
@@ -509,7 +509,7 @@ public class EmployeePage extends JFrame {
 		if(checkin){headers.add("Checkin Date");}
 		if(checkout){headers.add("Checkout Date");}
 		if(room_number){headers.add("Room #");}
-		if(deposit){headers.add("Security Deposit");}
+		if(deposit){headers.add("Confirmation Number");}
 		
 		reservation_model.setColumnIdentifiers(headers.toArray());
 		
@@ -519,7 +519,7 @@ public class EmployeePage extends JFrame {
 			if(checkin){data.add(SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()));}
 			if(checkout){data.add(SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()));}
 			if(room_number){data.add(reservation.getRoom().getRoomNumber());}
-			if(deposit){data.add("$" + reservation.getRoom().getRoomType().getSecurityDeposit());}
+			if(deposit){data.add("#" + reservation.getConfirmationNumber());}
 			reservation_model.addRow(data.toArray());
 		}
 		

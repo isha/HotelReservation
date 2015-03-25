@@ -266,8 +266,7 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public List<Reservation> getReservations(Customer customer) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Reservation>();
+		return getReservations(customer.getName(), customer.getPhoneNumber(), true, true, true, true);
 	}
 
 	public Customer getCustomer(String name, String phone_number) {
@@ -282,7 +281,7 @@ public class QueryManager implements IQueryManager {
 
 	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
-			boolean securityDeposit) {
+			boolean confNo) {
 		ArrayList<String> projList = new ArrayList<String>();
 		if(checkin) {
 			projList.add("checkin_date");
@@ -293,8 +292,11 @@ public class QueryManager implements IQueryManager {
 		if(roomNumber) {
 			projList.add("r_number");
 		}
-		if(securityDeposit) {
-			projList.add("security_deposit");
+		if(confNo) {
+			projList.add("conf_no");
+		}
+		if(!checkin && !checkout && !roomNumber && !confNo) { 
+			return new ArrayList<Reservation>();
 		}
 
 		String query = "SELECT " + getCommaSeparatedString(projList)
@@ -313,15 +315,20 @@ public class QueryManager implements IQueryManager {
 		        stmt = conn.createStatement();
 		        ResultSet rs = stmt.executeQuery(query);
 		        while (rs.next()) {
-		        	Calendar checkInDate = null, checkOutDate = null;
+		        	Calendar checkin_date = null, checkout_date = null;
+		        	int conf_no;
 		        	Room room = null;
 		        	if(checkin)
-		        		checkInDate = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkin_date"));
+		        		checkin_date = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkin_date"));
 		        	if(checkout)
-		        		checkOutDate = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkout_date"));
+		        		checkout_date = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkout_date"));
 		        	if(roomNumber)
 		        		room = new Room(rs.getInt("r_number"), null, null);
-		        	reservations.add(new Reservation(0, checkInDate, checkOutDate, null, room, null, null, null)
+		        	if(confNo) { 
+		        		conf_no = rs.getInt("conf_no");
+		        	}
+		        	
+		        	reservations.add(new Reservation(0, checkin_date, checkout_date, null, room, null, null, null)
 		            );
 		        }
 			} finally {
