@@ -74,12 +74,12 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public List<Customer> getCurrentCustomers() {
-		return null;
+		return new ArrayList<Customer>();
 	}
 
 	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Customer>();
 	}
 
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
@@ -88,8 +88,8 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {
-		String command = "SELECT MAX(AvgRate), EmployeeName FROM (" +
-				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
+		String command = "SELECT SumRate, EmployeeName FROM (" +
+				"SELECT E.name AS EmployeeName, SUM(Rt.daily_rate) AS SumRate" +
 				" FROM Reservation Re, Room R, RoomType Rt, Employee E" +
 				" WHERE Re.r_number = R.r_number" +
 				" AND Re.address_no = R.address_no" +
@@ -101,7 +101,7 @@ public class QueryManager implements IQueryManager {
 				" AND " + 
 				dateRangeQueryBuilder(startDate, endDate) + 
 				" GROUP BY Re.eid" +
-			") MaxRates;";
+			") MaxRates ORDER BY SumRate DESC LIMIT 1;";
 		
 		Connection conn = null;
 	    Statement stmt = null;
@@ -127,8 +127,8 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public Employee getWorstEmployee(Calendar startDate, Calendar endDate) {
-		String command = "SELECT MIN(AvgRate), EmployeeName FROM (" +
-				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
+		String command = "SELECT SumRate, EmployeeName FROM (" +
+				"SELECT E.name AS EmployeeName, SUM(Rt.daily_rate) AS SumRate" +
 				" FROM Reservation Re, Room R, RoomType Rt, Employee E" +
 				" WHERE Re.r_number = R.r_number" +
 				" AND Re.address_no = R.address_no" +
@@ -140,7 +140,7 @@ public class QueryManager implements IQueryManager {
 				" AND " + 
 				dateRangeQueryBuilder(startDate, endDate) + 
 				" GROUP BY Re.eid" +
-			") MaxRates;";
+			") MaxRates ORDER BY SumRate ASC LIMIT 1;";
 		Connection conn = null;
 	    Statement stmt = null;
 	    Employee e = null;
@@ -209,24 +209,24 @@ public class QueryManager implements IQueryManager {
 
 	public List<Reservation> getReservations(Customer customer) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Reservation>();
 	}
 
 	public Customer getCustomer(String name, String phone_number) {
 		// TODO Auto-generated method stub
-		return null;
+		return new Customer(name, phone_number, "PASS");
 	}
 
 	public Employee getEmployee(int eid) {
 		// TODO Auto-generated method stub
-		return null;
+		return new Employee(eid, "George", "PASS");
 	}
 
 	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayList<Reservation>();
 	}
 
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {

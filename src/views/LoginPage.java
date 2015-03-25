@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 import Implementations.MockQueryManager;
+import Implementations.QueryManager;
 import Interfaces.IQueryManager;
 
 import java.awt.event.ActionListener;
@@ -41,7 +42,7 @@ public class LoginPage extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginPage window = new LoginPage(new MockQueryManager());
+					LoginPage window = new LoginPage(new QueryManager());
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

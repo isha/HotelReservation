@@ -525,7 +525,7 @@ public class EmployeePage extends JFrame {
 		table.setModel(reservation_model);
 	}
 	
-	private void RefreshEmployeeRankings(JLabel worstLabel, JLabel bestLabel, Calendar start, Calendar end){
+	private void RefreshEmployeeRankings(JLabel bestLabel, JLabel worstLabel, Calendar start, Calendar end){
 		String bestEmployee = _queryManager.getBestEmployee(start, end).getName();
 		String worstEmployee = _queryManager.getWorstEmployee(start, end).getName();
 		bestLabel.setText(bestEmployee);
