@@ -352,13 +352,13 @@ public class EmployeePage extends JFrame {
 		lblWorstEmployee.setBounds(100, 268, 122, 25);
 		panel_2.add(lblWorstEmployee);
 		
-		JLabel best_employee_label = new JLabel("");
+		final JLabel best_employee_label = new JLabel("");
 		best_employee_label.setForeground(new Color(0, 128, 0));
 		best_employee_label.setFont(new Font("Tahoma", Font.BOLD, 14));
 		best_employee_label.setBounds(261, 179, 215, 18);
 		panel_2.add(best_employee_label);
 		
-		JLabel worst_employee_label = new JLabel("");
+		final JLabel worst_employee_label = new JLabel("");
 		worst_employee_label.setForeground(new Color(255, 0, 0));
 		worst_employee_label.setFont(new Font("Tahoma", Font.BOLD, 14));
 		worst_employee_label.setBounds(261, 275, 215, 17);
@@ -387,12 +387,12 @@ public class EmployeePage extends JFrame {
 		label_5.setBounds(142, 52, 138, 14);
 		panel_2.add(label_5);
 		
-		JLabel emp_rank_start_error = new JLabel("");
+		final JLabel emp_rank_start_error = new JLabel("");
 		emp_rank_start_error.setForeground(Color.RED);
 		emp_rank_start_error.setBounds(374, 49, 183, 14);
 		panel_2.add(emp_rank_start_error);
 		
-		JLabel emp_rank_end_error = new JLabel("");
+		final JLabel emp_rank_end_error = new JLabel("");
 		emp_rank_end_error.setForeground(Color.RED);
 		emp_rank_end_error.setBounds(374, 80, 183, 14);
 		panel_2.add(emp_rank_end_error);

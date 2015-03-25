@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import data_classes.CreditCard;
 import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Location;
@@ -57,13 +58,15 @@ public class QueryManager implements IQueryManager {
 	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate)
 	{
 		try {
-			String query = "SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
-			+ " FROM Room R, Reservation Re, RoomType Rt"
-			+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
-			+ " AND "
-			+ dateRangeQueryBuilder(startDate, endDate)
-			+ " GROUP BY R.type;";
+			String query =
+					"SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
+					+ " FROM Room R, Reservation Re, RoomType Rt"
+					+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
+					+ " AND "
+					+ dateRangeQueryBuilder(startDate, endDate)
+					+ " GROUP BY R.type;";
 			ArrayList<RoomType> roomTypes = (ArrayList<RoomType>) DatabaseManager.executeReadRoomType(query);
+
 			System.out.println("Returned most popular RoomType: " + roomTypes.get(0).getType());
 			return roomTypes.get(0);
 		} catch (SQLException e) {
@@ -78,19 +81,18 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public List<Customer> getValuedCustomers() {
-		String command = "SELECT name, phone_number FROM Customer C" +
-		  "WHERE NOT EXISTS (" +
-		  "SELECT *" +
-		  "FROM RoomType RT" +
-		  "WHERE NOT EXISTS (" +
-		    "SELECT *" +
-		    "FROM Reservation Res, Room Rm" +
-		    "WHERE Res.r_number=Rm.r_number" +
-		      "AND RT.type=Rm.type " +
-		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code" +
-		      "AND Res.name=C.name AND Res.phone_number=C.phone_number" +
-		    ")" +
-		  ");";
+		String command = "SELECT name, phone_number FROM Customer C"
+		  + " WHERE NOT EXISTS ("
+		  + " SELECT *"
+		  + " FROM RoomType RT"
+		  + " WHERE NOT EXISTS ("
+			  + " SELECT *"
+			  + " FROM Reservation Res, Room Rm"
+			  + " WHERE Res.r_number=Rm.r_number"
+			  + " AND RT.type=Rm.type"
+			  + " AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code"
+			  + " AND Res.name=C.name AND Res.phone_number=C.phone_number"
+			  + "));";
 		List<Customer> result_records = new ArrayList<Customer>();
 		
 		Connection conn = null;
@@ -280,10 +282,68 @@ public class QueryManager implements IQueryManager {
 	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Reservation>();
+		ArrayList<String> projList = new ArrayList<String>();
+		if(checkin) {
+			projList.add("checkin_date");
+		}
+		if(checkout) {
+			projList.add("checkout_date");
+		}
+		if(roomNumber) {
+			projList.add("r_number");
+		}
+		if(securityDeposit) {
+			projList.add("security_deposit");
+		}
+
+		String query = "SELECT " + getCommaSeparatedString(projList)
+				+ " FROM Reservation"
+				+ " WHERE name='"
+				+ name + "'"
+				+ " AND phone_number='"
+				+ phone_number + "';";
+
+		Connection conn = null;
+	    Statement stmt = null;
+	    List<Reservation> reservations = new ArrayList<Reservation>();
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		        	Calendar checkInDate = null, checkOutDate = null;
+		        	Room room = null;
+		        	if(checkin)
+		        		checkInDate = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkin_date"));
+		        	if(checkout)
+		        		checkOutDate = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkout_date"));
+		        	if(roomNumber)
+		        		room = new Room(rs.getInt("r_number"), null, null);
+		        	reservations.add(new Reservation(0, checkInDate, checkOutDate, null, room, null, null, null)
+		            );
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+
+		return reservations;
 	}
 
+	private String getCommaSeparatedString(List<String> list) {
+		StringBuilder sb = new StringBuilder();
+	    for (int i = 0; i < list.size(); i++) {
+	        if (i > 0)
+	        	sb.append(", ");
+	        sb.append(list.get(i));
+	    }
+	    return sb.toString();
+	}
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
 		 String q = "checkin_date BETWEEN " 
 				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(startDate) + "'"

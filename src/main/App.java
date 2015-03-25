@@ -44,5 +44,7 @@ public class App {
 		qm.getBestEmployee(startDate, endDate);
 		qm.getWorstEmployee(startDate, endDate);
 		qm.updateCustomerPassword(qm.getCustomer("Scott Brie", "7789970687"), "pass");
+		qm.getReservations("Jimmy Joy", "5139087893", true, true, true, false);
+		qm.getValuedCustomers();
 	}
 }
