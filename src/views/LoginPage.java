@@ -131,7 +131,7 @@ public class LoginPage extends JFrame{
 				allValid = validatePasswordLength(emp_pwd_error, emp_pass, 6) && allValid;
 				
 				if(allValid){
-					EmployeePage empPage = new EmployeePage(_queryManager, _queryManager.getEmployee(Integer.valueOf(eid.getText())));
+					EmployeePage empPage = new EmployeePage(_queryManager, _queryManager.getEmployee(Integer.valueOf(eid.getText(), emp_pass.getText())));
 					empPage.setVisible(true);
 					setVisible(false);
 				}
@@ -170,7 +170,7 @@ public class LoginPage extends JFrame{
 				allValid = validatePasswordLength(cust_pwd_error, cust_pass, 6) && allValid;
 				
 				if(allValid){
-					CustomerPage customerPage = new CustomerPage(_queryManager, _queryManager.getCustomer(cust_name.getText(), cust_phone.getText()));
+					CustomerPage customerPage = new CustomerPage(_queryManager, _queryManager.getCustomer(cust_name.getText(), cust_phone.getText(), cust_pass.getText()));
 					customerPage.setVisible(true);
 					setVisible(false);
 				}

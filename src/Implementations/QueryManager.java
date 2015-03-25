@@ -269,12 +269,12 @@ public class QueryManager implements IQueryManager {
 		return getReservations(customer.getName(), customer.getPhoneNumber(), true, true, true, true);
 	}
 
-	public Customer getCustomer(String name, String phone_number) {
+	public Customer getCustomer(String name, String phone_number, String password) {
 		// TODO Auto-generated method stub
 		return new Customer(name, phone_number, "PASS");
 	}
 
-	public Employee getEmployee(int eid) {
+	public Employee getEmployee(int eid, String password) {
 		// TODO Auto-generated method stub
 		return new Employee(eid, "George", "PASS");
 	}
