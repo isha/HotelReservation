@@ -59,7 +59,7 @@ public class CustomerPage extends JFrame{
 		
 		JLabel welcome_text = new JLabel("Welcome " + _customer.getName() + "!");
 		welcome_text.setFont(new Font("Tahoma", Font.BOLD, 14));
-		welcome_text.setBounds(32, 11, 587, 14);
+		welcome_text.setBounds(10, 17, 522, 14);
 		getContentPane().add(welcome_text);
 		DefaultTableModel dtm = new DefaultTableModel(){
 			@Override
@@ -137,5 +137,16 @@ public class CustomerPage extends JFrame{
 		});
 		btnNewButton.setBounds(32, 309, 151, 23);
 		getContentPane().add(btnNewButton);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginPage login = new LoginPage(_queryManager);
+				login.setVisible(true);
+				setVisible(false);
+			}
+		});
+		btnLogout.setBounds(549, 11, 134, 30);
+		getContentPane().add(btnLogout);
 	}
 }

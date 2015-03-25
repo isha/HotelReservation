@@ -257,6 +257,16 @@ public class EmployeePage extends JFrame {
 		valued_cust_table = new JTable();
 		RefreshValuedCustomers(valued_cust_table);
 		scrollPane_2.setViewportView(valued_cust_table);
+		
+		JButton btnLogout = new JButton("Logout");
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginPage login = new LoginPage(_queryManager);
+				login.setVisible(true);
+				setVisible(false);
+			}
+		});
+		tabbedPane.addTab("Logout", null, btnLogout, null);
 	}
 	
 	private void RefreshOccupiedRooms(JTable table){
