@@ -93,6 +93,7 @@ public class QueryManager implements IQueryManager {
 			  + " AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code"
 			  + " AND Res.name=C.name AND Res.phone_number=C.phone_number"
 			  + "));";
+
 		List<Customer> result_records = new ArrayList<Customer>();
 		
 		Connection conn = null;
