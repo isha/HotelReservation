@@ -56,13 +56,12 @@ public class QueryManager implements IQueryManager {
 	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate)
 	{
 		try {
-			StringBuilder sb = new StringBuilder("SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate");
-			sb.append(" FROM Room R, Reservation Re, RoomType Rt");
-			sb.append(" WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code");
-			sb.append(" AND ");
-			sb.append(dateRangeQueryBuilder(startDate, endDate));
-			sb.append(" GROUP BY R.type;");
-			String query = sb.toString();
+			String query = "SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
+			+ " FROM Room R, Reservation Re, RoomType Rt"
+			+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
+			+ " AND "
+			+ dateRangeQueryBuilder(startDate, endDate)
+			+ " GROUP BY R.type;";
 			ArrayList<RoomType> roomTypes = (ArrayList<RoomType>) DatabaseManager.executeReadRoomType(query);
 			System.out.println("Returned most popular RoomType: " + roomTypes.get(0).getType());
 			return roomTypes.get(0);
@@ -231,16 +230,15 @@ public class QueryManager implements IQueryManager {
 	}
 
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
-		StringBuilder sb = new StringBuilder("checkin_date BETWEEN '");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		sb.append(sdf.format(startDate.getTime()));
-		sb.append("' AND '");
-		sb.append(sdf.format(endDate.getTime()));
-		sb.append("' AND checkout_date BETWEEN '");
-		sb.append(sdf.format(startDate.getTime()));
-		sb.append("' AND '");
-		sb.append(sdf.format(endDate.getTime()));
-		sb.append("'");
-		return sb.toString();
+		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 String q = "checkin_date BETWEEN " 
+				+ "'" + sdf.format(startDate.getTime()) + "'"
+				+ " AND " 
+				+ "'" + sdf.format(endDate.getTime()) + "'"
+				+ " AND checkout_date BETWEEN "
+				+ "'" + sdf.format(startDate.getTime()) + "'"
+				+ " AND " 
+				+ "'" + sdf.format(endDate.getTime()) + "'";
+		return q;
 	}
 }
