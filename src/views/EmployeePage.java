@@ -304,19 +304,19 @@ public class EmployeePage extends JFrame {
 		lblSearchAttributes.setBounds(360, 11, 111, 14);
 		panel_1.add(lblSearchAttributes);
 		
-		JRadioButton start_date_select = new JRadioButton("Start Date");
+		final JRadioButton start_date_select = new JRadioButton("Start Date");
 		start_date_select.setBounds(326, 32, 109, 23);
 		panel_1.add(start_date_select);
 		
-		JRadioButton end_date_select = new JRadioButton("End Date");
+		final JRadioButton end_date_select = new JRadioButton("End Date");
 		end_date_select.setBounds(326, 66, 109, 23);
 		panel_1.add(end_date_select);
 		
-		JRadioButton room_number_select = new JRadioButton("Room #");
+		final JRadioButton room_number_select = new JRadioButton("Room #");
 		room_number_select.setBounds(442, 33, 109, 23);
 		panel_1.add(room_number_select);
 		
-		JRadioButton room_deposit_select = new JRadioButton("Deposit");
+		final JRadioButton room_deposit_select = new JRadioButton("Deposit");
 		room_deposit_select.setBounds(442, 66, 109, 23);
 		panel_1.add(room_deposit_select);
 		

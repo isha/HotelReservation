@@ -3,6 +3,7 @@ package Implementations;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,20 +11,65 @@ import java.util.List;
 
 import data_classes.Customer;
 import data_classes.Employee;
+import data_classes.Location;
 import data_classes.Reservation;
 import data_classes.Room;
 import data_classes.RoomType;
+import Helpers.SqlDateFormatHelper;
 import Interfaces.IQueryManager;
 
 public class QueryManager implements IQueryManager {
 
 	public List<Room> getOccupiedRooms() {
-		// TODO Auto-generated method stub
-		return null;
+		String command = "SELECT conf_no, R.r_number, type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date" +
+				"FROM Reservation R, Room O" +
+				"WHERE R.r_number = O.r_number" +
+				"AND R.address_no = O.address_no" +
+				"AND R.street = O.street" +
+				"AND R.postal_code = O.postal_code" +
+			"AND checkin_date < NOW() AND checkout_date > NOW();";
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    List<Room> rooms = new ArrayList<Room>();
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            rooms.add(new Room(rs.getInt("r_number"), new RoomType(rs.getString("type"), -1, -1 ), 
+		            		new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("province")) 
+		            ));
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		    
+		return rooms;
 	}
 
-	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
+	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate)
+	{
+		try {
+			String query = "SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
+			+ " FROM Room R, Reservation Re, RoomType Rt"
+			+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
+			+ " AND "
+			+ dateRangeQueryBuilder(startDate, endDate)
+			+ " GROUP BY R.type;";
+			ArrayList<RoomType> roomTypes = (ArrayList<RoomType>) DatabaseManager.executeReadRoomType(query);
+			System.out.println("Returned most popular RoomType: " + roomTypes.get(0).getType());
+			return roomTypes.get(0);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not query");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -182,5 +228,17 @@ public class QueryManager implements IQueryManager {
 			boolean securityDeposit) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
+		 String q = "checkin_date BETWEEN " 
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(startDate) + "'"
+				+ " AND " 
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(endDate) + "'"
+				+ " AND checkout_date BETWEEN "
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(startDate) + "'"
+				+ " AND " 
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(endDate) + "'";
+		return q;
 	}
 }
