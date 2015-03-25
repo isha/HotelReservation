@@ -50,7 +50,6 @@ public class CustomerPage extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		setTitle("MacKenzie");
 		setBounds(100, 100, 709, 469);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/resources/8652.png")));

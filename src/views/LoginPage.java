@@ -101,8 +101,8 @@ public class LoginPage {
 		JButton emp_login_btn = new JButton("Login as Employee");
 		emp_login_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Main newFrame = new Main();
-				newFrame.setVisible(true);
+				EmployeePage empPage = new EmployeePage(_queryManager, _queryManager.getEmployee(Integer.valueOf(eid.getText())));
+				empPage.setVisible(true);
 				frame.setVisible(false);
 			}
 		});

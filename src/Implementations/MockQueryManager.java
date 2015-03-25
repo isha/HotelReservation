@@ -18,11 +18,23 @@ import Interfaces.IQueryManager;
 
 public class MockQueryManager implements IQueryManager{
 
-	public List<Room> getOccupiedRooms(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Room> getOccupiedRooms() {
+		List<Room> rooms = new ArrayList<Room>();
+		RoomType type1 = new RoomType("Single", 1000, 200);
+		RoomType type2 = new RoomType("Double", 1250, 400);
+		Location loc1 = new Location(767, "Albert St.", "V6V7G7", "Vancouver", "BC");
+		Location loc2 = new Location(887, "King  St.", "K9V7G9", "Calgary", "AB");
+		rooms.add(new Room(123, type1, loc1));
+		rooms.add(new Room(123, type2, loc2));
+		rooms.add(new Room(123, type1, loc2));
+		rooms.add(new Room(123, type2, loc1));
+		return rooms;
 	}
 
+	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
+		return new RoomType("Single", 1000, 200);
+	}
+	
 	public List<Customer> getCurrentCustomers(Calendar date) {
 		// TODO Auto-generated method stub
 		return null;
@@ -31,11 +43,6 @@ public class MockQueryManager implements IQueryManager{
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {
@@ -119,6 +126,11 @@ public class MockQueryManager implements IQueryManager{
 		reservations.add(new Reservation(1200, fakeIn, fakeOut, "Great place!", fakeRoom, customer, fakeCard, fakeEmployee));
 		
 		return reservations;
+	}
+
+	@Override
+	public Employee getEmployee(int eid) {
+		return new Employee(eid, "George", "PASS");
 	}
 
 }
