@@ -27,4 +27,8 @@ public class SqlDateFormatHelper {
 		
 		return sqlStringDate;
 	}
+	
+	public static boolean isValidSqlDateString(String dateString){
+		return dateString.matches("[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]");
+	}
 }

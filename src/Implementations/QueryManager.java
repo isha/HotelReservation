@@ -13,49 +13,41 @@ import Interfaces.IQueryManager;
 
 public class QueryManager implements IQueryManager {
 
-	@Override
 	public List<Room> getOccupiedRooms() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<Customer> getCurrentCustomers(Calendar date) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
-	@Override
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Employee getWorstEmployee(Calendar startDate, Calendar endDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public void deleteReservation(Reservation reservationToDelete) {
 		try {
 		    String createString =
@@ -68,7 +60,6 @@ public class QueryManager implements IQueryManager {
 		}
 	}
 
-	@Override
 	public void updateEmployeePassword(Employee employee, String newPassword) {
 		try {
 		    String createString =
@@ -82,13 +73,11 @@ public class QueryManager implements IQueryManager {
 		}
 	}
 
-	@Override
 	public void updateReservationRoom(Reservation reservation, Room newRoom) {
 		// TODO Auto-generated method stub
 
 	}
 
-	@Override
 	public void updateCustomerPassword(Customer customer, String newPassword) {
 		try {
 		    String createString =
@@ -102,19 +91,16 @@ public class QueryManager implements IQueryManager {
 		}
 	}
 
-	@Override
 	public List<Reservation> getReservations(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Customer getCustomer(String name, String phone_number) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public Employee getEmployee(int eid) {
 		// TODO Auto-generated method stub
 		return null;
