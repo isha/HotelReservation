@@ -40,6 +40,8 @@ public class App {
 		startDate.add(Calendar.YEAR, -2);
 		Calendar endDate = Calendar.getInstance();
 		endDate.add(Calendar.YEAR, 1);
-		qm.getMostPopularRoomType(Calendar.getInstance(), endDate);
+		qm.getMostPopularRoomType(startDate, endDate);
+		qm.getBestEmployee(startDate, endDate);
+		qm.getWorstEmployee(startDate, endDate);
 	}
 }
