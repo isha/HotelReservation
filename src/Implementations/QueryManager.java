@@ -78,17 +78,17 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public List<Customer> getValuedCustomers() {
-		String command = "SELECT name, phone_number FROM Customer C " +
-		  "WHERE NOT EXISTS ( " +
-		  "SELECT * " +
-		  "FROM RoomType RT " +
-		  "WHERE NOT EXISTS ( " +
+		String command = "SELECT name, phone_number FROM Customer C" +
+		  "WHERE NOT EXISTS (" +
+		  "SELECT *" +
+		  "FROM RoomType RT" +
+		  "WHERE NOT EXISTS (" +
 		    "SELECT *" +
-		    "FROM Reservation Res, Room Rm " +
-		    "WHERE Res.r_number=Rm.r_number " +
+		    "FROM Reservation Res, Room Rm" +
+		    "WHERE Res.r_number=Rm.r_number" +
 		      "AND RT.type=Rm.type " +
-		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code " +
-		      "AND Res.name=C.name AND Res.phone_number=C.phone_number " +
+		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code" +
+		      "AND Res.name=C.name AND Res.phone_number=C.phone_number" +
 		    ")" +
 		  ");";
 		List<Customer> result_records = new ArrayList<Customer>();
@@ -199,9 +199,9 @@ public class QueryManager implements IQueryManager {
 
 	public void deleteReservation(Reservation reservationToDelete) {
 		try {
-		    String createString =
+		    String deleteString =
 			        "DELETE FROM Reservation WHERE conf_no="+reservationToDelete.getConfirmationNumber()+";";
-		    DatabaseManager.executeUpdate(createString);
+		    DatabaseManager.executeUpdate(deleteString);
 			System.out.println("Deleted Reservation");
 	    } catch (SQLException e) {
 			System.out.println("ERROR: Could not delete Reservation");
@@ -209,16 +209,33 @@ public class QueryManager implements IQueryManager {
 		}
 	}
 
-	public void updateEmployeePassword(Employee employee, String newPassword) {
+	public void deleteCustomer(Customer customerToDelete) {
 		try {
-		    String createString =
-			        "Update Employee SET password='"+newPassword+"' WHERE eid='"+
-			        employee.getId()+"';";
-		    DatabaseManager.executeUpdate(createString);
-			System.out.println("Updated Employee password");
+		    String deleteString =
+			        "DELETE FROM Customer WHERE name="+customerToDelete.getName()+" AND phone_number="+customerToDelete.getPhoneNumber()+";";
+		    DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Customer");
 	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not update Employee password");
+			System.out.println("ERROR: Could not delete Customer");
 			e.printStackTrace();
+		}
+	}
+	
+	public void updateEmployeePassword(Employee employee, String newPassword) {
+		if (newPassword.length() < 6){
+			System.out.println("ERROR: Password length must be greater than 6 characters");
+			return;
+		} else {
+			try {
+			    String createString =
+				        "Update Employee SET password='"+newPassword+"' WHERE eid='"+
+				        employee.getId()+"';";
+			    DatabaseManager.executeUpdate(createString);
+				System.out.println("Updated Employee password");
+		    } catch (SQLException e) {
+				System.out.println("ERROR: Could not update Employee password");
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -228,15 +245,20 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public void updateCustomerPassword(Customer customer, String newPassword) {
-		try {
-		    String createString =
-			        "Update Customer SET password='"+newPassword+"' WHERE name='"+
-			        customer.getName()+"' AND phone_number='"+customer.getPhoneNumber()+"';";
-		    DatabaseManager.executeUpdate(createString);
-			System.out.println("Updated Customer password");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not update Customer password");
-			e.printStackTrace();
+		if (newPassword.length() < 6){
+			System.out.println("ERROR: Password length must be greater than 6 characters");
+			return;
+		} else {
+			try {
+			    String createString =
+				        "Update Customer SET password='"+newPassword+"' WHERE name='"+
+				        customer.getName()+"' AND phone_number='"+customer.getPhoneNumber()+"';";
+			    DatabaseManager.executeUpdate(createString);
+				System.out.println("Updated Customer password");
+		    } catch (SQLException e) {
+				System.out.println("ERROR: Could not update Customer password");
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -258,30 +280,8 @@ public class QueryManager implements IQueryManager {
 	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
-		
-		List<Reservation> res = new ArrayList<Reservation>();
-		String command = "";
-		
-		Connection conn = null;
-	    Statement stmt = null;
-	    try {
-		    try {
-		    	conn = DatabaseManager.getConnection();
-		        stmt = conn.createStatement();
-		        ResultSet rs = stmt.executeQuery(command);
-		        while (rs.next()) {
-		            res.add(new Reservation(0, null, null, command, null, null, null, null));
-		        }
-		    } finally {
-		        if (stmt != null) { stmt.close(); }
-		        if (conn != null) { conn.close(); }
-		    }
-	    } catch (SQLException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-	    
-		return res;
+		// TODO Auto-generated method stub
+		return new ArrayList<Reservation>();
 	}
 
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {

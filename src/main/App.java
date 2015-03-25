@@ -43,5 +43,6 @@ public class App {
 		qm.getMostPopularRoomType(startDate, endDate);
 		qm.getBestEmployee(startDate, endDate);
 		qm.getWorstEmployee(startDate, endDate);
+		qm.updateCustomerPassword(qm.getCustomer("Scott Brie", "7789970687"), "pass");
 	}
 }
