@@ -37,7 +37,7 @@ CREATE TABLE CreditCard (cc_number VARCHAR(255),
   FOREIGN KEY (address_no, street, postal_code) REFERENCES StreetLocation(address_no, street, postal_code) ON DELETE CASCADE ON UPDATE CASCADE);
 
 CREATE TABLE RoomType (type VARCHAR(255),
-  securityDeposit INTEGER,
+  security_deposit INTEGER,
   daily_rate INTEGER, PRIMARY KEY(type));
 
 CREATE TABLE Room (r_number INTEGER,

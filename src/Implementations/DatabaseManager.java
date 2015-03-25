@@ -84,7 +84,7 @@ public class DatabaseManager {
 	        stmt = conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(command);
 	        while (rs.next()) {
-	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("securityDeposit"), rs.getInt("daily_rate")));
+	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("security_deposit"), rs.getInt("daily_rate")));
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }
@@ -125,7 +125,7 @@ public class DatabaseManager {
 			ResultSet rs = stmt.executeQuery(command);
 			while (rs.next()) {
 				result_records.add(new Room(rs.getInt("r_number"), 
-											new RoomType(rs.getString("type"), rs.getInt("securityDeposit"), rs.getInt("daily_rate")), 
+											new RoomType(rs.getString("type"), rs.getInt("security_deposit"), rs.getInt("daily_rate")), 
 											new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),rs.getString("province"))
 										   )
 								  );

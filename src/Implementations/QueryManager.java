@@ -1,6 +1,8 @@
 package Implementations;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,8 +20,23 @@ public class QueryManager implements IQueryManager {
 		return null;
 	}
 
-	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
+	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate)
+	{
+		try {
+			StringBuilder sb = new StringBuilder("SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate");
+			sb.append(" FROM Room R, Reservation Re, RoomType Rt");
+			sb.append(" WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code");
+			sb.append(" AND ");
+			sb.append(dateRangeQueryBuilder(startDate, endDate));
+			sb.append(" GROUP BY R.type;");
+			String query = sb.toString();
+			ArrayList<RoomType> roomTypes = (ArrayList<RoomType>) DatabaseManager.executeReadRoomType(query);
+			System.out.println("Returned most popular RoomType: " + roomTypes.get(0).getType());
+			return roomTypes.get(0);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not query");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -105,11 +122,24 @@ public class QueryManager implements IQueryManager {
 		return null;
 	}
 
-	@Override
 	public Reservation getReservation(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
+		StringBuilder sb = new StringBuilder("checkin_date BETWEEN '");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		sb.append(sdf.format(startDate.getTime()));
+		sb.append("' AND '");
+		sb.append(sdf.format(endDate.getTime()));
+		sb.append("' AND checkout_date BETWEEN '");
+		sb.append(sdf.format(startDate.getTime()));
+		sb.append("' AND '");
+		sb.append(sdf.format(endDate.getTime()));
+		sb.append("'");
+		return sb.toString();
 	}
 }

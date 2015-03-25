@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
 import java.util.Properties;
 
 import Implementations.DatabaseManager;
+import Implementations.QueryManager;
 
 public class App {
 
@@ -32,5 +34,12 @@ public class App {
 		db.deleteRoomType("king");
 		db.deleteReservation(11300);
 		db.deleteCreditCard("5555555555554444");
+
+		QueryManager qm = new QueryManager();
+		Calendar startDate = Calendar.getInstance();
+		startDate.add(Calendar.YEAR, -2);
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(Calendar.YEAR, 1);
+		qm.getMostPopularRoomType(Calendar.getInstance(), endDate);
 	}
 }
