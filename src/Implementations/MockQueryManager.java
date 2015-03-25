@@ -44,7 +44,7 @@ public class MockQueryManager implements IQueryManager{
 		return customers;
 	}
 
-	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
+	public List<Customer> getValuedCustomers() {
 		List<Customer> customers = new ArrayList<Customer>();
 		customers.add(new Customer("MacKenzie Judd", "1112223333", "password"));
 		return customers;

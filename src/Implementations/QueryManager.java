@@ -77,9 +77,42 @@ public class QueryManager implements IQueryManager {
 		return null;
 	}
 
-	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Customer> getValuedCustomers() {
+		String command = "SELECT name, phone_number FROM Customer C" +
+		  "WHERE NOT EXISTS (" +
+		  "SELECT *" +
+		  "FROM RoomType RT" +
+		  "WHERE NOT EXISTS (" +
+		    "SELECT *" +
+		    "FROM Reservation Res, Room Rm" +
+		    "WHERE Res.r_number=Rm.r_number" +
+		      "AND RT.type=Rm.type " +
+		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code" +
+		      "AND Res.name=C.name AND Res.phone_number=C.phone_number" +
+		    ")" +
+		  ");";
+		List<Customer> result_records = new ArrayList<Customer>();
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            result_records.add(new Customer(rs.getString("name"), rs.getString("phone_number"), rs.getString("password")));
+		        }
+		    } finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	    
+		return result_records;
 	}
 
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {

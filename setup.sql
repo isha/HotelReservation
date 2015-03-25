@@ -182,6 +182,21 @@ INSERT INTO Reservation VALUES (NULL, '2015-01-07', '2015-01-14', 'here on busin
   6457, 'Apple Road', 'L0L 4O4', 140, 3, 'Jimmy Joy', '5139087893', '3530111333300000');
 INSERT INTO Reservation VALUES (NULL, '2015-11-29', '2015-12-20', 'honeymoon',
   1260, 'Bidwell Street', 'V6G 2L2', 500, 1, 'Allie Wilson', '7771565678', '378282246310005');
+
+-- Following added to check for division. Customers who have booked all types of rooms. Scott Brie has reserved all 5 types of rooms
+--king
 INSERT INTO Reservation VALUES (NULL, '2015-12-23', '2016-01-02', 'Christmas and NYE celebration',
   1234, 'Shaw Avenue', 'V5K 4A1', 424, 2, 'Scott Brie', '7789970687', '5555555555554444');
+-- single
+INSERT INTO Reservation VALUES (NULL, '2015-11-23', '2015-11-25', NULL,
+  1234, 'Shaw Avenue', 'V5K 4A1', 203, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+-- queen
+INSERT INTO Reservation VALUES (NULL, '2015-10-23', '2015-10-25', "anniversary",
+  1234, 'Shaw Avenue', 'V5K 4A1', 322, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+-- presidential
+INSERT INTO Reservation VALUES (NULL, '2015-8-23', '2015-8-25', NULL,
+  1234, 'Shaw Avenue', 'V5K 4A1', 700, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+-- suite
+INSERT INTO Reservation VALUES (NULL, '2015-9-23', '2015-9-25', "has baby joining",
+  1234, 'Shaw Avenue', 'V5K 4A1', 522, NULL, 'Scott Brie', '7789970687', '5555555555554444');
 

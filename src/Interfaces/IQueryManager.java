@@ -15,7 +15,7 @@ public interface IQueryManager {
 	RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate);
 	
 	List<Customer> getCurrentCustomers();
-	List<Customer> getValuedCustomers(int reservationNumberThreshold);
+	List<Customer> getValuedCustomers();
 	
 	List<Reservation> getReservations(String name, String phone_number, boolean checkin, boolean checkout, boolean roomNumber, boolean securityDeposit);
 	
