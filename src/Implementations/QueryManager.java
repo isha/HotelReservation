@@ -78,17 +78,17 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public List<Customer> getValuedCustomers() {
-		String command = "SELECT name, phone_number FROM Customer C" +
-		  "WHERE NOT EXISTS (" +
-		  "SELECT *" +
-		  "FROM RoomType RT" +
-		  "WHERE NOT EXISTS (" +
+		String command = "SELECT name, phone_number FROM Customer C " +
+		  "WHERE NOT EXISTS ( " +
+		  "SELECT * " +
+		  "FROM RoomType RT " +
+		  "WHERE NOT EXISTS ( " +
 		    "SELECT *" +
-		    "FROM Reservation Res, Room Rm" +
-		    "WHERE Res.r_number=Rm.r_number" +
+		    "FROM Reservation Res, Room Rm " +
+		    "WHERE Res.r_number=Rm.r_number " +
 		      "AND RT.type=Rm.type " +
-		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code" +
-		      "AND Res.name=C.name AND Res.phone_number=C.phone_number" +
+		      "AND Res.address_no=Rm.address_no AND Res.street=Rm.street AND Res.postal_code=Rm.postal_code " +
+		      "AND Res.name=C.name AND Res.phone_number=C.phone_number " +
 		    ")" +
 		  ");";
 		List<Customer> result_records = new ArrayList<Customer>();
@@ -258,8 +258,30 @@ public class QueryManager implements IQueryManager {
 	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Reservation>();
+		
+		List<Reservation> res = new ArrayList<Reservation>();
+		String command = "";
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            res.add(new Reservation(0, null, null, command, null, null, null, null));
+		        }
+		    } finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+	    
+		return res;
 	}
 
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
