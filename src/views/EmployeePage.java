@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -32,6 +33,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
+import javax.swing.JRadioButton;
+
 public class EmployeePage extends JFrame {
 
 	private JPanel contentPane;
@@ -46,6 +49,9 @@ public class EmployeePage extends JFrame {
 	private JTextField stay_start_date_field;
 	private JTextField stay_end_date_field;
 	private JTable valued_cust_table;
+	private JTextField reservation_cust_name_field;
+	private JTextField reservation_cust_phone_field;
+	private JTable reservations_customer_table;
 
 	/**
 	 * Create the frame.
@@ -266,6 +272,62 @@ public class EmployeePage extends JFrame {
 				setVisible(false);
 			}
 		});
+		
+		JPanel panel_1 = new JPanel();
+		tabbedPane.addTab("Reservations", null, panel_1, null);
+		panel_1.setLayout(null);
+		
+		JLabel lblCustomerName = new JLabel("Customer Name");
+		lblCustomerName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCustomerName.setBounds(10, 13, 106, 14);
+		panel_1.add(lblCustomerName);
+		
+		reservation_cust_name_field = new JTextField();
+		reservation_cust_name_field.setBounds(141, 11, 157, 20);
+		panel_1.add(reservation_cust_name_field);
+		reservation_cust_name_field.setColumns(10);
+		
+		JLabel lblCustomerTextField = new JLabel("Customer Phone");
+		lblCustomerTextField.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblCustomerTextField.setBounds(10, 38, 135, 14);
+		panel_1.add(lblCustomerTextField);
+		
+		reservation_cust_phone_field = new JTextField();
+		reservation_cust_phone_field.setBounds(141, 36, 157, 20);
+		panel_1.add(reservation_cust_phone_field);
+		reservation_cust_phone_field.setColumns(10);
+		
+		JLabel lblSearchAttributes = new JLabel("Search Attributes");
+		lblSearchAttributes.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblSearchAttributes.setBounds(360, 11, 111, 14);
+		panel_1.add(lblSearchAttributes);
+		
+		JRadioButton start_date_select = new JRadioButton("Start Date");
+		start_date_select.setBounds(326, 32, 109, 23);
+		panel_1.add(start_date_select);
+		
+		JRadioButton end_date_select = new JRadioButton("End Date");
+		end_date_select.setBounds(326, 66, 109, 23);
+		panel_1.add(end_date_select);
+		
+		JRadioButton room_number_select = new JRadioButton("Room #");
+		room_number_select.setBounds(442, 33, 109, 23);
+		panel_1.add(room_number_select);
+		
+		JRadioButton room_deposit_select = new JRadioButton("Deposit");
+		room_deposit_select.setBounds(442, 66, 109, 23);
+		panel_1.add(room_deposit_select);
+		
+		JButton btnNewButton = new JButton("Find Reservations!");
+		btnNewButton.setBounds(10, 63, 288, 29);
+		panel_1.add(btnNewButton);
+		
+		JScrollPane scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(10, 105, 537, 235);
+		panel_1.add(scrollPane_3);
+		
+		reservations_customer_table = new JTable();
+		scrollPane_3.setViewportView(reservations_customer_table);
 		tabbedPane.addTab("Logout", null, btnLogout, null);
 	}
 	
@@ -336,5 +398,30 @@ public class EmployeePage extends JFrame {
 		}
 		
 		table.setModel(current_customer_model);
+	}
+	
+	private void RefreshReservationsSelected(JTable table, String name, String phone,  boolean checkin, boolean checkout, boolean room_number, boolean deposit){
+		DefaultTableModel reservation_model = new DefaultTableModel(){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		
+		List<String> headers = new ArrayList<String>();
+		if(checkin){headers.add("Checkin Date");}
+		if(checkout){headers.add("Checkout Date");}
+		if(room_number){headers.add("Room #");}
+		if(deposit){headers.add("Security Deposit");}
+		
+		reservation_model.setColumnIdentifiers(headers.toArray());
+		
+		List<Reservation> reservations = _queryManager.getReservations(name, phone, checkin, checkout, room_number, deposit);
+		for(Reservation reservation : reservations){
+			Object[] rowdata = new Object[] { };
+			reservation_model.addRow(rowdata);
+		}
+		
+		table.setModel(reservation_model);
 	}
 }

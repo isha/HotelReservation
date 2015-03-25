@@ -109,8 +109,7 @@ public class MockQueryManager implements IQueryManager{
 		return new Employee(eid, "George", "PASS");
 	}
 
-	@Override
-	public Reservation getReservation(String name, String phone_number,
+	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
 		// TODO Auto-generated method stub
