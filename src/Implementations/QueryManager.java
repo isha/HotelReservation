@@ -10,6 +10,7 @@ import java.util.List;
 
 import data_classes.Customer;
 import data_classes.Employee;
+import data_classes.Location;
 import data_classes.Reservation;
 import data_classes.Room;
 import data_classes.RoomType;
@@ -18,8 +19,37 @@ import Interfaces.IQueryManager;
 public class QueryManager implements IQueryManager {
 
 	public List<Room> getOccupiedRooms() {
-		// TODO Auto-generated method stub
-		return null;
+		String command = "SELECT conf_no, R.r_number, type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date" +
+				"FROM Reservation R, Room O" +
+				"WHERE R.r_number = O.r_number" +
+				"AND R.address_no = O.address_no" +
+				"AND R.street = O.street" +
+				"AND R.postal_code = O.postal_code" +
+			"AND checkin_date < NOW() AND checkout_date > NOW();";
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    List<Room> rooms = new ArrayList<Room>();
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            rooms.add(new Room(rs.getInt("r_number"), new RoomType(rs.getString("type"), -1, -1 ), 
+		            		new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("province")) 
+		            ));
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		    
+		return rooms;
 	}
 
 	public RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate) {
