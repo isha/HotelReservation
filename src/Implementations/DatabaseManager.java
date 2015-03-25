@@ -240,5 +240,84 @@ public class DatabaseManager {
 		}
 		
 	}
+	
+	//DELETE methods go here
 
+	public void deleteCustomer(String name, String phone_number){
+		try{
+			String deleteString =
+					"DELETE FROM Customer WHERE name = ('"+name+"') AND phone_number = ('"+phone_number+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Customer record for name = " + name);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record for name = "+ name);
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	public void deleteEmployee(int eid){
+		try{
+			String deleteString =
+					"DELETE FROM Employee WHERE eid = ('"+eid+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Employee record for eid = " + eid);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record for eid = " + eid);
+			e.printStackTrace();
+			return;
+		}
+	}
+
+	public void deleteRoom(int r_number, int address_no, String street, String postal_code){
+		try{
+			String deleteString =
+					"DELETE FROM Room WHERE r_number = ('"+r_number+"') AND address_no = ('"+address_no+"')	AND street = ('"+street+"') AND postal_code = ('"+postal_code+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Room record");
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record");
+			e.printStackTrace();
+			return;
+		}
+	}
+	
+	public void deleteRoomType(String type){
+		try{
+			String deleteString =
+					"DELETE FROM RoomType WHERE type = ('"+type+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted RoomType record for type = " + type);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record");
+			e.printStackTrace();
+			return;
+		}
+	}
+	
+	public void deleteReservation(int conf_no){
+		try{
+			String deleteString =
+					"DELETE FROM Reservation WHERE conf_no = ('"+conf_no+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Reservation record for conf_no = " + conf_no);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record");
+			e.printStackTrace();
+			return;
+		}
+	}
+	
+	public void deleteCreditCard(String cc_number){
+		try{
+			String deleteString =
+					"DELETE FROM CreditCard WHERE cc_number = ('"+cc_number+"');";
+			DatabaseManager.executeUpdate(deleteString);
+			System.out.println("Deleted Reservation record for cc_number = " + cc_number);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not delete record");
+			e.printStackTrace();
+			return;
+		}
+	}
 }

@@ -25,5 +25,12 @@ public class App {
 		/** Example Updates */
 		
 		/** Example Deletes */
+		db.deleteCustomer("Mal Mallard", "4069089820");
+		db.deleteEmployee(3);
+		db.deleteEmployee(11234);
+		db.deleteRoom(303, 1260, "Bidwell Street", "V6G 2L2");
+		db.deleteRoomType("king");
+		db.deleteReservation(11300);
+		db.deleteCreditCard("5555555555554444");
 	}
 }
