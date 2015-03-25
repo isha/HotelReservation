@@ -132,4 +132,17 @@ List<Reservation> reservations = new ArrayList<Reservation>();
 		
 		return reservations;
 	}
+
+	@Override
+	public Customer getCustomer(String name, String phone_number,
+			String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Employee getEmployee(int eid, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

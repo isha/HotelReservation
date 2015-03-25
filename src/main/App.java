@@ -43,8 +43,10 @@ public class App {
 		qm.getMostPopularRoomType(startDate, endDate);
 		qm.getBestEmployee(startDate, endDate);
 		qm.getWorstEmployee(startDate, endDate);
-		qm.updateCustomerPassword(qm.getCustomer("Scott Brie", "7789970687"), "pass");
+//		qm.updateCustomerPassword(qm.getCustomer("Scott Brie", "7789970687"), "pass");
 		qm.getReservations("Jimmy Joy", "5139087893", true, true, true, false);
 		qm.getValuedCustomers();
+		qm.getCustomer("Jimmy Joy", "5139087893", "joy_7893_pw");
+		qm.getEmployee(1, "password1");
 	}
 }

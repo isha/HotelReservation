@@ -270,13 +270,43 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public Customer getCustomer(String name, String phone_number, String password) {
-		// TODO Auto-generated method stub
-		return new Customer(name, phone_number, "PASS");
+		Customer customer = null;
+		try { 
+			String query = "SELECT * "
+					+ " FROM Customer "
+					+ " WHERE name='"
+					+ name + "'"
+					+ " AND phone_number='"
+					+ phone_number + "'"
+					+ " AND password='"
+					+ password +"'"
+					+ ";";
+			customer = DatabaseManager.executeReadCustomer(query);
+		} catch (SQLException e) { 
+			System.out.println("ERROR: Could not query");
+			e.printStackTrace();
+		}
+						
+		return customer;
 	}
 
 	public Employee getEmployee(int eid, String password) {
-		// TODO Auto-generated method stub
-		return new Employee(eid, "George", "PASS");
+		Employee employee = null;
+		try { 
+			String query = "SELECT * "
+					+ " FROM Employee "
+					+ " WHERE eid='"
+					+ eid + "'"
+					+ " AND password='"
+					+ password +"'"
+					+ ";";
+			employee = DatabaseManager.executeReadEmployee(query);
+		} catch (SQLException e) { 
+			System.out.println("ERROR: Could not query");
+			e.printStackTrace();
+		}
+						
+		return employee;
 	}
 
 	public List<Reservation> getReservations(String name, String phone_number,

@@ -54,8 +54,8 @@ public class DatabaseManager {
 	 * 
 	 * @throws SQLException If something goes wrong
 	 */
-	public static List<Customer> executeReadCustomer (String command) throws SQLException {
-		List<Customer> result_records = new ArrayList<Customer>();
+	public static Customer executeReadCustomer (String command) throws SQLException {
+		Customer customer = null;
 		
 		Connection conn = DatabaseManager.getConnection();
 	    Statement stmt = null;
@@ -64,14 +64,14 @@ public class DatabaseManager {
 	        stmt = conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(command);
 	        while (rs.next()) {
-	            result_records.add(new Customer(rs.getString("name"), rs.getString("phone_number"), rs.getString("password")));
+	        	customer = new Customer(rs.getString("name"), rs.getString("phone_number"), rs.getString("password"));
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }
 	        if (conn != null) { conn.close(); }
 	    }
 	    
-		return result_records;
+		return customer;
 	}
 	
 	public static List<RoomType> executeReadRoomType (String command) throws SQLException {
@@ -83,7 +83,7 @@ public class DatabaseManager {
 	    try {
 	        stmt = conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(command);
-	        while (rs.next()) {
+	        if (rs.next()) {
 	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("security_deposit"), rs.getInt("daily_rate")));
 	        }
 	    } finally {
@@ -94,8 +94,8 @@ public class DatabaseManager {
 		return result_records;
 	}
 	
-	public static List<Employee> executeReadEmployee (String command) throws SQLException {
-		List<Employee> result_records = new ArrayList<Employee>();
+	public static Employee executeReadEmployee (String command) throws SQLException {
+		Employee employee = null;
 			
 		Connection conn = DatabaseManager.getConnection();
 		Statement stmt = null;
@@ -103,15 +103,15 @@ public class DatabaseManager {
 		try {
 			stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(command);
-			while (rs.next()) {
-				result_records.add(new Employee(rs.getInt("eid"), rs.getString("name"), rs.getString("password")));
+			if (rs.next()) {
+				employee = new Employee(rs.getInt("eid"), rs.getString("name"), rs.getString("password"));
 			}
 		} finally {
 			if (stmt != null) { stmt.close(); }
 			if (conn != null) { conn.close(); }
 		}
       
-		return result_records;
+		return employee;
 	}
 	
 	public static List<Room> executeReadRoom (String command) throws SQLException {
