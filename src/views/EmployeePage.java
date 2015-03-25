@@ -45,6 +45,7 @@ public class EmployeePage extends JFrame {
 	private JTable current_cust_table;
 	private JTextField stay_start_date_field;
 	private JTextField stay_end_date_field;
+	private JTable valued_cust_table;
 
 	/**
 	 * Create the frame.
@@ -155,7 +156,7 @@ public class EmployeePage extends JFrame {
 		room_panel.add(button);
 		
 		JPanel customer_panel = new JPanel();
-		tabbedPane.addTab("Customer", null, customer_panel, null);
+		tabbedPane.addTab("Customers", null, customer_panel, null);
 		customer_panel.setLayout(null);
 		
 		JLabel lblNewLabel_1 = new JLabel("Current Customers");
@@ -239,6 +240,23 @@ public class EmployeePage extends JFrame {
 		});
 		btnFindAverageStay.setBounds(110, 309, 226, 20);
 		customer_panel.add(btnFindAverageStay);
+		
+		JPanel panel = new JPanel();
+		tabbedPane.addTab("Valued Customers", null, panel, null);
+		panel.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("Valued Customers");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblNewLabel_2.setBounds(10, 11, 110, 14);
+		panel.add(lblNewLabel_2);
+		
+		JScrollPane scrollPane_2 = new JScrollPane();
+		scrollPane_2.setBounds(10, 36, 537, 304);
+		panel.add(scrollPane_2);
+		
+		valued_cust_table = new JTable();
+		RefreshValuedCustomers(valued_cust_table);
+		scrollPane_2.setViewportView(valued_cust_table);
 	}
 	
 	private void RefreshOccupiedRooms(JTable table){
@@ -279,6 +297,29 @@ public class EmployeePage extends JFrame {
 		current_customer_model.setColumnIdentifiers(cust_headers);
 		
 		List<Customer> customers = _queryManager.getCurrentCustomers();
+		for(Customer customer : customers){
+			Object[] rowdata = new Object[] { customer.getName(), customer.getPhoneNumber()};
+			current_customer_model.addRow(rowdata);
+		}
+		
+		table.setModel(current_customer_model);
+	}
+	
+	private void RefreshValuedCustomers(JTable table){
+		DefaultTableModel current_customer_model = new DefaultTableModel(){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		
+		String[] cust_headers = new String[] {
+				"Customer Name", "Customer Phone Number"
+			};
+		
+		current_customer_model.setColumnIdentifiers(cust_headers);
+		
+		List<Customer> customers = _queryManager.getValuedCustomers(2);
 		for(Customer customer : customers){
 			Object[] rowdata = new Object[] { customer.getName(), customer.getPhoneNumber()};
 			current_customer_model.addRow(rowdata);

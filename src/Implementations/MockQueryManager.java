@@ -44,6 +44,12 @@ public class MockQueryManager implements IQueryManager{
 		return customers;
 	}
 
+	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
+		List<Customer> customers = new ArrayList<Customer>();
+		customers.add(new Customer("MacKenzie Judd", "1112223333", "password"));
+		return customers;
+	}
+	
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
 		return 2;
 	}
@@ -54,11 +60,6 @@ public class MockQueryManager implements IQueryManager{
 	}
 
 	public Employee getWorstEmployee(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<Customer> getValuedCustomers(int reservationNumberThreshold) {
 		// TODO Auto-generated method stub
 		return null;
 	}
