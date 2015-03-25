@@ -52,6 +52,8 @@ public class EmployeePage extends JFrame {
 	private JTextField reservation_cust_name_field;
 	private JTextField reservation_cust_phone_field;
 	private JTable reservations_customer_table;
+	private JTextField emp_rank_start;
+	private JTextField emp_rank_end;
 
 	/**
 	 * Create the frame.
@@ -335,7 +337,94 @@ public class EmployeePage extends JFrame {
 		
 		reservations_customer_table = new JTable();
 		scrollPane_3.setViewportView(reservations_customer_table);
+		
+		JPanel panel_2 = new JPanel();
+		tabbedPane.addTab("Employee Rankings", null, panel_2, null);
+		panel_2.setLayout(null);
+		
+		JLabel lblBestEmployee = new JLabel("Best Employee:");
+		lblBestEmployee.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblBestEmployee.setBounds(100, 172, 122, 25);
+		panel_2.add(lblBestEmployee);
+		
+		JLabel lblWorstEmployee = new JLabel("Worst Employee: ");
+		lblWorstEmployee.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblWorstEmployee.setBounds(100, 268, 122, 25);
+		panel_2.add(lblWorstEmployee);
+		
+		JLabel best_employee_label = new JLabel("");
+		best_employee_label.setForeground(new Color(0, 128, 0));
+		best_employee_label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		best_employee_label.setBounds(261, 179, 215, 18);
+		panel_2.add(best_employee_label);
+		
+		JLabel worst_employee_label = new JLabel("");
+		worst_employee_label.setForeground(new Color(255, 0, 0));
+		worst_employee_label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		worst_employee_label.setBounds(261, 275, 215, 17);
+		panel_2.add(worst_employee_label);
+		
+		JLabel lblDuration = new JLabel("Duration: ");
+		lblDuration.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDuration.setBounds(142, 25, 148, 14);
+		panel_2.add(lblDuration);
+		
+		emp_rank_start = new JTextField();
+		emp_rank_start.setColumns(10);
+		emp_rank_start.setBounds(282, 49, 86, 20);
+		panel_2.add(emp_rank_start);
+		
+		emp_rank_end = new JTextField();
+		emp_rank_end.setColumns(10);
+		emp_rank_end.setBounds(282, 80, 86, 20);
+		panel_2.add(emp_rank_end);
+		
+		JLabel label_4 = new JLabel("End Date (yyyy-mm-dd)");
+		label_4.setBounds(142, 83, 138, 14);
+		panel_2.add(label_4);
+		
+		JLabel label_5 = new JLabel("Start Date (yyyy-mm-dd)");
+		label_5.setBounds(142, 52, 138, 14);
+		panel_2.add(label_5);
+		
+		JLabel emp_rank_start_error = new JLabel("");
+		emp_rank_start_error.setForeground(Color.RED);
+		emp_rank_start_error.setBounds(374, 49, 183, 14);
+		panel_2.add(emp_rank_start_error);
+		
+		JLabel emp_rank_end_error = new JLabel("");
+		emp_rank_end_error.setForeground(Color.RED);
+		emp_rank_end_error.setBounds(374, 80, 183, 14);
+		panel_2.add(emp_rank_end_error);
 		tabbedPane.addTab("Logout", null, btnLogout, null);
+		
+		JButton btnFindBestAnd = new JButton("Find Best and Worst Employees!");
+		btnFindBestAnd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String startDateText = emp_rank_start.getText();
+				String endDateText = emp_rank_end.getText();
+				
+				if(!SqlDateFormatHelper.isValidSqlDateString(startDateText)){
+					emp_rank_start_error.setText("Invalid date format!");
+				}else{
+					emp_rank_start_error.setText("");
+				}
+				
+				if(!SqlDateFormatHelper.isValidSqlDateString(endDateText)){
+					emp_rank_end_error.setText("Invalid date format!");
+				}else{
+					emp_rank_end_error.setText("");
+				}
+				
+				if(SqlDateFormatHelper.isValidSqlDateString(startDateText) && SqlDateFormatHelper.isValidSqlDateString(endDateText)){
+					Calendar startDate = SqlDateFormatHelper.SQLDateStringToCalendar(startDateText);
+					Calendar endDate = SqlDateFormatHelper.SQLDateStringToCalendar(endDateText);
+					RefreshEmployeeRankings(best_employee_label, worst_employee_label, startDate, endDate);
+				}
+			}
+		});
+		btnFindBestAnd.setBounds(142, 108, 226, 20);
+		panel_2.add(btnFindBestAnd);
 	}
 	
 	private void RefreshOccupiedRooms(JTable table){
@@ -434,5 +523,12 @@ public class EmployeePage extends JFrame {
 		}
 		
 		table.setModel(reservation_model);
+	}
+	
+	private void RefreshEmployeeRankings(JLabel worstLabel, JLabel bestLabel, Calendar start, Calendar end){
+		String bestEmployee = _queryManager.getBestEmployee(start, end).getName();
+		String worstEmployee = _queryManager.getWorstEmployee(start, end).getName();
+		bestLabel.setText(bestEmployee);
+		worstLabel.setText(worstEmployee);
 	}
 }
