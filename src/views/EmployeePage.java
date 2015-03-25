@@ -487,7 +487,7 @@ public class EmployeePage extends JFrame {
 		
 		current_customer_model.setColumnIdentifiers(cust_headers);
 		
-		List<Customer> customers = _queryManager.getValuedCustomers(2);
+		List<Customer> customers = _queryManager.getValuedCustomers();
 		for(Customer customer : customers){
 			Object[] rowdata = new Object[] { customer.getName(), customer.getPhoneNumber()};
 			current_customer_model.addRow(rowdata);
