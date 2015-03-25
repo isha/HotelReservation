@@ -109,17 +109,17 @@ public class EmployeePage extends JFrame {
 		lblEndDate.setBounds(123, 295, 138, 14);
 		room_panel.add(lblEndDate);
 		
-		JLabel popular_room_label = new JLabel("None");
+		final JLabel popular_room_label = new JLabel("None");
 		popular_room_label.setFont(new Font("Dialog", Font.BOLD, 12));
 		popular_room_label.setBounds(263, 238, 86, 14);
 		room_panel.add(popular_room_label);
 		
-		JLabel start_error = new JLabel("");
+		final JLabel start_error = new JLabel("");
 		start_error.setForeground(Color.RED);
 		start_error.setBounds(364, 264, 183, 14);
 		room_panel.add(start_error);
 		
-		JLabel end_error = new JLabel("");
+		final JLabel end_error = new JLabel("");
 		end_error.setForeground(Color.RED);
 		end_error.setBounds(364, 295, 183, 14);
 		room_panel.add(end_error);
@@ -179,7 +179,7 @@ public class EmployeePage extends JFrame {
 		lblAverageStayDuration.setBounds(110, 226, 148, 14);
 		customer_panel.add(lblAverageStayDuration);
 		
-		JLabel stay_duration_label = new JLabel("None");
+		final JLabel stay_duration_label = new JLabel("None");
 		stay_duration_label.setFont(new Font("Dialog", Font.BOLD, 12));
 		stay_duration_label.setBounds(268, 226, 86, 14);
 		customer_panel.add(stay_duration_label);
@@ -202,12 +202,12 @@ public class EmployeePage extends JFrame {
 		label_3.setBounds(110, 253, 138, 14);
 		customer_panel.add(label_3);
 		
-		JLabel stay_start_error = new JLabel("");
+		final JLabel stay_start_error = new JLabel("");
 		stay_start_error.setForeground(Color.RED);
 		stay_start_error.setBounds(364, 248, 183, 14);
 		customer_panel.add(stay_start_error);
 		
-		JLabel stay_end_error = new JLabel("");
+		final JLabel stay_end_error = new JLabel("");
 		stay_end_error.setForeground(Color.RED);
 		stay_end_error.setBounds(364, 279, 183, 14);
 		customer_panel.add(stay_end_error);
