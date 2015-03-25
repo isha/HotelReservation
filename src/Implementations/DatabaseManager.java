@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
@@ -43,6 +44,38 @@ public class DatabaseManager {
 				connectionProps);
 
 		return conn;
+	}
+	
+	/**
+	 * Run a SQL command which returns a recordset:
+	 * 
+	 * @throws SQLException If something goes wrong
+	 */
+	public static void executeSelect (String command) throws SQLException {
+		Connection conn = DatabaseManager.getConnection();
+
+	    Statement stmt = null;
+	    String query =
+	        "select COF_NAME, SUP_ID, PRICE, " +
+	        "SALES, TOTAL " +
+	        "from " + dbName + ".COFFEES";
+
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(query);
+	        while (rs.next()) {
+	            String coffeeName = rs.getString("COF_NAME");
+	            int supplierID = rs.getInt("SUP_ID");
+	            float price = rs.getFloat("PRICE");
+	            int sales = rs.getInt("SALES");
+	            int total = rs.getInt("TOTAL");
+	            System.out.println(coffeeName + "\t" + supplierID +
+	                               "\t" + price + "\t" + sales +
+	                               "\t" + total);
+	        }
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	    }
 	}
 	
 	/**
