@@ -17,6 +17,8 @@ public interface IQueryManager {
 	List<Customer> getCurrentCustomers();
 	List<Customer> getValuedCustomers(int reservationNumberThreshold);
 	
+	Reservation getReservation(String name, String phone_number, boolean checkin, boolean checkout, boolean roomNumber, boolean securityDeposit);
+	
 	int getAverageStayDuration(Calendar startDate, Calendar endDate);
 	
 	Employee getBestEmployee(Calendar startDate, Calendar endDate);

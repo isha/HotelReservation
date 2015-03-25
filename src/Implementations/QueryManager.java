@@ -104,4 +104,12 @@ public class QueryManager implements IQueryManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Reservation getReservation(String name, String phone_number,
+			boolean checkin, boolean checkout, boolean roomNumber,
+			boolean securityDeposit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
