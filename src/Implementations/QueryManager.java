@@ -15,6 +15,7 @@ import data_classes.Location;
 import data_classes.Reservation;
 import data_classes.Room;
 import data_classes.RoomType;
+import Helpers.SqlDateFormatHelper;
 import Interfaces.IQueryManager;
 
 public class QueryManager implements IQueryManager {
@@ -230,15 +231,14 @@ public class QueryManager implements IQueryManager {
 	}
 
 	 private String dateRangeQueryBuilder(Calendar startDate, Calendar endDate) {
-		 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		 String q = "checkin_date BETWEEN " 
-				+ "'" + sdf.format(startDate.getTime()) + "'"
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(startDate) + "'"
 				+ " AND " 
-				+ "'" + sdf.format(endDate.getTime()) + "'"
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(endDate) + "'"
 				+ " AND checkout_date BETWEEN "
-				+ "'" + sdf.format(startDate.getTime()) + "'"
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(startDate) + "'"
 				+ " AND " 
-				+ "'" + sdf.format(endDate.getTime()) + "'";
+				+ "'" + SqlDateFormatHelper.CalendarToSqlDateString(endDate) + "'";
 		return q;
 	}
 }
