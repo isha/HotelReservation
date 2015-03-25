@@ -35,14 +35,17 @@ public class MockQueryManager implements IQueryManager{
 		return new RoomType("Single", 1000, 200);
 	}
 	
-	public List<Customer> getCurrentCustomers(Calendar date) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Customer> getCurrentCustomers() {
+		List<Customer> customers = new ArrayList<Customer>();
+		customers.add(new Customer("MacKenzie Judd", "1112223333", "password"));
+		customers.add(new Customer("Denise", "7778885555", "password"));
+		customers.add(new Customer("Isha", "123456789", "password"));
+		customers.add(new Customer("John", "1112223333", "password"));
+		return customers;
 	}
 
 	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2;
 	}
 
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {

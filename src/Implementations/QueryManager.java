@@ -26,7 +26,7 @@ public class QueryManager implements IQueryManager {
 	}
 
 	@Override
-	public List<Customer> getCurrentCustomers(Calendar date) {
+	public List<Customer> getCurrentCustomers() {
 		// TODO Auto-generated method stub
 		return null;
 	}

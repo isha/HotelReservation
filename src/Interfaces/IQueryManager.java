@@ -14,7 +14,7 @@ public interface IQueryManager {
 	List<Room> getOccupiedRooms();
 	RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate);
 	
-	List<Customer> getCurrentCustomers(Calendar date);
+	List<Customer> getCurrentCustomers();
 	List<Customer> getValuedCustomers(int reservationNumberThreshold);
 	
 	int getAverageStayDuration(Calendar startDate, Calendar endDate);
