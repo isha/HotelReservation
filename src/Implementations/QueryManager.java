@@ -105,7 +105,6 @@ public class QueryManager implements IQueryManager {
 		return null;
 	}
 
-	@Override
 	public Reservation getReservation(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
