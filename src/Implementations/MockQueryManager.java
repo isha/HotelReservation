@@ -115,5 +115,4 @@ public class MockQueryManager implements IQueryManager{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }
