@@ -84,12 +84,12 @@ public class LoginPage extends JFrame{
 		getContentPane().add(cust_name);
 		cust_name.setColumns(10);
 		
-		JLabel lblUsername = new JLabel("Name");
+		final JLabel lblUsername = new JLabel("Name");
 		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblUsername.setBounds(47, 167, 73, 14);
 		getContentPane().add(lblUsername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		final JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblPassword.setBounds(47, 261, 73, 14);
 		getContentPane().add(lblPassword);
@@ -98,12 +98,12 @@ public class LoginPage extends JFrame{
 		cust_pass.setBounds(130, 259, 121, 20);
 		getContentPane().add(cust_pass);
 		
-		JLabel emp_eid_error = new JLabel("");
+		final JLabel emp_eid_error = new JLabel("");
 		emp_eid_error.setForeground(Color.RED);
 		emp_eid_error.setBounds(402, 230, 209, 14);
 		getContentPane().add(emp_eid_error);
 		
-		JLabel emp_pwd_error = new JLabel("");
+		final JLabel emp_pwd_error = new JLabel("");
 		emp_pwd_error.setForeground(Color.RED);
 		emp_pwd_error.setBounds(367, 280, 271, 14);
 		getContentPane().add(emp_pwd_error);
@@ -140,17 +140,17 @@ public class LoginPage extends JFrame{
 		emp_login_btn.setBounds(402, 305, 204, 23);
 		getContentPane().add(emp_login_btn);
 		
-		JLabel cust_name_error = new JLabel("");
+		final JLabel cust_name_error = new JLabel("");
 		cust_name_error.setForeground(new Color(255, 0, 0));
 		cust_name_error.setBounds(47, 184, 204, 14);
 		getContentPane().add(cust_name_error);
 		
-		JLabel cust_phone_error = new JLabel("");
+		final JLabel cust_phone_error = new JLabel("");
 		cust_phone_error.setForeground(Color.RED);
 		cust_phone_error.setBounds(47, 240, 204, 14);
 		getContentPane().add(cust_phone_error);
 		
-		JLabel cust_pwd_error = new JLabel("");
+		final JLabel cust_pwd_error = new JLabel("");
 		cust_pwd_error.setForeground(Color.RED);
 		cust_pwd_error.setBounds(47, 286, 276, 14);
 		getContentPane().add(cust_pwd_error);
