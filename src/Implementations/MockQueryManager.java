@@ -109,12 +109,27 @@ public class MockQueryManager implements IQueryManager{
 		return new Employee(eid, "George", "PASS");
 	}
 
-	@Override
-	public Reservation getReservation(String name, String phone_number,
+	public List<Reservation> getReservations(String name, String phone_number,
 			boolean checkin, boolean checkout, boolean roomNumber,
 			boolean securityDeposit) {
-		// TODO Auto-generated method stub
-		return null;
+List<Reservation> reservations = new ArrayList<Reservation>();
+		
+		Location fakeLocation = new Location(1234, "Prince Albert", "V6G2L2", "Vancouver", "BC");
+		RoomType fakeType = new RoomType("Big Room", 10000, 100);
+		Room fakeRoom = new Room(123, fakeType, fakeLocation);
+		Calendar fakeIn = new GregorianCalendar(1992, 1, 12);
+		Calendar fakeOut = new GregorianCalendar(1992, 1, 16);
+		
+		CreditCard fakeCard = new CreditCard("1234567891019", fakeOut, fakeLocation);
+		Employee fakeEmployee = new Employee(123, "John", "password");
+		
+		Customer testCust = new Customer(name, phone_number, "asdf");
+		
+		reservations.add(new Reservation(123, fakeIn, fakeOut, "Great place!", fakeRoom, testCust, fakeCard, fakeEmployee));
+		reservations.add(new Reservation(126, fakeIn, fakeOut, "Great place!", fakeRoom, testCust, fakeCard, fakeEmployee));
+		reservations.add(new Reservation(129, fakeIn, fakeOut, "Great place!", fakeRoom, testCust, fakeCard, fakeEmployee));
+		reservations.add(new Reservation(1200, fakeIn, fakeOut, "Great place!", fakeRoom, testCust, fakeCard, fakeEmployee));
+		
+		return reservations;
 	}
-
 }
