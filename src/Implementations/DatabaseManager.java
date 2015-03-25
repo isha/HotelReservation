@@ -8,6 +8,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
@@ -51,32 +53,64 @@ public class DatabaseManager {
 	 * 
 	 * @throws SQLException If something goes wrong
 	 */
-	public static void executeSelect (String command) throws SQLException {
+	public static List<Customer> executeReadCustomer (String command) throws SQLException {
+		List<Customer> result_records = new ArrayList<Customer>();
+		
 		Connection conn = DatabaseManager.getConnection();
-
 	    Statement stmt = null;
-	    String query =
-	        "select COF_NAME, SUP_ID, PRICE, " +
-	        "SALES, TOTAL " +
-	        "from " + dbName + ".COFFEES";
-
+	    
 	    try {
 	        stmt = conn.createStatement();
-	        ResultSet rs = stmt.executeQuery(query);
+	        ResultSet rs = stmt.executeQuery(command);
 	        while (rs.next()) {
-	            String coffeeName = rs.getString("COF_NAME");
-	            int supplierID = rs.getInt("SUP_ID");
-	            float price = rs.getFloat("PRICE");
-	            int sales = rs.getInt("SALES");
-	            int total = rs.getInt("TOTAL");
-	            System.out.println(coffeeName + "\t" + supplierID +
-	                               "\t" + price + "\t" + sales +
-	                               "\t" + total);
+	            result_records.add(new Customer(rs.getString("name"), rs.getString("phone_number"), rs.getString("password")));
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }
 	    }
+	    
+		return result_records;
 	}
+	
+	public static List<RoomType> executeReadRoomType (String command) throws SQLException {
+		List<RoomType> result_records = new ArrayList<RoomType>();
+		
+		Connection conn = DatabaseManager.getConnection();
+	    Statement stmt = null;
+	    
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(command);
+	        while (rs.next()) {
+	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("securityDeposit"), rs.getInt("daily_rate")));
+	        }
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	    }
+	    
+		return result_records;
+	}
+	
+	public static List<Employee> executeReadEmployee (String command) throws SQLException {
+	    List<Employee> result_records = new ArrayList<Employee>();
+	    
+	    Connection conn = DatabaseManager.getConnection();
+	      Statement stmt = null;
+	      
+	      try {
+	          stmt = conn.createStatement();
+	          ResultSet rs = stmt.executeQuery(command);
+	          while (rs.next()) {
+	              result_records.add(new Employee(rs.getInt("eid"), rs.getString("name"), rs.getString("password")));
+	          }
+	      } finally {
+	          if (stmt != null) { stmt.close(); }
+	      }
+	      
+	    return result_records;
+	  }
+	
+	
 	
 	/**
 	 * Run a SQL command which does not return a recordset:
