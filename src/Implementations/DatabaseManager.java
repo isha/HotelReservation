@@ -16,6 +16,7 @@ import org.apache.ibatis.jdbc.ScriptRunner;
 
 import data_classes.Customer;
 import data_classes.Employee;
+import data_classes.Location;
 import data_classes.Room;
 import data_classes.RoomType;
 
@@ -113,6 +114,29 @@ public class DatabaseManager {
 		return result_records;
 	}
 	
+	public static List<Room> executeReadRoom (String command) throws SQLException {
+		List<Room> result_records = new ArrayList<Room>();
+			
+		Connection conn = DatabaseManager.getConnection();
+		Statement stmt = null;
+		      
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(command);
+			while (rs.next()) {
+				result_records.add(new Room(rs.getInt("r_number"), 
+											new RoomType(rs.getString("type"), rs.getInt("securityDeposit"), rs.getInt("daily_rate")), 
+											new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"),rs.getString("province"))
+										   )
+								  );
+			}
+		} finally {
+			if (stmt != null) { stmt.close(); }
+			if (conn != null) { conn.close(); }
+		}
+      
+		return result_records;
+	}
 	
 	
 	/**
