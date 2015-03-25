@@ -69,14 +69,14 @@ public class CustomerPage extends JFrame{
 		};
 		
 		String[] headers = new String[] {
-				"Conf #", "Checkin", "Checkout", "Room #", "Daily Rate"
+				"Conf #", "Checkin", "Checkout", "Room #"
 			};
 		
 		dtm.setColumnIdentifiers(headers);
 		
 		List<Reservation> reservations = _queryManager.getReservations(_customer);
 		for(Reservation reservation : reservations){
-			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()), reservation.getRoom().getRoomNumber(), "$" + reservation.getRoom().getRoomType().getDailyRate()};
+			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()), reservation.getRoom().getRoomNumber()};
 			dtm.addRow(rowdata);
 		}
 		
