@@ -104,7 +104,6 @@ public class MockQueryManager implements IQueryManager{
 		return reservations;
 	}
 
-	@Override
 	public Employee getEmployee(int eid) {
 		return new Employee(eid, "George", "PASS");
 	}
