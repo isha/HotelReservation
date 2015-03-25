@@ -67,6 +67,7 @@ public class DatabaseManager {
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
 	    }
 	    
 		return result_records;
@@ -86,29 +87,31 @@ public class DatabaseManager {
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
 	    }
 	    
 		return result_records;
 	}
 	
 	public static List<Employee> executeReadEmployee (String command) throws SQLException {
-	    List<Employee> result_records = new ArrayList<Employee>();
-	    
-	    Connection conn = DatabaseManager.getConnection();
-	      Statement stmt = null;
-	      
-	      try {
-	          stmt = conn.createStatement();
-	          ResultSet rs = stmt.executeQuery(command);
-	          while (rs.next()) {
-	              result_records.add(new Employee(rs.getInt("eid"), rs.getString("name"), rs.getString("password")));
-	          }
-	      } finally {
-	          if (stmt != null) { stmt.close(); }
-	      }
-	      
-	    return result_records;
-	  }
+		List<Employee> result_records = new ArrayList<Employee>();
+			
+		Connection conn = DatabaseManager.getConnection();
+		Statement stmt = null;
+		      
+		try {
+			stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(command);
+			while (rs.next()) {
+				result_records.add(new Employee(rs.getInt("eid"), rs.getString("name"), rs.getString("password")));
+			}
+		} finally {
+			if (stmt != null) { stmt.close(); }
+			if (conn != null) { conn.close(); }
+		}
+      
+		return result_records;
+	}
 	
 	
 	
@@ -120,8 +123,9 @@ public class DatabaseManager {
 	 */
 	public static boolean executeUpdate(String command) throws SQLException {
 	    Statement stmt = null;
+	    Connection conn = null;
 	    try {
-	    	Connection conn = DatabaseManager.getConnection();
+	    	conn = DatabaseManager.getConnection();
 	        stmt = conn.createStatement();
 	        stmt.executeUpdate(command); // This will throw a SQLException if it fails
 	        return true;
@@ -129,6 +133,7 @@ public class DatabaseManager {
 
 	    	// This will run whether we throw an exception or not
 	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
 	    }
 	}
 	
