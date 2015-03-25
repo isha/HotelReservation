@@ -22,12 +22,12 @@ public class QueryManager implements IQueryManager {
 
 	public List<Room> getOccupiedRooms() {
 		String command = "SELECT conf_no, R.r_number, type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date" +
-				"FROM Reservation R, Room O" +
-				"WHERE R.r_number = O.r_number" +
-				"AND R.address_no = O.address_no" +
-				"AND R.street = O.street" +
-				"AND R.postal_code = O.postal_code" +
-			"AND checkin_date < NOW() AND checkout_date > NOW();";
+				" FROM Reservation R, Room O" +
+				" WHERE R.r_number = O.r_number" +
+				" AND R.address_no = O.address_no" +
+				" AND R.street = O.street" +
+				" AND R.postal_code = O.postal_code" +
+			" AND checkin_date < NOW() AND checkout_date > NOW();";
 		
 		Connection conn = null;
 	    Statement stmt = null;
@@ -90,17 +90,17 @@ public class QueryManager implements IQueryManager {
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {
 		String command = "SELECT MAX(AvgRate), EmployeeName FROM (" +
 				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
-				"FROM Reservation Re, Room R, RoomType Rt, Employee E" +
-				"WHERE Re.r_number = R.r_number" +
-				"AND Re.address_no = R.address_no" +
-				"AND Re.street = R.street" +
-				"AND Re.postal_code = R.postal_code" +
-				"AND R.type = Rt.type" +
-				"AND Re.eid IS NOT NULL" +
-				"AND Re.eid = E.eid" +
-			"AND checkin_date BETWEEN" + startDate + " AND " + endDate + 
-			"AND checkout_date BETWEEN"+ startDate + " AND " + endDate +
-			"GROUP BY Re.eid" +
+				" FROM Reservation Re, Room R, RoomType Rt, Employee E" +
+				" WHERE Re.r_number = R.r_number" +
+				" AND Re.address_no = R.address_no" +
+				" AND Re.street = R.street" +
+				" AND Re.postal_code = R.postal_code" +
+				" AND R.type = Rt.type" +
+				" AND Re.eid IS NOT NULL" +
+				" AND Re.eid = E.eid" +
+				" AND " + 
+				dateRangeQueryBuilder(startDate, endDate) + 
+				" GROUP BY Re.eid" +
 			") MaxRates;";
 		
 		Connection conn = null;
@@ -129,19 +129,18 @@ public class QueryManager implements IQueryManager {
 	public Employee getWorstEmployee(Calendar startDate, Calendar endDate) {
 		String command = "SELECT MIN(AvgRate), EmployeeName FROM (" +
 				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
-				"FROM Reservation Re, Room R, RoomType Rt, Employee E" +
-				"WHERE Re.r_number = R.r_number" +
-				"AND Re.address_no = R.address_no" +
-				"AND Re.street = R.street" +
-				"AND Re.postal_code = R.postal_code" +
-				"AND R.type = Rt.type" +
-				"AND Re.eid IS NOT NULL" +
-				"AND Re.eid = E.eid" +
-			"AND checkin_date BETWEEN" + startDate + " AND " + endDate + 
-			"AND checkout_date BETWEEN"+ startDate + " AND " + endDate +
-			"GROUP BY Re.eid" +
+				" FROM Reservation Re, Room R, RoomType Rt, Employee E" +
+				" WHERE Re.r_number = R.r_number" +
+				" AND Re.address_no = R.address_no" +
+				" AND Re.street = R.street" +
+				" AND Re.postal_code = R.postal_code" +
+				" AND R.type = Rt.type" +
+				" AND Re.eid IS NOT NULL" +
+				" AND Re.eid = E.eid" +
+				" AND " + 
+				dateRangeQueryBuilder(startDate, endDate) + 
+				" GROUP BY Re.eid" +
 			") MaxRates;";
-		
 		Connection conn = null;
 	    Statement stmt = null;
 	    Employee e = null;
