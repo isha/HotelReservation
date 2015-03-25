@@ -64,8 +64,8 @@ CREATE TABLE Reservation (conf_no INTEGER AUTO_INCREMENT,
   PRIMARY KEY (conf_no),
   FOREIGN KEY (r_number, address_no, street, postal_code) REFERENCES Room(r_number, address_no, street, postal_code) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (eid) REFERENCES Employee(eid) ON DELETE SET NULL ON UPDATE CASCADE,
-  FOREIGN KEY (name, phone_number) REFERENCES Customer(name, phone_number) ON UPDATE CASCADE,
-  FOREIGN KEY (cc_number) REFERENCES CreditCard(cc_number) ON UPDATE CASCADE);
+  FOREIGN KEY (name, phone_number) REFERENCES Customer(name, phone_number) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (cc_number) REFERENCES CreditCard(cc_number) ON DELETE CASCADE ON UPDATE CASCADE);
 
 INSERT INTO RoomType VALUES ('queen', 150, 200);
 INSERT INTO RoomType VALUES ('single', 90, 120);
