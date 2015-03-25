@@ -1,6 +1,10 @@
 package Implementations;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -38,13 +42,81 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		String command = "SELECT MAX(AvgRate), EmployeeName FROM (" +
+				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
+				"FROM Reservation Re, Room R, RoomType Rt, Employee E" +
+				"WHERE Re.r_number = R.r_number" +
+				"AND Re.address_no = R.address_no" +
+				"AND Re.street = R.street" +
+				"AND Re.postal_code = R.postal_code" +
+				"AND R.type = Rt.type" +
+				"AND Re.eid IS NOT NULL" +
+				"AND Re.eid = E.eid" +
+			"AND checkin_date BETWEEN" + startDate + " AND " + endDate + 
+			"AND checkout_date BETWEEN"+ startDate + " AND " + endDate +
+			"GROUP BY Re.eid" +
+			") MaxRates;";
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    Employee e = null;
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            e = new Employee(-1, rs.getString("EmployeeName"), "**********");
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		    
+		return e;
 	}
 
 	public Employee getWorstEmployee(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return null;
+		String command = "SELECT MIN(AvgRate), EmployeeName FROM (" +
+				"SELECT E.name AS EmployeeName, AVG(Rt.daily_rate) AS AvgRate" +
+				"FROM Reservation Re, Room R, RoomType Rt, Employee E" +
+				"WHERE Re.r_number = R.r_number" +
+				"AND Re.address_no = R.address_no" +
+				"AND Re.street = R.street" +
+				"AND Re.postal_code = R.postal_code" +
+				"AND R.type = Rt.type" +
+				"AND Re.eid IS NOT NULL" +
+				"AND Re.eid = E.eid" +
+			"AND checkin_date BETWEEN" + startDate + " AND " + endDate + 
+			"AND checkout_date BETWEEN"+ startDate + " AND " + endDate +
+			"GROUP BY Re.eid" +
+			") MaxRates;";
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    Employee e = null;
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(command);
+		        while (rs.next()) {
+		            e = new Employee(-1, rs.getString("EmployeeName"), "**********");
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		    
+		return e;
 	}
 
 	public void deleteReservation(Reservation reservationToDelete) {
