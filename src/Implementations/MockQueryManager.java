@@ -61,41 +61,14 @@ public class MockQueryManager implements IQueryManager{
 	}
 
 	public void deleteReservation(Reservation reservationToDelete) {
-		try {
-		    String createString =
-			        "DELETE FROM Reservation WHERE conf_no="+reservationToDelete.getConfirmationNumber()+";";
-		    DatabaseManager.executeUpdate(createString);
-			System.out.println("Deleted Reservation");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not delete Reservation");
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void updateCustomerPassword(Customer customer, String newPassword) {
-		try {
-		    String createString =
-			        "Update Customer SET password='"+newPassword+"' WHERE name='"+
-			        customer.getName()+"' AND phone_number='"+customer.getPhoneNumber()+"';";
-		    DatabaseManager.executeUpdate(createString);
-			System.out.println("Updated Customer password");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not update Customer password");
-			e.printStackTrace();
-		}
+		
 	}
 
 	public void updateEmployeePassword(Employee employee, String newPassword) {
-		try {
-		    String createString =
-			        "Update Employee SET password='"+newPassword+"' WHERE eid='"+
-			        employee.getId()+"';";
-		    DatabaseManager.executeUpdate(createString);
-			System.out.println("Updated Employee password");
-	    } catch (SQLException e) {
-			System.out.println("ERROR: Could not update Employee password");
-			e.printStackTrace();
-		}
 		
 	}
 

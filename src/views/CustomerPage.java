@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import data_classes.Customer;
 import data_classes.Reservation;
+import Helpers.SqlDateFormatHelper;
 import Interfaces.IQueryManager;
 
 import javax.swing.JLabel;
@@ -19,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -74,7 +76,7 @@ public class CustomerPage extends JFrame{
 		
 		List<Reservation> reservations = _queryManager.getReservations(_customer);
 		for(Reservation reservation : reservations){
-			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), reservation.getCheckinDate().getTime().toLocaleString(), reservation.getCheckoutDate().getTime().toLocaleString(), reservation.getRoom().getRoomNumber(), "$" + reservation.getRoom().getRoomType().getDailyRate()};
+			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()), reservation.getRoom().getRoomNumber(), "$" + reservation.getRoom().getRoomType().getDailyRate()};
 			dtm.addRow(rowdata);
 		}
 		
