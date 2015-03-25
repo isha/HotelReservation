@@ -319,6 +319,13 @@ public class EmployeePage extends JFrame {
 		panel_1.add(room_deposit_select);
 		
 		JButton btnNewButton = new JButton("Find Reservations!");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RefreshReservationsSelected(reservations_customer_table, reservation_cust_name_field.getText(), 
+						reservation_cust_phone_field.getText(), start_date_select.isSelected(), end_date_select.isSelected(), 
+						room_number_select.isSelected(), room_deposit_select.isSelected());
+			}
+		});
 		btnNewButton.setBounds(10, 63, 288, 29);
 		panel_1.add(btnNewButton);
 		
@@ -418,8 +425,12 @@ public class EmployeePage extends JFrame {
 		
 		List<Reservation> reservations = _queryManager.getReservations(name, phone, checkin, checkout, room_number, deposit);
 		for(Reservation reservation : reservations){
-			Object[] rowdata = new Object[] { };
-			reservation_model.addRow(rowdata);
+			List<Object> data = new ArrayList<Object>();
+			if(checkin){data.add(SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()));}
+			if(checkout){data.add(SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()));}
+			if(room_number){data.add(reservation.getRoom().getRoomNumber());}
+			if(deposit){data.add("$" + reservation.getRoom().getRoomType().getSecurityDeposit());}
+			reservation_model.addRow(data.toArray());
 		}
 		
 		table.setModel(reservation_model);
