@@ -101,7 +101,7 @@ public class QueryManager implements IQueryManager {
 		        stmt = conn.createStatement();
 		        ResultSet rs = stmt.executeQuery(command);
 		        while (rs.next()) {
-		            result_records.add(new Customer(rs.getString("name"), rs.getString("phone_number"), rs.getString("password")));
+		            result_records.add(new Customer(rs.getString("name"), rs.getString("phone_number"), "********"));
 		        }
 		    } finally {
 		        if (stmt != null) { stmt.close(); }
