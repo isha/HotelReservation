@@ -10,11 +10,13 @@ DROP TABLE IF EXISTS Employee;
 CREATE TABLE Employee (eid INTEGER AUTO_INCREMENT,
   name VARCHAR(255),
   password VARCHAR(255),
+  CHECK (LEN(password)>6),
   PRIMARY KEY (eid));
 
 CREATE TABLE Customer (name VARCHAR(255),
   phone_number VARCHAR(255),
   password VARCHAR(255),
+  CHECK (LEN(password)>6),
   PRIMARY KEY (name, phone_number));
 
 CREATE TABLE PostalLocation(postal_code VARCHAR(255),
