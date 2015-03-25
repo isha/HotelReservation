@@ -17,6 +17,8 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
+import data_classes.Customer;
+import data_classes.Employee;
 import Implementations.MockQueryManager;
 import Implementations.QueryManager;
 import Interfaces.IQueryManager;
@@ -131,9 +133,14 @@ public class LoginPage extends JFrame{
 				allValid = validatePasswordLength(emp_pwd_error, emp_pass, 6) && allValid;
 				
 				if(allValid){
-					EmployeePage empPage = new EmployeePage(_queryManager, _queryManager.getEmployee(Integer.valueOf(eid.getText()), emp_pass.getText()));
-					empPage.setVisible(true);
-					setVisible(false);
+					Employee currentEmployee = _queryManager.getEmployee(Integer.valueOf(eid.getText()), emp_pass.getText());
+					if(currentEmployee == null){
+						emp_pwd_error.setText("Invalid EID or Password");
+					}else{
+						EmployeePage empPage = new EmployeePage(_queryManager, currentEmployee);
+						empPage.setVisible(true);
+						setVisible(false);
+					}
 				}
 			}
 		});
@@ -170,9 +177,14 @@ public class LoginPage extends JFrame{
 				allValid = validatePasswordLength(cust_pwd_error, cust_pass, 6) && allValid;
 				
 				if(allValid){
-					CustomerPage customerPage = new CustomerPage(_queryManager, _queryManager.getCustomer(cust_name.getText(), cust_phone.getText(), cust_pass.getText()));
-					customerPage.setVisible(true);
-					setVisible(false);
+					Customer currentCustomer = _queryManager.getCustomer(cust_name.getText(), cust_phone.getText(), cust_pass.getText());
+					if(currentCustomer == null){
+						cust_pwd_error.setText("Invalid Customer or Password!");
+					}else{
+						CustomerPage customerPage = new CustomerPage(_queryManager, currentCustomer);
+						customerPage.setVisible(true);
+						setVisible(false);
+					}
 				}
 			}
 		});
