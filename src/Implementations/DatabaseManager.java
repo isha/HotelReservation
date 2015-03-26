@@ -84,7 +84,7 @@ public class DatabaseManager {
 	        stmt = conn.createStatement();
 	        ResultSet rs = stmt.executeQuery(command);
 	        if (rs.next()) {
-	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("securityDeposit"), rs.getInt("daily_rate")));
+	            result_records.add(new RoomType(rs.getString("type"), rs.getInt("security_deposit"), rs.getInt("daily_rate")));
 	        }
 	    } finally {
 	        if (stmt != null) { stmt.close(); }

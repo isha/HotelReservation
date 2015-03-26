@@ -22,13 +22,15 @@ import Interfaces.IQueryManager;
 public class QueryManager implements IQueryManager {
 
 	public List<Room> getOccupiedRooms() {
-		String command = "SELECT conf_no, R.r_number, type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date" +
-				" FROM Reservation R, Room O" +
+		String command = "SELECT conf_no, R.r_number, O.type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date, PL.city, PL.province, RT.security_deposit, RT.daily_rate" +
+				" FROM Reservation R, Room O, postallocation PL, RoomType RT" +
 				" WHERE R.r_number = O.r_number" +
 				" AND R.address_no = O.address_no" +
 				" AND R.street = O.street" +
 				" AND R.postal_code = O.postal_code" +
-			" AND checkin_date < NOW() AND checkout_date > NOW();";
+				" AND O.postal_code = PL.postal_code" +
+				" AND O.type = RT.type" +
+			" AND checkin_date <= NOW() AND checkout_date >= NOW();";
 		
 		Connection conn = null;
 	    Statement stmt = null;
@@ -39,7 +41,7 @@ public class QueryManager implements IQueryManager {
 		        stmt = conn.createStatement();
 		        ResultSet rs = stmt.executeQuery(command);
 		        while (rs.next()) {
-		            rooms.add(new Room(rs.getInt("r_number"), new RoomType(rs.getString("type"), -1, -1 ), 
+		            rooms.add(new Room(rs.getInt("r_number"), new RoomType(rs.getString("type"), Integer.valueOf(rs.getString("security_deposit")), Integer.valueOf(rs.getString("daily_rate"))), 
 		            		new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), rs.getString("city"), rs.getString("province")) 
 		            ));
 		        }
@@ -59,7 +61,7 @@ public class QueryManager implements IQueryManager {
 	{
 		try {
 			String query =
-					"SELECT MAX(R.type) as type, Rt.securityDeposit, Rt.daily_rate"
+					"SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
 					+ " FROM Room R, Reservation Re, RoomType Rt"
 					+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
 					+ " AND "
