@@ -161,7 +161,7 @@ public class DatabaseManager {
 	    }
 	}
 	
-	public Customer createCustomer(String name, String phone_number, String password) {
+	public static Customer createCustomer(String name, String phone_number, String password) {
 		try {
 		    String createString =
 			        "INSERT INTO Customer VALUES ('"+name+"', '"+phone_number

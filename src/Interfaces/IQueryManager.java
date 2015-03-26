@@ -33,6 +33,7 @@ public interface IQueryManager {
 	List<Reservation> getReservations(Customer customer);
 	
 	//Basic Queries needed
+	Customer getCustomer(String name, String phone_number);
 	Customer getCustomer(String name, String phone_number, String password);
 	Employee getEmployee(int eid, String password);
 }

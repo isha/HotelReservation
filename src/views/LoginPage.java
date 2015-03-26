@@ -19,6 +19,7 @@ import javax.swing.JPasswordField;
 
 import data_classes.Customer;
 import data_classes.Employee;
+import Implementations.DatabaseManager;
 import Implementations.MockQueryManager;
 import Implementations.QueryManager;
 import Interfaces.IQueryManager;
@@ -170,11 +171,7 @@ public class LoginPage extends JFrame{
 				clearLabel(cust_phone_error);
 				clearLabel(cust_pwd_error);
 				
-				boolean allValid = true;
-				allValid = validateNotEmpty(cust_name_error, cust_name) && allValid;
-				allValid = validateNotEmpty(cust_phone_error, cust_phone) && allValid;
-				allValid = validateNotEmpty(cust_pwd_error, cust_pass) && allValid;
-				allValid = validatePasswordLength(cust_pwd_error, cust_pass, 6) && allValid;
+				boolean allValid = validateCustomerFields(cust_name_error, cust_phone_error, cust_pwd_error);
 				
 				if(allValid){
 					Customer currentCustomer = _queryManager.getCustomer(cust_name.getText(), cust_phone.getText(), cust_pass.getText());
@@ -191,6 +188,35 @@ public class LoginPage extends JFrame{
 		
 		cust_login_btm.setBounds(47, 305, 204, 23);
 		getContentPane().add(cust_login_btm);
+		
+		JButton cust_reg_btm = new JButton("Register as new Customer");
+		cust_reg_btm.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				clearLabel(cust_name_error);
+				clearLabel(cust_phone_error);
+				clearLabel(cust_pwd_error);
+
+				boolean allValid = validateCustomerFields(cust_name_error, cust_phone_error, cust_pwd_error);
+				
+				if(allValid){
+					Customer currentCustomer = _queryManager.getCustomer(cust_name.getText(), cust_phone.getText());
+					if(currentCustomer == null){
+						DatabaseManager.createCustomer(cust_name.getText(), cust_phone.getText(), cust_pass.getText());
+						currentCustomer = new Customer(cust_name.getText(), cust_phone.getText(), cust_pass.getText());
+						CustomerPage customerPage = new CustomerPage(_queryManager, currentCustomer);
+						customerPage.setVisible(true);
+						setVisible(false);					
+					}else{
+						cust_pwd_error.setText("User with this phone number & name already exists.");
+
+					}
+				}
+			}
+		});
+		
+		cust_reg_btm.setBounds(47, 338, 204, 23);
+		getContentPane().add(cust_reg_btm);
 		
 		cust_phone = new JTextField();
 		cust_phone.setBounds(130, 209, 121, 20);
@@ -221,6 +247,15 @@ public class LoginPage extends JFrame{
 		lblEmployeeLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblEmployeeLogin.setBounds(402, 118, 204, 25);
 		getContentPane().add(lblEmployeeLogin);
+	}
+	
+	private boolean validateCustomerFields(JLabel cust_name_error, JLabel cust_phone_error, JLabel cust_pwd_error) { 
+		boolean allValid = true;
+		allValid = validateNotEmpty(cust_name_error, cust_name) && allValid;
+		allValid = validateNotEmpty(cust_phone_error, cust_phone) && allValid;
+		allValid = validateNotEmpty(cust_pwd_error, cust_pass) && allValid;
+		allValid = validatePasswordLength(cust_pwd_error, cust_pass, 6) && allValid;
+		return allValid;
 	}
 	
 	private boolean validateNotEmpty(JLabel errorLabel, JTextField field){

@@ -293,6 +293,25 @@ public class QueryManager implements IQueryManager {
 		return getReservations(customer.getName(), customer.getPhoneNumber(), true, true, true, true);
 	}
 
+	public Customer getCustomer(String name, String phone_number) {
+		Customer customer = null;
+		try {
+			String query = "SELECT * "
+					+ " FROM Customer "
+					+ " WHERE name='"
+					+ name + "'"
+					+ " AND phone_number='"
+					+ phone_number + "'"
+					+ ";";
+			customer = DatabaseManager.executeReadCustomer(query);
+		} catch (SQLException e) {
+			System.out.println("ERROR: Could not query");
+			e.printStackTrace();
+		}
+
+		return customer;
+	}
+
 	public Customer getCustomer(String name, String phone_number, String password) {
 		Customer customer = null;
 		try { 
