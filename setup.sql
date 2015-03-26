@@ -199,4 +199,31 @@ INSERT INTO Reservation VALUES (NULL, '2015-8-23', '2015-8-25', NULL,
 -- suite
 INSERT INTO Reservation VALUES (NULL, '2015-9-23', '2015-9-25', "has baby joining",
   1234, 'Shaw Avenue', 'V5K 4A1', 522, NULL, 'Scott Brie', '7789970687', '5555555555554444');
-
+  
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'allergic to nuts',
+  1234, 'Shaw Avenue', 'V5K 4A1', 482, 3, 'Mal Mallard', '4069089820', '6011111111111117');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'allergic to nuts',
+  1992, 'Stalashen Drive', 'V0N 3A1', 739, 2, 'Mal Mallard', '4069089820', '6011111111111117');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'here on business',
+  6457, 'Apple Road', 'L0L 4O4', 120, 5, 'Jimmy Joy', '5139087893', '3530111333300000');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  6457, 'Apple Road', 'L0L 4O4', 420, NULL, 'Jimmy Joy', '5139087893', '3530111333300000');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'allergic to nuts',
+  1245, 'W. 49th', 'H8J 4L4', 500, 4, 'Mal Mallard', '4069089820', '6011111111111117');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'here on business',
+  6457, 'Apple Road', 'L0L 4O4', 400, 2, 'Jimmy Joy', '5139087893', '3530111333300000');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'here on business',
+  6457, 'Apple Road', 'L0L 4O4', 140, 3, 'Jimmy Joy', '5139087893', '3530111333300000');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', 'honeymoon',
+  1260, 'Bidwell Street', 'V6G 2L2', 500, 1, 'Allie Wilson', '7771565678', '378282246310005');
+  
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  1260, 'Bidwell Street', 'V6G 2L2', 100, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  1260, 'Bidwell Street', 'V6G 2L2', 200, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  1260, 'Bidwell Street', 'V6G 2L2', 301, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  1260, 'Bidwell Street', 'V6G 2L2', 400, NULL, 'Scott Brie', '7789970687', '5555555555554444');
+INSERT INTO Reservation VALUES (NULL, '2015-03-24', '2015-03-31', NULL,
+  1260, 'Bidwell Street', 'V6G 2L2', 500, NULL, 'Scott Brie', '7789970687', '5555555555554444');
