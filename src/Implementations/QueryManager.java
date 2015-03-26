@@ -235,7 +235,7 @@ public class QueryManager implements IQueryManager {
 	public void deleteCustomer(Customer customerToDelete) {
 		try {
 		    String deleteString =
-			        "DELETE FROM Customer WHERE name="+customerToDelete.getName()+" AND phone_number="+customerToDelete.getPhoneNumber()+";";
+			        "DELETE FROM Customer WHERE name='"+customerToDelete.getName()+"' AND phone_number="+customerToDelete.getPhoneNumber()+";";
 		    DatabaseManager.executeUpdate(deleteString);
 			System.out.println("Deleted Customer");
 	    } catch (SQLException e) {
