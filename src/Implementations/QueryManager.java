@@ -383,7 +383,7 @@ public class QueryManager implements IQueryManager {
 		        ResultSet rs = stmt.executeQuery(query);
 		        while (rs.next()) {
 		        	Calendar checkin_date = null, checkout_date = null;
-		        	int conf_no;
+		        	int conf_no = 0;
 		        	Room room = null;
 		        	if(checkin)
 		        		checkin_date = SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("checkin_date"));
@@ -395,7 +395,7 @@ public class QueryManager implements IQueryManager {
 		        		conf_no = rs.getInt("conf_no");
 		        	}
 		        	
-		        	reservations.add(new Reservation(0, checkin_date, checkout_date, null, room, null, null, null)
+		        	reservations.add(new Reservation(conf_no, checkin_date, checkout_date, null, room, null, null, null)
 		            );
 		        }
 			} finally {
