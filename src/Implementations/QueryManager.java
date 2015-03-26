@@ -117,11 +117,12 @@ public class QueryManager implements IQueryManager {
 	}
 
 	public double getAverageStayDuration(Calendar startDate, Calendar endDate) {
-		String query = "SELECT AVG( (checkout_date - checkin_date)) AS AvgNumDays"
+		String query = "SELECT AVG(diff) AS AvgNumDays FROM "
+				+ "(SELECT DATEDIFF(checkout_date, checkin_date) AS diff"
 				+ " FROM Reservation"
 				+ " WHERE "
 				+ dateRangeQueryBuilder(startDate, endDate)
-				+ ";";
+				+ ") AvgStay;";
 		float average = 0;
 		
 		Connection conn = null;

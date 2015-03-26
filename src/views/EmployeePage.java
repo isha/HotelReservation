@@ -415,7 +415,7 @@ public class EmployeePage extends JFrame {
 		panel_3.add(cust_rem_phone);
 		cust_rem_phone.setColumns(10);
 		
-		JLabel rem_status = new JLabel("");
+		final JLabel rem_status = new JLabel("");
 		rem_status.setForeground(new Color(255, 69, 0));
 		rem_status.setBounds(168, 251, 196, 14);
 		panel_3.add(rem_status);

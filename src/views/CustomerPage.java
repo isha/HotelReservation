@@ -117,12 +117,12 @@ public class CustomerPage extends JFrame{
 		lblNewLabel_2.setBounds(32, 261, 151, 20);
 		getContentPane().add(lblNewLabel_2);
 		
-		JLabel new_pass_error = new JLabel("");
+		final JLabel new_pass_error = new JLabel("");
 		new_pass_error.setForeground(new Color(255, 0, 0));
 		new_pass_error.setBounds(33, 236, 246, 14);
 		getContentPane().add(new_pass_error);
 		
-		JLabel new_pass_re_error = new JLabel("");
+		final JLabel new_pass_re_error = new JLabel("");
 		new_pass_re_error.setForeground(Color.RED);
 		new_pass_re_error.setBounds(32, 313, 246, 14);
 		getContentPane().add(new_pass_re_error);
@@ -139,7 +139,7 @@ public class CustomerPage extends JFrame{
 		new_pass_conf.setBounds(32, 282, 151, 20);
 		getContentPane().add(new_pass_conf);
 		
-		JLabel old_pass_error = new JLabel("");
+		final JLabel old_pass_error = new JLabel("");
 		old_pass_error.setForeground(Color.RED);
 		old_pass_error.setBounds(33, 169, 246, 14);
 		getContentPane().add(old_pass_error);
