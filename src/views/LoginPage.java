@@ -78,7 +78,7 @@ public class LoginPage extends JFrame{
 		
 		JLabel lblWelcomToThe = new JLabel("Welcome to the Hotel Reservation System!");
 		lblWelcomToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblWelcomToThe.setBounds(110, 11, 423, 25);
+		lblWelcomToThe.setBounds(82, 11, 485, 25);
 		getContentPane().add(lblWelcomToThe);
 		
 		cust_name = new JTextField();
