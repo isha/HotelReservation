@@ -14,7 +14,6 @@ public interface IQueryManager {
 	List<Room> getOccupiedRooms();
 	RoomType getMostPopularRoomType(Calendar startDate, Calendar endDate);
 	
-	List<Customer> getCurrentCustomers();
 	List<Customer> getValuedCustomers();
 	
 	List<Reservation> getReservations(String name, String phone_number, boolean checkin, boolean checkout, boolean roomNumber, boolean securityDeposit);
@@ -26,11 +25,12 @@ public interface IQueryManager {
 	
 	void deleteReservation(Reservation reservationToDelete);
 	void updateEmployeePassword(Employee employee, String newPassword);
-	void updateReservationRoom(Reservation reservation, Room newRoom);
 	
 	//Customer Queries
 	void updateCustomerPassword(Customer customer, String newPassword);
 	List<Reservation> getReservations(Customer customer);
+	
+	public void deleteCustomer(Customer customerToDelete);
 	
 	//Basic Queries needed
 	Customer getCustomer(String name, String phone_number);

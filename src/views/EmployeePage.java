@@ -45,7 +45,6 @@ public class EmployeePage extends JFrame {
 	private Employee _employee;
 	private JTextField start_date_field;
 	private JTextField end_date_field;
-	private JTable current_cust_table;
 	private JTextField stay_start_date_field;
 	private JTextField stay_end_date_field;
 	private JTable valued_cust_table;
@@ -54,6 +53,8 @@ public class EmployeePage extends JFrame {
 	private JTable reservations_customer_table;
 	private JTextField emp_rank_start;
 	private JTextField emp_rank_end;
+	private JTextField cust_rem_name;
+	private JTextField cust_rem_phone;
 
 	/**
 	 * Create the frame.
@@ -316,47 +317,32 @@ public class EmployeePage extends JFrame {
 		tabbedPane.addTab("Customers", null, customer_panel, null);
 		customer_panel.setLayout(null);
 		
-		JLabel lblNewLabel_1 = new JLabel("Current Customers");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setForeground(new Color(0, 0, 0));
-		lblNewLabel_1.setBounds(10, 11, 135, 14);
-		customer_panel.add(lblNewLabel_1);
-		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 36, 569, 168);
-		customer_panel.add(scrollPane_1);
-		
-		
-		current_cust_table = new JTable();
-		RefreshCurrentCustomers(current_cust_table);
-		scrollPane_1.setViewportView(current_cust_table);
-		
 		JLabel lblAverageStayDuration = new JLabel("Average Stay Duration: ");
 		lblAverageStayDuration.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblAverageStayDuration.setBounds(176, 228, 148, 14);
+		lblAverageStayDuration.setBounds(153, 106, 148, 14);
 		customer_panel.add(lblAverageStayDuration);
 		
 		final JLabel stay_duration_label = new JLabel("None");
 		stay_duration_label.setFont(new Font("Dialog", Font.BOLD, 12));
-		stay_duration_label.setBounds(334, 228, 86, 14);
+		stay_duration_label.setBounds(311, 106, 86, 14);
 		customer_panel.add(stay_duration_label);
 		
 		stay_start_date_field = new JTextField();
 		stay_start_date_field.setColumns(10);
-		stay_start_date_field.setBounds(316, 252, 86, 20);
+		stay_start_date_field.setBounds(293, 130, 86, 20);
 		customer_panel.add(stay_start_date_field);
 		
 		stay_end_date_field = new JTextField();
 		stay_end_date_field.setColumns(10);
-		stay_end_date_field.setBounds(316, 283, 86, 20);
+		stay_end_date_field.setBounds(293, 161, 86, 20);
 		customer_panel.add(stay_end_date_field);
 		
 		JLabel label_2 = new JLabel("End Date (yyyy-mm-dd)");
-		label_2.setBounds(176, 286, 138, 14);
+		label_2.setBounds(153, 164, 138, 14);
 		customer_panel.add(label_2);
 		
 		JLabel label_3 = new JLabel("Start Date (yyyy-mm-dd)");
-		label_3.setBounds(176, 255, 138, 14);
+		label_3.setBounds(153, 133, 138, 14);
 		customer_panel.add(label_3);
 		
 		final JLabel stay_start_error = new JLabel("");
@@ -395,8 +381,54 @@ public class EmployeePage extends JFrame {
 				}
 			}
 		});
-		btnFindAverageStay.setBounds(176, 311, 226, 20);
+		btnFindAverageStay.setBounds(153, 189, 226, 20);
 		customer_panel.add(btnFindAverageStay);
+		
+		JPanel panel_3 = new JPanel();
+		tabbedPane.addTab("User Management", null, panel_3, null);
+		panel_3.setLayout(null);
+		
+		JLabel lblRemoveCustomer = new JLabel("Remove Customer");
+		lblRemoveCustomer.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblRemoveCustomer.setBounds(168, 85, 140, 14);
+		panel_3.add(lblRemoveCustomer);
+		
+		JLabel lblName = new JLabel("Name");
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblName.setBounds(168, 124, 46, 14);
+		panel_3.add(lblName);
+		
+		JLabel lblPhone = new JLabel("Phone #");
+		lblPhone.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblPhone.setBounds(168, 166, 59, 14);
+		panel_3.add(lblPhone);
+		
+		cust_rem_name = new JTextField();
+		cust_rem_name.setBounds(253, 122, 111, 20);
+		panel_3.add(cust_rem_name);
+		cust_rem_name.setColumns(10);
+		
+		cust_rem_phone = new JTextField();
+		cust_rem_phone.setBounds(253, 164, 111, 20);
+		panel_3.add(cust_rem_phone);
+		cust_rem_phone.setColumns(10);
+		
+		JLabel rem_status = new JLabel("");
+		rem_status.setForeground(new Color(255, 69, 0));
+		rem_status.setBounds(168, 251, 196, 14);
+		panel_3.add(rem_status);
+		
+		JButton btnNewButton_1 = new JButton("Remove Customer");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				_queryManager.deleteCustomer(new Customer(cust_rem_name.getText(), cust_rem_phone.getText(), "NULL"));
+				rem_status.setText("Removed Customer: " + cust_rem_name.getText());
+				cust_rem_name.setText("");
+				cust_rem_phone.setText("");
+			}
+		});
+		btnNewButton_1.setBounds(168, 204, 196, 23);
+		panel_3.add(btnNewButton_1);
 		tabbedPane.addTab("Logout", null, btnLogout, null);
 		
 		JButton btnFindBestAnd = new JButton("Find Best and Worst Employees!");
@@ -426,6 +458,8 @@ public class EmployeePage extends JFrame {
 		});
 		btnFindBestAnd.setBounds(170, 107, 226, 20);
 		panel_2.add(btnFindBestAnd);
+		
+		
 	}
 	
 	private void RefreshOccupiedRooms(JTable table){
@@ -449,29 +483,6 @@ public class EmployeePage extends JFrame {
 		}
 		
 		table.setModel(dtm);
-	}
-	
-	private void RefreshCurrentCustomers(JTable table){
-		DefaultTableModel current_customer_model = new DefaultTableModel(){
-			@Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
-		};
-		
-		String[] cust_headers = new String[] {
-				"Customer Name", "Customer Phone Number"
-			};
-		
-		current_customer_model.setColumnIdentifiers(cust_headers);
-		
-		List<Customer> customers = _queryManager.getCurrentCustomers();
-		for(Customer customer : customers){
-			Object[] rowdata = new Object[] { customer.getName(), customer.getPhoneNumber()};
-			current_customer_model.addRow(rowdata);
-		}
-		
-		table.setModel(current_customer_model);
 	}
 	
 	private void RefreshValuedCustomers(JTable table){

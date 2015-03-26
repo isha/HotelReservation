@@ -45,6 +45,7 @@ public class CustomerPage extends JFrame{
 	public CustomerPage(IQueryManager queryManager, Customer customer){
 		_queryManager = queryManager;
 		_customer = customer;
+		setTitle("Customer: " + _customer.getName());
 		initialize();
 	}
 

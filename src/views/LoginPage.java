@@ -46,7 +46,7 @@ public class LoginPage extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LoginPage window = new LoginPage(new QueryManager());
+					LoginPage window = new LoginPage(new MockQueryManager());
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

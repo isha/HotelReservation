@@ -145,4 +145,10 @@ List<Reservation> reservations = new ArrayList<Reservation>();
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void deleteCustomer(Customer customerToDelete) {
+		// TODO Auto-generated method stub
+		
+	}
 }

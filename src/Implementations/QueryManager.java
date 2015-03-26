@@ -76,10 +76,6 @@ public class QueryManager implements IQueryManager {
 		return null;
 	}
 
-	public List<Customer> getCurrentCustomers() {
-		return new ArrayList<Customer>();
-	}
-
 	public List<Customer> getValuedCustomers() {
 		String command = "SELECT name, phone_number FROM Customer C"
 		  + " WHERE NOT EXISTS ("
@@ -264,11 +260,6 @@ public class QueryManager implements IQueryManager {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	public void updateReservationRoom(Reservation reservation, Room newRoom) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public void updateCustomerPassword(Customer customer, String newPassword) {
