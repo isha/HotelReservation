@@ -162,6 +162,9 @@ public class CustomerPage extends JFrame{
 					_customer = _queryManager.getCustomer(_customer.getName(), _customer.getPhoneNumber());
 					PasswordChanged passwordAlert = new PasswordChanged();
 					passwordAlert.setVisible(true);
+					old_pass.setText("");
+					new_pass.setText("");
+					new_pass_conf.setText("");
 				}
 			}
 		});
