@@ -23,6 +23,7 @@ import javax.swing.JButton;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class CustomerPage extends JFrame{
 
@@ -103,21 +104,31 @@ public class CustomerPage extends JFrame{
 		
 		JLabel lblNewLabel = new JLabel("Old Password");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(32, 124, 83, 14);
+		lblNewLabel.setBounds(34, 124, 83, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("New Password");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(35, 180, 117, 14);
+		lblNewLabel_1.setBounds(33, 191, 117, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("New Password (Retype)");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(32, 236, 151, 20);
+		lblNewLabel_2.setBounds(32, 261, 151, 20);
 		getContentPane().add(lblNewLabel_2);
 		
+		JLabel new_pass_error = new JLabel("");
+		new_pass_error.setForeground(new Color(255, 0, 0));
+		new_pass_error.setBounds(33, 236, 246, 14);
+		getContentPane().add(new_pass_error);
+		
+		JLabel new_pass_re_error = new JLabel("");
+		new_pass_re_error.setForeground(Color.RED);
+		new_pass_re_error.setBounds(32, 313, 246, 14);
+		getContentPane().add(new_pass_re_error);
+		
 		old_pass = new JPasswordField();
-		old_pass.setBounds(32, 149, 150, 20);
+		old_pass.setBounds(33, 138, 150, 20);
 		getContentPane().add(old_pass);
 		
 		new_pass = new JPasswordField();
@@ -125,18 +136,36 @@ public class CustomerPage extends JFrame{
 		getContentPane().add(new_pass);
 		
 		new_pass_conf = new JPasswordField();
-		new_pass_conf.setBounds(32, 267, 151, 20);
+		new_pass_conf.setBounds(32, 282, 151, 20);
 		getContentPane().add(new_pass_conf);
+		
+		JLabel old_pass_error = new JLabel("");
+		old_pass_error.setForeground(Color.RED);
+		old_pass_error.setBounds(33, 169, 246, 14);
+		getContentPane().add(old_pass_error);
 		
 		JButton btnNewButton = new JButton("Change Password");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				_queryManager.updateCustomerPassword(_customer, new_pass.getText());
-				PasswordChanged passwordAlert = new PasswordChanged();
-				passwordAlert.setVisible(true);
+				
+				clearLabel(old_pass_error);
+				clearLabel(new_pass_error);
+				clearLabel(new_pass_re_error);
+				
+				boolean allValid = true;
+				allValid =  validateCorrectPassword(old_pass_error, old_pass) && allValid;
+				allValid = validatePasswordLength(new_pass_error, new_pass, 6) && allValid;
+				allValid = validatePasswordMatch(new_pass_error, new_pass_re_error, new_pass, new_pass_conf) && allValid;
+				
+				if(allValid){
+					_queryManager.updateCustomerPassword(_customer, new_pass.getText());
+					_customer = _queryManager.getCustomer(_customer.getName(), _customer.getPhoneNumber());
+					PasswordChanged passwordAlert = new PasswordChanged();
+					passwordAlert.setVisible(true);
+				}
 			}
 		});
-		btnNewButton.setBounds(32, 309, 151, 23);
+		btnNewButton.setBounds(33, 342, 151, 23);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnLogout = new JButton("Logout");
@@ -149,5 +178,35 @@ public class CustomerPage extends JFrame{
 		});
 		btnLogout.setBounds(549, 11, 134, 30);
 		getContentPane().add(btnLogout);
+	}
+	
+	private boolean validatePasswordLength(JLabel errorLabel, JPasswordField field, int minLength){
+		if(field.getText().length() < minLength){
+			errorLabel.setText("Password must be at least " + minLength + " characters long!");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validatePasswordMatch(JLabel errorLabel1, JLabel errorLabel2, JPasswordField field1, JPasswordField field2){
+		if(!field1.getText().equals(field2.getText())){
+			errorLabel1.setText("Passwords don't match!");
+			errorLabel2.setText("Passwords don't match!");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validateCorrectPassword(JLabel errorLabel, JPasswordField field){
+		
+		if(!field.getText().equals(_customer.getPassword())){
+			errorLabel.setText("Incorrect Password!");
+			return false;
+		}
+		return true;
+	}
+	
+	private void clearLabel(JLabel label){
+		label.setText("");
 	}
 }

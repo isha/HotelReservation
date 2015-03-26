@@ -34,7 +34,6 @@ public class LoginPage extends JFrame{
 	private JPasswordField cust_pass;
 	private JTextField cust_phone;
 	private JTextField eid;
-	private JPasswordField passwordField_1;
 	private JPasswordField emp_pass;
 	
 	private IQueryManager _queryManager;
