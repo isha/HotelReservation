@@ -59,7 +59,7 @@ public class QueryManager implements IQueryManager {
 	{
 		try {
 			String query =
-					"SELECT MAX(R.type) as type, Rt.security_deposit, Rt.daily_rate"
+					"SELECT MAX(R.type) as type, Rt.securityDeposit, Rt.daily_rate"
 					+ " FROM Room R, Reservation Re, RoomType Rt"
 					+ " WHERE Re.r_number = R.r_number AND Re.address_no = R.address_no AND Re.street = R.street AND Re.postal_code = R.postal_code"
 					+ " AND "

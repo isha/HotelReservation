@@ -379,7 +379,7 @@ public class EmployeePage extends JFrame {
 					Calendar startDate = SqlDateFormatHelper.SQLDateStringToCalendar(startDateText);
 					Calendar endDate = SqlDateFormatHelper.SQLDateStringToCalendar(endDateText);
 					double averageStay = _queryManager.getAverageStayDuration(startDate, endDate);
-					stay_duration_label.setText(String.valueOf(averageStay));
+					stay_duration_label.setText(String.valueOf(averageStay) + " days");
 				}
 			}
 		});
