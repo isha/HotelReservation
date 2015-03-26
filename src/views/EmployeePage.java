@@ -390,7 +390,7 @@ public class EmployeePage extends JFrame {
 				if(SqlDateFormatHelper.isValidSqlDateString(startDateText) && SqlDateFormatHelper.isValidSqlDateString(endDateText)){
 					Calendar startDate = SqlDateFormatHelper.SQLDateStringToCalendar(startDateText);
 					Calendar endDate = SqlDateFormatHelper.SQLDateStringToCalendar(endDateText);
-					int averageStay = _queryManager.getAverageStayDuration(startDate, endDate);
+					double averageStay = _queryManager.getAverageStayDuration(startDate, endDate);
 					stay_duration_label.setText(String.valueOf(averageStay));
 				}
 			}

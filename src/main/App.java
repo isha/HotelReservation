@@ -48,5 +48,6 @@ public class App {
 		qm.getValuedCustomers();
 		qm.getCustomer("Jimmy Joy", "5139087893", "joy_7893_pw");
 		qm.getEmployee(1, "password1");
+		qm.getAverageStayDuration(startDate, endDate);
 	}
 }

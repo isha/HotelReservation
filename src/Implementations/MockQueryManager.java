@@ -50,7 +50,7 @@ public class MockQueryManager implements IQueryManager{
 		return customers;
 	}
 	
-	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
+	public double getAverageStayDuration(Calendar startDate, Calendar endDate) {
 		return 2;
 	}
 

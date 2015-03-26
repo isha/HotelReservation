@@ -118,9 +118,33 @@ public class QueryManager implements IQueryManager {
 		return result_records;
 	}
 
-	public int getAverageStayDuration(Calendar startDate, Calendar endDate) {
-		// TODO Auto-generated method stub
-		return 0;
+	public double getAverageStayDuration(Calendar startDate, Calendar endDate) {
+		String query = "SELECT AVG( (checkout_date - checkin_date)) AS AvgNumDays"
+				+ " FROM Reservation"
+				+ " WHERE "
+				+ dateRangeQueryBuilder(startDate, endDate)
+				+ ";";
+		float average = 0;
+		
+		Connection conn = null;
+	    Statement stmt = null;
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(query);
+		        if (rs.next()) {
+		        	average = rs.getFloat("AvgNumDays");
+		        }
+		    } finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return 0;
+		}
+	    return average;
 	}
 
 	public Employee getBestEmployee(Calendar startDate, Calendar endDate) {

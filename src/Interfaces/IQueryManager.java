@@ -19,7 +19,7 @@ public interface IQueryManager {
 	
 	List<Reservation> getReservations(String name, String phone_number, boolean checkin, boolean checkout, boolean roomNumber, boolean securityDeposit);
 	
-	int getAverageStayDuration(Calendar startDate, Calendar endDate);
+	double getAverageStayDuration(Calendar startDate, Calendar endDate);
 	
 	Employee getBestEmployee(Calendar startDate, Calendar endDate);
 	Employee getWorstEmployee(Calendar startDate, Calendar endDate);

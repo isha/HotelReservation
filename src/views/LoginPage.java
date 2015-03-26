@@ -76,7 +76,7 @@ public class LoginPage extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/resources/8652.png")));
 		getContentPane().setLayout(null);
 		
-		JLabel lblWelcomToThe = new JLabel("Welcom to the Hotel Reservation System!");
+		JLabel lblWelcomToThe = new JLabel("Welcome to the Hotel Reservation System!");
 		lblWelcomToThe.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblWelcomToThe.setBounds(110, 11, 423, 25);
 		getContentPane().add(lblWelcomToThe);
