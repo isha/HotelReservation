@@ -158,4 +158,16 @@ List<Reservation> reservations = new ArrayList<Reservation>();
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<Room> getAvailableRooms(Calendar startDate, Calendar endDate) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void makeReservation(Customer customer, Room room, CreditCard cc, String checkinDate, String checkoutDate) {
+		// TODO Auto-generated method stub
+		
+	}
 }

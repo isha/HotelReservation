@@ -2,8 +2,10 @@ package Interfaces;
 import java.util.Calendar;
 import java.util.List;
 
+import data_classes.CreditCard;
 import data_classes.Customer;
 import data_classes.Employee;
+import data_classes.Location;
 import data_classes.Reservation;
 import data_classes.RevenueReport;
 import data_classes.Room;
@@ -28,6 +30,7 @@ public interface IQueryManager {
 	void updateEmployeePassword(Employee employee, String newPassword);
 	
 	//Customer Queries
+	List<Room> getAvailableRooms(Calendar startDate, Calendar endDate);
 	void updateCustomerPassword(Customer customer, String newPassword);
 	List<Reservation> getReservations(Customer customer);
 	
@@ -37,6 +40,7 @@ public interface IQueryManager {
 	Customer getCustomer(String name, String phone_number);
 	Customer getCustomer(String name, String phone_number, String password);
 	Employee getEmployee(int eid, String password);
+	void makeReservation(Customer customer, Room room, CreditCard cc, String checkinDate, String checkoutDate);
 	
 //	Interesting Query
 	List<RevenueReport> produceRevenueReport(String sortBy);

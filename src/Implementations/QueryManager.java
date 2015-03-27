@@ -79,6 +79,44 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 		return reports;
 	}
 
+	public List<Room> getAvailableRooms(Calendar startDate, Calendar endDate) { 
+		String query = "SELECT *" +
+				" FROM Room R, RoomType T" +
+				" WHERE R.type = T.type" +
+				" AND r_number NOT IN (" +
+					" SELECT r_number" +
+					" FROM Reservation Re" +
+					" WHERE Re.address_no = R.address_no" +
+					" AND Re.street = R.street" +
+					" AND Re.postal_code = R.postal_code" +
+					" AND " + 
+					dateRangeQueryBuilder(startDate, endDate) +
+				")" +
+				" ORDER BY address_no DESC, daily_rate ASC;";
+		Connection conn = null;
+	    Statement stmt = null;
+	    List<Room> rooms = new ArrayList<Room>();
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		            rooms.add(new Room(rs.getInt("r_number"), new RoomType(rs.getString("type"), Integer.valueOf(rs.getString("security_deposit")), Integer.valueOf(rs.getString("daily_rate"))), 
+		            		new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), null, null) 
+		            ));
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		return rooms;
+	}
+
 	public List<Room> getOccupiedRooms() {
 		String command = "SELECT conf_no, R.r_number, O.type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date, PL.city, PL.province, RT.security_deposit, RT.daily_rate" +
 				" FROM Reservation R, Room O, postallocation PL, RoomType RT" +
@@ -466,6 +504,43 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 		}
 
 		return reservations;
+	}
+	
+	public void makeReservation(Customer customer, Room room, CreditCard cc, String checkinDate, String checkoutDate) { 
+		
+		String query_ccPLoc = "INSERT INTO PostalLocation VALUES ('" + cc.getLocation().getPostalCode() 
+				+ "', '" + cc.getLocation().getCity() + "', '" + cc.getLocation().getProvince() +"');";
+		String query_ccSLoc = "INSERT INTO StreetLocation VALUES (" + cc.getLocation().getAddressNumber() + ", '" + cc.getLocation().getStreet()
+				+ "', '" + cc.getLocation().getPostalCode() + "');";
+		String query_cc = "INSERT INTO CreditCard VALUES ('" + cc.getCreditCardNumber() + "', '" 
+		+ SqlDateFormatHelper.CalendarToSqlDateString(cc.getExpiryDate())
+		+ "', " + cc.getLocation().getAddressNumber() + ", '" + cc.getLocation().getStreet()
+		+ "', '" + cc.getLocation().getPostalCode() + "');";
+		
+		String reservationQuery = "INSERT INTO Reservation VALUES (NULL,'" +
+						checkinDate + "', '" + checkoutDate + "', NULL, " +
+						room.getLocation().getAddressNumber() 
+						+ ", '" + room.getLocation().getStreet()
+						+ "', '" + room.getLocation().getPostalCode()
+						+ "', " + room.getRoomNumber()
+						+ ", NULL, '" 
+						+ customer.getName()
+						+ "', '" + customer.getPhoneNumber()
+						+ "', '" + cc.getCreditCardNumber() + "');";		
+		
+		try {
+			DatabaseManager.executeUpdate(query_ccPLoc);
+			System.out.println("Inserted PostalLocation record");
+			DatabaseManager.executeUpdate(query_ccSLoc);
+			System.out.println("Inserted StreetLocation record");
+			DatabaseManager.executeUpdate(query_cc);
+			System.out.println("Inserted CreditCard record");
+			DatabaseManager.executeUpdate(reservationQuery);
+			System.out.println("Inserted Reservation record");			
+	    } catch (SQLException e) {
+			System.out.println("ERROR: Could not insert record");
+			e.printStackTrace();
+		}
 	}
 
 	private String getCommaSeparatedString(List<String> list) {
