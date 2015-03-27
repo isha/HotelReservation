@@ -5,6 +5,7 @@ import java.util.List;
 import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Reservation;
+import data_classes.RevenueReport;
 import data_classes.Room;
 import data_classes.RoomType;
 
@@ -36,4 +37,7 @@ public interface IQueryManager {
 	Customer getCustomer(String name, String phone_number);
 	Customer getCustomer(String name, String phone_number, String password);
 	Employee getEmployee(int eid, String password);
+	
+//	Interesting Query
+	List<RevenueReport> produceRevenueReport(String sortBy);
 }

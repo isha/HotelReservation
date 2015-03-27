@@ -18,6 +18,7 @@ public class RevenueReport {
 		_numReservations = numReservations;
 		_revenue = revenue;
 		_reportType = type;
+		_date = date;
 	}
 	
 	public int getNumReservations() { 
@@ -30,6 +31,10 @@ public class RevenueReport {
 	
 	public ReportType getReportType() { 
 		return _reportType;
+	}
+	
+	public Calendar getDate() { 
+		return _date;
 	}
 	
 }

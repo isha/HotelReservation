@@ -12,6 +12,7 @@ import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Location;
 import data_classes.Reservation;
+import data_classes.RevenueReport;
 import data_classes.Room;
 import data_classes.RoomType;
 import Interfaces.IQueryManager;
@@ -150,5 +151,11 @@ List<Reservation> reservations = new ArrayList<Reservation>();
 	public void deleteCustomer(Customer customerToDelete) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<RevenueReport> produceRevenueReport(String sortBy) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -8,11 +8,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -26,12 +31,15 @@ import Interfaces.IQueryManager;
 import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Reservation;
+import data_classes.RevenueReport;
 import data_classes.Room;
 
 import javax.swing.JTextField;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 import javax.swing.JRadioButton;
@@ -56,6 +64,7 @@ public class EmployeePage extends JFrame {
 	private JTextField emp_rank_end;
 	private JTextField cust_rem_name;
 	private JTextField cust_rem_phone;
+	private JTable revenue_report_table;
 
 	/**
 	 * Create the frame.
@@ -78,6 +87,54 @@ public class EmployeePage extends JFrame {
 		tabbedPane.setBounds(0, 0, 594, 413);
 		contentPane.add(tabbedPane);
 		
+//		REVENUE REPORT: 
+		JPanel report_panel = new JPanel(); 
+		tabbedPane.addTab("Revenue Report", null, report_panel, null);
+		report_panel.setLayout(null);
+
+		JLabel lblReportType = new JLabel("Report Type");
+		lblReportType.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblReportType.setBounds(10, 11, 110, 14);
+		report_panel.add(lblReportType);
+		
+		final JRadioButton month_date_select = new JRadioButton("Month");
+		month_date_select.setBounds(10, 32, 100, 23);
+		report_panel.add(month_date_select);
+		
+		final JRadioButton day_date_select = new JRadioButton("Day");
+		day_date_select.setSelected(true);
+		day_date_select.setBounds(110, 32, 100, 23);
+		report_panel.add(day_date_select);
+		
+		final JRadioButton year_date_select = new JRadioButton("Year");
+		year_date_select.setBounds(210, 32, 100, 23);
+		report_panel.add(year_date_select);
+		
+		ButtonGroup reportGroup = new ButtonGroup();
+		reportGroup.add(month_date_select);
+		reportGroup.add(day_date_select);
+		reportGroup.add(year_date_select);
+		
+		JButton reportButton = new JButton("Get Report");
+		reportButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RefreshRevenueReportSelected(revenue_report_table, month_date_select.isSelected(), day_date_select.isSelected(), 
+						year_date_select.isSelected());
+			}
+		});
+		reportButton.setBounds(10, 63, 288, 29);
+		report_panel.add(reportButton);
+		
+		JScrollPane scrollPane_revenue = new JScrollPane();
+		scrollPane_revenue.setBounds(10, 105, 569, 269);
+		report_panel.add(scrollPane_revenue);
+		
+		revenue_report_table = new JTable();
+		scrollPane_revenue.setViewportView(revenue_report_table);
+		
+		
+		
+//		OCCUPIED ROOMS: 
 		JPanel room_panel = new JPanel();
 		tabbedPane.addTab("Rooms", null, room_panel, null);
 		room_panel.setLayout(null);
@@ -90,8 +147,6 @@ public class EmployeePage extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 36, 569, 164);
 		room_panel.add(scrollPane);
-		
-		
 		
 		occupied_room_table = new JTable();
 		RefreshOccupiedRooms(occupied_room_table);
@@ -166,6 +221,7 @@ public class EmployeePage extends JFrame {
 		button.setBounds(184, 317, 226, 20);
 		room_panel.add(button);
 		
+//		VALUED CUSTOMER:
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Valued Customers", null, panel, null);
 		panel.setLayout(null);
@@ -193,6 +249,7 @@ public class EmployeePage extends JFrame {
 			}
 		});
 		
+//		RESERVATIONS: 
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Reservations", null, panel_1, null);
 		panel_1.setLayout(null);
@@ -256,6 +313,7 @@ public class EmployeePage extends JFrame {
 		reservations_customer_table = new JTable();
 		scrollPane_3.setViewportView(reservations_customer_table);
 		
+//		EMPLOYEE RANKING:
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("Employee Rankings", null, panel_2, null);
 		panel_2.setLayout(null);
@@ -386,6 +444,7 @@ public class EmployeePage extends JFrame {
 		btnFindAverageStay.setBounds(153, 189, 226, 20);
 		customer_panel.add(btnFindAverageStay);
 		
+//		USER MANAGEMENT
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("User Management", null, panel_3, null);
 		panel_3.setLayout(null);
@@ -431,6 +490,8 @@ public class EmployeePage extends JFrame {
 		});
 		btnNewButton_1.setBounds(168, 204, 196, 23);
 		panel_3.add(btnNewButton_1);
+		
+//		LOG OUT
 		tabbedPane.addTab("Logout", null, btnLogout, null);
 		
 		JButton btnFindBestAnd = new JButton("Find Best and Worst Employees!");
@@ -508,6 +569,54 @@ public class EmployeePage extends JFrame {
 		}
 		
 		table.setModel(current_customer_model);
+	}
+	
+	private void RefreshRevenueReportSelected(JTable table, boolean month, boolean day, boolean year) {
+		DefaultTableModel revenue_model = new DefaultTableModel(){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		List<String> headers = new ArrayList<String>();
+		SimpleDateFormat sdf = new SimpleDateFormat();
+		if(month) {
+			headers.add("Month"); 
+			sdf.applyPattern("MMM yyyy");
+		}
+		else if(day){
+			headers.add("Day");
+			sdf.applyPattern("MMM dd, yyyy");
+		}
+		else if(year){
+			headers.add("Year");
+			sdf.applyPattern("yyyy");
+		}
+		
+		headers.add("Number of Reservations");
+		headers.add("Revenue");
+		
+		revenue_model.setColumnIdentifiers(headers.toArray());
+		List<RevenueReport> reports = _queryManager.produceRevenueReport(headers.get(0).toLowerCase());
+		for(RevenueReport r : reports){
+			List<Object> data = new ArrayList<Object>();
+			if(month) {
+				data.add(sdf.format(r.getDate().getTime()));
+			}
+			if(day) {
+				data.add(sdf.format(r.getDate().getTime()));
+			}
+			if(year) {
+				data.add(sdf.format(r.getDate().getTime()));
+			}
+			
+			data.add(r.getNumReservations());
+			data.add("$" + r.getRevenue());		
+			
+			revenue_model.addRow(data.toArray());
+		}
+		
+		table.setModel(revenue_model);
 	}
 	
 	private void RefreshReservationsSelected(JTable table, String name, String phone,  boolean checkin, boolean checkout, boolean room_number, boolean deposit){
