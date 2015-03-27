@@ -79,6 +79,7 @@ public class CustomerPage extends JFrame{
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Main.class.getResource("/resources/8652.png")));
 		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
@@ -277,21 +278,21 @@ public class CustomerPage extends JFrame{
 		
 		JLabel lblPayment = new JLabel("Payment Info:");
 		lblPayment.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPayment.setBounds(460, 36, 150, 30);
+		lblPayment.setBounds(460, 24, 150, 30);
 		reservation_panel.add(lblPayment);
 
 //		Credit Card Number
 		JLabel lblCreditCardNumber = new JLabel("Credit Card #");
 		lblCreditCardNumber.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCreditCardNumber.setBounds(460, 60, 150, 20);
+		lblCreditCardNumber.setBounds(460, 48, 150, 20);
 		reservation_panel.add(lblCreditCardNumber);
 		
 		ccNumber_field = new JTextField();
-		ccNumber_field.setBounds(460, 80, 150, 20);
+		ccNumber_field.setBounds(460, 68, 150, 20);
 		reservation_panel.add(ccNumber_field);
 		
 //		Credit Card Expiry Date
-		JLabel lblCreditCardExpiryDate = new JLabel("Expiry Date (yyy-mm-dd)");
+		JLabel lblCreditCardExpiryDate = new JLabel("Expiry Date (yyyy-mm-dd)");
 		lblCreditCardExpiryDate.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblCreditCardExpiryDate.setBounds(460, 110, 172, 14);
 		reservation_panel.add(lblCreditCardExpiryDate);
@@ -373,6 +374,11 @@ public class CustomerPage extends JFrame{
 		room_pick_error.setBounds(207, 85, 192, 14);
 		reservation_panel.add(room_pick_error);
 		
+		JLabel cc_number_error = new JLabel("");
+		cc_number_error.setForeground(Color.RED);
+		cc_number_error.setBounds(460, 87, 161, 14);
+		reservation_panel.add(cc_number_error);
+		
 		makeReservationBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -382,11 +388,13 @@ public class CustomerPage extends JFrame{
 				clearLabel(res_expiry_date_error);
 				clearLabel(street_num_error);
 				clearLabel(room_pick_error);
+				clearLabel(cc_number_error);
 				
 				boolean allValid = true;
 				allValid = validateDate(res_expiry_date_error, ccExpireDate_field) && allValid;
 				allValid = validateNumeric(street_num_error, addressNo_field) && allValid;
 				allValid = validateRoomPick(room_pick_error, available_rooms_table) && allValid;
+				allValid = validateNotEmpty(cc_number_error, ccNumber_field) && allValid;
 				
 				if(allValid){
 					System.out.println("Making Reservation~");
@@ -473,6 +481,14 @@ public class CustomerPage extends JFrame{
 	private boolean validatePasswordLength(JLabel errorLabel, JPasswordField field, int minLength){
 		if(field.getText().length() < minLength){
 			errorLabel.setText("Password must be at least " + minLength + " characters long!");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validateNotEmpty(JLabel errorLabel, JTextField field){
+		if(field.getText().equals("")){
+			errorLabel.setText("Can not be empty!");
 			return false;
 		}
 		return true;

@@ -1,5 +1,6 @@
 package Helpers;
 
+import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -29,6 +30,11 @@ public class SqlDateFormatHelper {
 	}
 	
 	public static boolean isValidSqlDateString(String dateString){
-		return dateString.matches("[1-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]");
+		try{
+			java.sql.Date.valueOf(dateString);
+		}catch(Exception e){
+			return false;
+		}
+		return true;
 	}
 }
