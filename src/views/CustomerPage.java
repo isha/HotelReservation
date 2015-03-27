@@ -200,36 +200,36 @@ public class CustomerPage extends JFrame{
 //		Done Label
 		final JLabel lblDone = new JLabel("Reservation Made!");
 		lblDone.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblDone.setBounds(460, 370, 120, 14);
+		lblDone.setBounds(460, 386, 120, 14);
 		lblDone.setVisible(false);
 		reservation_panel.add(lblDone);
 		
 		JLabel lblAvailableRooms = new JLabel("Select an Available Room:");
-		lblAvailableRooms.setBounds(15, 85, 278, 15);
+		lblAvailableRooms.setBounds(15, 85, 182, 15);
 		lblAvailableRooms.setFont(new Font("Tahoma", Font.BOLD, 14));
 		reservation_panel.add(lblAvailableRooms);
 		
 		JLabel lblDuration = new JLabel("When:");
 		lblDuration.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDuration.setBounds(20, 25, 150, 30);
+		lblDuration.setBounds(15, 36, 55, 30);
 		reservation_panel.add(lblDuration);
 
 		JLabel lblCheckin = new JLabel("Check-In");
 		lblCheckin.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCheckin.setBounds(80, 20, 60, 14);
+		lblCheckin.setBounds(80, 11, 60, 14);
 		reservation_panel.add(lblCheckin);
 
 		checkin_field = new JTextField();
-		checkin_field.setBounds(80, 35, 80, 20);
+		checkin_field.setBounds(81, 43, 80, 20);
 		reservation_panel.add(checkin_field);
 		
 		JLabel lblCheckout = new JLabel("Check-Out");
 		lblCheckout.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblCheckout.setBounds(180, 20, 60, 14);
+		lblCheckout.setBounds(180, 11, 60, 14);
 		reservation_panel.add(lblCheckout);
 
 		checkout_field = new JTextField();
-		checkout_field.setBounds(180, 35, 80, 20);
+		checkout_field.setBounds(171, 43, 80, 20);
 		reservation_panel.add(checkout_field);
 		
 		available_rooms_table = new JTable();
@@ -243,12 +243,32 @@ public class CustomerPage extends JFrame{
 		final JButton makeReservationBtn = new JButton("Make Reservation");
 		makeReservationBtn.setEnabled(false);
 		
+		JLabel res_chkn_date_error = new JLabel("");
+		res_chkn_date_error.setForeground(Color.RED);
+		res_chkn_date_error.setBounds(41, 65, 120, 14);
+		reservation_panel.add(res_chkn_date_error);
+		
+		JLabel res_chko_date_error = new JLabel("");
+		res_chko_date_error.setForeground(Color.RED);
+		res_chko_date_error.setBounds(171, 65, 120, 14);
+		reservation_panel.add(res_chko_date_error);
+		
 		JButton findAvailableBtn = new JButton("Find Rooms");
-		findAvailableBtn.setBounds(270, 35, 100, 20);
+		findAvailableBtn.setBounds(268, 43, 100, 20);
 		findAvailableBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				RefreshAvailableRooms(available_rooms_table);
-				makeReservationBtn.setEnabled(true);
+				
+				clearLabel(res_chkn_date_error);
+				clearLabel(res_chko_date_error);
+				
+				boolean allValid = true;
+				allValid = validateDate(res_chkn_date_error, checkin_field) && allValid;
+				allValid = validateDate(res_chko_date_error, checkout_field) && allValid;
+				
+				if(allValid){
+					RefreshAvailableRooms(available_rooms_table);
+					makeReservationBtn.setEnabled(true);
+				}
 			}
 			}
 		);
@@ -257,7 +277,7 @@ public class CustomerPage extends JFrame{
 		
 		JLabel lblPayment = new JLabel("Payment Info:");
 		lblPayment.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblPayment.setBounds(450, 35, 150, 30);
+		lblPayment.setBounds(460, 36, 150, 30);
 		reservation_panel.add(lblPayment);
 
 //		Credit Card Number
@@ -271,9 +291,9 @@ public class CustomerPage extends JFrame{
 		reservation_panel.add(ccNumber_field);
 		
 //		Credit Card Expiry Date
-		JLabel lblCreditCardExpiryDate = new JLabel("Expiry Date");
+		JLabel lblCreditCardExpiryDate = new JLabel("Expiry Date (yyy-mm-dd)");
 		lblCreditCardExpiryDate.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCreditCardExpiryDate.setBounds(460, 110, 83, 14);
+		lblCreditCardExpiryDate.setBounds(460, 110, 172, 14);
 		reservation_panel.add(lblCreditCardExpiryDate);
 
 		ccExpireDate_field = new JTextField();
@@ -281,77 +301,113 @@ public class CustomerPage extends JFrame{
 		reservation_panel.add(ccExpireDate_field);
 		
 //		Credit Card Address No
-		JLabel lblCCAddressNo = new JLabel("#");
+		JLabel lblCCAddressNo = new JLabel("Street #");
 		lblCCAddressNo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCCAddressNo.setBounds(460, 150, 20, 14);
+		lblCCAddressNo.setBounds(460, 150, 80, 14);
 		reservation_panel.add(lblCCAddressNo);
 
 		addressNo_field = new JTextField();
-		addressNo_field.setBounds(460, 170, 40, 20);
+		addressNo_field.setBounds(460, 170, 80, 20);
 		reservation_panel.add(addressNo_field);
 		
 //		Credit Card Street
 		JLabel lblCCStreet = new JLabel("Street Name");
 		lblCCStreet.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCCStreet.setBounds(500, 150, 83, 14);
+		lblCCStreet.setBounds(549, 150, 83, 14);
 		reservation_panel.add(lblCCStreet);
 
 		street_field = new JTextField();
-		street_field.setBounds(500, 170, 120, 20);
+		street_field.setBounds(550, 170, 120, 20);
 		reservation_panel.add(street_field);	
 		
 //		Credit Card Postal Code
 		JLabel lblCCPostalCode = new JLabel("Postal Code");
 		lblCCPostalCode.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCCPostalCode.setBounds(460, 200, 83, 14);
+		lblCCPostalCode.setBounds(460, 211, 83, 14);
 		reservation_panel.add(lblCCPostalCode);
 
 		postal_field = new JTextField();
-		postal_field.setBounds(460, 220, 80, 20);
+		postal_field.setBounds(460, 231, 80, 20);
 		reservation_panel.add(postal_field);		
 		
 //		Credit Card City
 		JLabel lblCCCity = new JLabel("City");
 		lblCCCity.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCCCity.setBounds(460, 245, 90, 14);
+		lblCCCity.setBounds(460, 256, 90, 14);
 		reservation_panel.add(lblCCCity);
 
 		city_field = new JTextField();
-		city_field.setBounds(460, 265, 80, 20);
+		city_field.setBounds(460, 276, 80, 20);
 		reservation_panel.add(city_field);
 		
 //		Credit Card Province
 		JLabel lblProvince = new JLabel("Province");
 		lblProvince.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblProvince.setBounds(460, 290, 83, 14);
+		lblProvince.setBounds(460, 301, 83, 14);
 		reservation_panel.add(lblProvince);
 
 		prov_field = new JTextField();
-		prov_field.setBounds(460, 310, 80, 20);
+		prov_field.setBounds(460, 321, 80, 20);
 		reservation_panel.add(prov_field);		
+		
+		JLabel res_expiry_date_error = new JLabel("");
+		res_expiry_date_error.setForeground(Color.RED);
+		res_expiry_date_error.setBounds(550, 128, 120, 14);
+		reservation_panel.add(res_expiry_date_error);
+		
+		JLabel lblyyyymmdd_1 = new JLabel("(yyyy-mm-dd)");
+		lblyyyymmdd_1.setBounds(180, 24, 81, 14);
+		reservation_panel.add(lblyyyymmdd_1);
+		
+		JLabel lblyyyymmdd = new JLabel("(yyyy-mm-dd)");
+		lblyyyymmdd.setBounds(80, 24, 81, 14);
+		reservation_panel.add(lblyyyymmdd);
+		
+		JLabel street_num_error = new JLabel("");
+		street_num_error.setForeground(Color.RED);
+		street_num_error.setBounds(460, 190, 150, 14);
+		reservation_panel.add(street_num_error);
+		
+		JLabel room_pick_error = new JLabel("");
+		room_pick_error.setForeground(Color.RED);
+		room_pick_error.setBounds(207, 85, 192, 14);
+		reservation_panel.add(room_pick_error);
 		
 		makeReservationBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("Making Reservation~");
+
 				int row = available_rooms_table.getSelectedRow();
 				TableModel dtm = available_rooms_table.getModel();
-				RoomType roomType = new RoomType(dtm.getValueAt(row, 0).toString(), Integer.parseInt(dtm.getValueAt(row, 6).toString()), 
-						Integer.parseInt(dtm.getValueAt(row, 5).toString()));
-				Location roomLoc = new Location(Integer.parseInt(dtm.getValueAt(row, 2).toString()), dtm.getValueAt(row, 3).toString(), 
-						dtm.getValueAt(row, 4).toString(), null, null);
-				Room room = new Room(Integer.parseInt(dtm.getValueAt(row, 1).toString()), roomType, roomLoc);
-				Location ccLocation = new Location(Integer.parseInt(addressNo_field.getText()), street_field.getText(), 
-						postal_field.getText(), city_field.getText(), prov_field.getText());
-				CreditCard cc = new CreditCard(ccNumber_field.getText(), SqlDateFormatHelper.SQLDateStringToCalendar(ccExpireDate_field.getText()), 
-						ccLocation);
-				_queryManager.makeReservation(_customer, room, cc, checkin_field.getText(), checkout_field.getText());
-				lblDone.setVisible(true);
-				RefreshReservations(reservation_table);
+				
+				clearLabel(res_expiry_date_error);
+				clearLabel(street_num_error);
+				clearLabel(room_pick_error);
+				
+				boolean allValid = true;
+				allValid = validateDate(res_expiry_date_error, ccExpireDate_field) && allValid;
+				allValid = validateNumeric(street_num_error, addressNo_field) && allValid;
+				allValid = validateRoomPick(room_pick_error, available_rooms_table) && allValid;
+				
+				if(allValid){
+					System.out.println("Making Reservation~");
+					
+					RoomType roomType = new RoomType(dtm.getValueAt(row, 0).toString(), Integer.parseInt(dtm.getValueAt(row, 6).toString()), 
+							Integer.parseInt(dtm.getValueAt(row, 5).toString()));
+					Location roomLoc = new Location(Integer.parseInt(dtm.getValueAt(row, 2).toString()), dtm.getValueAt(row, 3).toString(), 
+							dtm.getValueAt(row, 4).toString(), null, null);
+					Room room = new Room(Integer.parseInt(dtm.getValueAt(row, 1).toString()), roomType, roomLoc);
+					Location ccLocation = new Location(Integer.parseInt(addressNo_field.getText()), street_field.getText(), 
+							postal_field.getText(), city_field.getText(), prov_field.getText());
+					CreditCard cc = new CreditCard(ccNumber_field.getText(), SqlDateFormatHelper.SQLDateStringToCalendar(ccExpireDate_field.getText()), 
+							ccLocation);
+					_queryManager.makeReservation(_customer, room, cc, checkin_field.getText(), checkout_field.getText());
+					lblDone.setVisible(true);
+					RefreshReservations(reservation_table);
+				}
 			}
-			}
-		);
+		});
 		
-		makeReservationBtn.setBounds(460, 340, 151, 23);
+		makeReservationBtn.setBounds(460, 352, 151, 23);
 		reservation_panel.add(makeReservationBtn);	
 			
 		
@@ -429,6 +485,34 @@ public class CustomerPage extends JFrame{
 			return false;
 		}
 		return true;
+	}
+	
+	private boolean validateNumeric(JLabel errorLabel, JTextField field){
+		try{
+			Integer.valueOf(field.getText());
+		}catch(NumberFormatException e){
+			errorLabel.setText("Must be a number!");
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean validateDate(JLabel errorLabel, JTextField field){
+		if(SqlDateFormatHelper.isValidSqlDateString(field.getText())){
+			return true;
+		}else{
+			errorLabel.setText("Invalid date format!");
+			return false;
+		}
+	}
+	
+	private boolean validateRoomPick(JLabel errorLabel, JTable td){
+		if(td.getSelectedRow() == -1){
+			errorLabel.setText("Must pick a room!");
+			return false;
+		}else{
+			return true;
+		}
 	}
 	
 	private boolean validateCorrectPassword(JLabel errorLabel, JPasswordField field){
