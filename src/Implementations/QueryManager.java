@@ -119,7 +119,7 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 
 	public List<Room> getOccupiedRooms() {
 		String command = "SELECT conf_no, R.r_number, O.type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date, PL.city, PL.province, RT.security_deposit, RT.daily_rate" +
-				" FROM Reservation R, Room O, postallocation PL, RoomType RT" +
+				" FROM Reservation R, Room O, PostalLocation PL, RoomType RT" +
 				" WHERE R.r_number = O.r_number" +
 				" AND R.address_no = O.address_no" +
 				" AND R.street = O.street" +
