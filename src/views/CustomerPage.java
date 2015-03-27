@@ -94,33 +94,24 @@ public class CustomerPage extends JFrame{
 		welcome_text.setFont(new Font("Tahoma", Font.BOLD, 14));
 		welcome_text.setBounds(10, 17, 522, 14);
 		information_panel.add(welcome_text);
-		DefaultTableModel dtm = new DefaultTableModel(){
-			@Override
-		    public boolean isCellEditable(int row, int column) {
-		        return false;
-		    }
-		};
-		
-		String[] headers = new String[] {
-				"Conf #", "Checkin", "Checkout", "Room #"
-			};
-		
-		dtm.setColumnIdentifiers(headers);
-		
-		List<Reservation> reservations = _queryManager.getReservations(_customer);
-		for(Reservation reservation : reservations){
-			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()), reservation.getRoom().getRoomNumber()};
-			dtm.addRow(rowdata);
-		}
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(220, 80, 370, 300);
 		information_panel.add(scrollPane);
-
 		
 		reservation_table = new JTable();
 		scrollPane.setViewportView(reservation_table);
-		reservation_table.setModel(dtm);
+		
+		RefreshReservations(reservation_table);
+		
+		JButton refreshBtn = new JButton("Refresh Reservations");
+		refreshBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RefreshReservations(reservation_table);	
+			}
+		});
+		refreshBtn.setBounds(220, 390, 180, 23);
+		information_panel.add(refreshBtn);
 		
 		JLabel lblReservations = new JLabel("Your Reservations");
 		lblReservations.setBounds(220, 50, 278, 30);
@@ -205,6 +196,13 @@ public class CustomerPage extends JFrame{
 		final JPanel reservation_panel = new JPanel(); 
 		tabbedPane.addTab("Make a Reservation", null, reservation_panel, null);
 		reservation_panel.setLayout(null);
+		
+//		Done Label
+		final JLabel lblDone = new JLabel("Reservation Made!");
+		lblDone.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblDone.setBounds(460, 370, 120, 14);
+		lblDone.setVisible(false);
+		reservation_panel.add(lblDone);
 		
 		JLabel lblAvailableRooms = new JLabel("Select an Available Room:");
 		lblAvailableRooms.setBounds(15, 85, 278, 15);
@@ -348,12 +346,15 @@ public class CustomerPage extends JFrame{
 				CreditCard cc = new CreditCard(ccNumber_field.getText(), SqlDateFormatHelper.SQLDateStringToCalendar(ccExpireDate_field.getText()), 
 						ccLocation);
 				_queryManager.makeReservation(_customer, room, cc, checkin_field.getText(), checkout_field.getText());
+				lblDone.setVisible(true);
 			}
 			}
 		);
 		
 		makeReservationBtn.setBounds(460, 340, 151, 23);
-		reservation_panel.add(makeReservationBtn);		
+		reservation_panel.add(makeReservationBtn);	
+			
+		
 //		LOG OUT
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -366,6 +367,28 @@ public class CustomerPage extends JFrame{
 		});		
 		tabbedPane.addTab("Logout", null, btnLogout, null);		
 		
+	}
+	
+	private void RefreshReservations(JTable table) { 
+		DefaultTableModel dtm = new DefaultTableModel(){
+			@Override
+		    public boolean isCellEditable(int row, int column) {
+		        return false;
+		    }
+		};
+		String[] headers = new String[] {
+				"Conf #", "Checkin", "Checkout", "Room #"
+			};
+		
+		dtm.setColumnIdentifiers(headers);
+		
+		List<Reservation> reservations = _queryManager.getReservations(_customer);
+		for(Reservation reservation : reservations){
+			Object[] rowdata = new Object[] { reservation.getConfirmationNumber(), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckinDate()), SqlDateFormatHelper.CalendarToSqlDateString(reservation.getCheckoutDate()), reservation.getRoom().getRoomNumber()};
+			dtm.addRow(rowdata);
+		}
+
+		table.setModel(dtm);
 	}
 	
 	private void RefreshAvailableRooms(JTable table){

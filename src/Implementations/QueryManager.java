@@ -467,7 +467,7 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 				+ " WHERE name='"
 				+ name + "'"
 				+ " AND phone_number='"
-				+ phone_number + "';";
+				+ phone_number + "' ORDER BY checkin_date ASC;";
 
 		Connection conn = null;
 	    Statement stmt = null;
