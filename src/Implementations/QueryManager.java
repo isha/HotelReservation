@@ -14,12 +14,70 @@ import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Location;
 import data_classes.Reservation;
+import data_classes.RevenueReport;
+import data_classes.RevenueReport.ReportType;
 import data_classes.Room;
 import data_classes.RoomType;
 import Helpers.SqlDateFormatHelper;
 import Interfaces.IQueryManager;
 
 public class QueryManager implements IQueryManager {
+	
+public List<RevenueReport> produceRevenueReport(String sortBy) { 
+		
+		String groupByQuery;
+		ReportType reportType = ReportType.YEAR;
+		
+		switch(sortBy) { 
+			case "month": 
+				groupByQuery = " GROUP BY MONTH(checkin_date), YEAR(checkin_date)";
+				reportType = ReportType.MONTH;
+				break;
+			case "year": 
+				groupByQuery = " GROUP BY YEAR(checkin_date)";
+				break; 
+			default: 
+				// Default grouping method is group by day
+				groupByQuery = " GROUP BY checkin_date";
+				reportType = ReportType.DAY;
+				break;
+		}
+		
+		String query = "SELECT count(conf_no) AS numReservations,"
+				+ " SUM(DATEDIFF(checkout_date, checkin_date)*daily_rate) AS revenue,"
+				+ "checkin_date AS date"
+				+ " FROM Reservation R, RoomType T, Room M"
+				+ " WHERE R.r_number = M.r_number"
+				+ " AND R.street = M.street"
+				+ " AND R.postal_code = M.postal_code"
+				+ " AND M.type = T.type"
+				+ groupByQuery
+				+ " ORDER BY checkin_date DESC;";
+
+		Connection conn = null;
+	    Statement stmt = null;
+	    List<RevenueReport> reports = new ArrayList<RevenueReport>();
+	    try {
+		    try {
+		    	conn = DatabaseManager.getConnection();
+		        stmt = conn.createStatement();
+		        ResultSet rs = stmt.executeQuery(query);
+		        while (rs.next()) {
+		        	RevenueReport r = new RevenueReport(rs.getInt("numReservations"), rs.getInt("revenue"), 
+		        			reportType, SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("date")));
+		        	reports.add(r);
+		        }
+			} finally {
+		        if (stmt != null) { stmt.close(); }
+		        if (conn != null) { conn.close(); }
+		    }
+	    } catch (SQLException ex) {
+			ex.printStackTrace();
+			return null;
+		}
+		    
+		return reports;
+	}
 
 	public List<Room> getOccupiedRooms() {
 		String command = "SELECT conf_no, R.r_number, O.type, R.address_no, R.street, R.postal_code, R.checkin_date, R.checkout_date, PL.city, PL.province, RT.security_deposit, RT.daily_rate" +
