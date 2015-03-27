@@ -508,6 +508,12 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 	
 	public void makeReservation(Customer customer, Room room, CreditCard cc, String checkinDate, String checkoutDate) { 
 		
+		String checkPLocQuery = "SELECT * FROM PostalLocation WHERE postal_code='" + cc.getLocation().getPostalCode() + "';";
+		
+		String checkSLocQuery = "SELECT * FROM StreetLocation WHERE address_no=" +
+				cc.getLocation().getAddressNumber() + " AND street='" + cc.getLocation().getStreet() + "'" +
+				" AND postal_code='" + cc.getLocation().getPostalCode() + "';";
+		
 		String query_ccPLoc = "INSERT INTO PostalLocation VALUES ('" + cc.getLocation().getPostalCode() 
 				+ "', '" + cc.getLocation().getCity() + "', '" + cc.getLocation().getProvince() +"');";
 		String query_ccSLoc = "INSERT INTO StreetLocation VALUES (" + cc.getLocation().getAddressNumber() + ", '" + cc.getLocation().getStreet()
@@ -529,12 +535,18 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 						+ "', '" + cc.getCreditCardNumber() + "');";		
 		
 		try {
-			DatabaseManager.executeUpdate(query_ccPLoc);
-			System.out.println("Inserted PostalLocation record");
-			DatabaseManager.executeUpdate(query_ccSLoc);
-			System.out.println("Inserted StreetLocation record");
-			DatabaseManager.executeUpdate(query_cc);
-			System.out.println("Inserted CreditCard record");
+			if(null == DatabaseManager.executeReadPostalLocation(checkPLocQuery)) { 
+				DatabaseManager.executeUpdate(query_ccPLoc);
+				System.out.println("Inserted PostalLocation record");
+			}
+			if(null ==  DatabaseManager.executeReadStreetLocation(checkSLocQuery)) { 
+				DatabaseManager.executeUpdate(query_ccSLoc);
+				System.out.println("Inserted StreetLocation record");
+			}
+			if(null == DatabaseManager.executeReadCreditCard("SELECT * FROM CreditCard WHERE cc_number='" + cc.getCreditCardNumber() + "';")) { 
+				DatabaseManager.executeUpdate(query_cc);
+				System.out.println("Inserted CreditCard record");	
+			}
 			DatabaseManager.executeUpdate(reservationQuery);
 			System.out.println("Inserted Reservation record");			
 	    } catch (SQLException e) {

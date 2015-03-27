@@ -14,6 +14,9 @@ import java.util.Properties;
 
 import org.apache.ibatis.jdbc.ScriptRunner;
 
+import Helpers.SqlDateFormatHelper;
+
+import data_classes.CreditCard;
 import data_classes.Customer;
 import data_classes.Employee;
 import data_classes.Location;
@@ -72,6 +75,67 @@ public class DatabaseManager {
 	    }
 	    
 		return customer;
+	}
+	
+	public static Location executeReadPostalLocation (String command) throws SQLException {
+		Location postal_loc = null;
+		
+		Connection conn = DatabaseManager.getConnection();
+	    Statement stmt = null;
+	    
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(command);
+	        while (rs.next()) {
+	        	postal_loc = new Location(0, null, rs.getString("postal_code"), rs.getString("city"), rs.getString("province"));
+	        }
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
+	    }
+	    
+		return postal_loc;
+	}
+	
+	public static Location executeReadStreetLocation (String command) throws SQLException {
+		Location street_loc = null;
+		
+		Connection conn = DatabaseManager.getConnection();
+	    Statement stmt = null;
+	    
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(command);
+	        while (rs.next()) {
+	        	street_loc = new Location(Integer.parseInt(rs.getString("address_no")), rs.getString("street"), rs.getString("postal_code"), null, null);
+	        }
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
+	    }
+	    
+		return street_loc;
+	}
+	
+	public static CreditCard executeReadCreditCard (String command) throws SQLException {
+		CreditCard cc = null;
+		
+		Connection conn = DatabaseManager.getConnection();
+	    Statement stmt = null;
+	    
+	    try {
+	        stmt = conn.createStatement();
+	        ResultSet rs = stmt.executeQuery(command);
+	        while (rs.next()) {
+	        	Location loc = new Location(rs.getInt("address_no"), rs.getString("street"), rs.getString("postal_code"), null, null);
+	        	cc = new CreditCard(rs.getString("cc_number"), SqlDateFormatHelper.SQLDateStringToCalendar(rs.getString("expiry_date")), loc);
+	        }
+	    } finally {
+	        if (stmt != null) { stmt.close(); }
+	        if (conn != null) { conn.close(); }
+	    }
+	    
+		return cc;
 	}
 	
 	public static List<RoomType> executeReadRoomType (String command) throws SQLException {
