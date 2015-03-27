@@ -206,7 +206,6 @@ public class CustomerPage extends JFrame{
 		
 		JLabel lblAvailableRooms = new JLabel("Select an Available Room:");
 		lblAvailableRooms.setBounds(15, 85, 278, 15);
-		information_panel.add(lblAvailableRooms);
 		lblAvailableRooms.setFont(new Font("Tahoma", Font.BOLD, 14));
 		reservation_panel.add(lblAvailableRooms);
 		
@@ -347,6 +346,7 @@ public class CustomerPage extends JFrame{
 						ccLocation);
 				_queryManager.makeReservation(_customer, room, cc, checkin_field.getText(), checkout_field.getText());
 				lblDone.setVisible(true);
+				RefreshReservations(reservation_table);
 			}
 			}
 		);
