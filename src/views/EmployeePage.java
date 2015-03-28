@@ -407,12 +407,12 @@ public class EmployeePage extends JFrame {
 		
 		final JLabel stay_start_error = new JLabel("");
 		stay_start_error.setForeground(Color.RED);
-		stay_start_error.setBounds(412, 253, 183, 14);
+		stay_start_error.setBounds(389, 136, 183, 14);
 		customer_panel.add(stay_start_error);
 		
 		final JLabel stay_end_error = new JLabel("");
 		stay_end_error.setForeground(Color.RED);
-		stay_end_error.setBounds(406, 289, 183, 14);
+		stay_end_error.setBounds(389, 167, 183, 14);
 		customer_panel.add(stay_end_error);
 		
 		JButton btnFindAverageStay = new JButton("Find Average Stay!");
@@ -479,13 +479,33 @@ public class EmployeePage extends JFrame {
 		rem_status.setBounds(168, 251, 196, 14);
 		panel_3.add(rem_status);
 		
+		JLabel um_name_error = new JLabel("");
+		um_name_error.setForeground(Color.RED);
+		um_name_error.setBounds(375, 125, 183, 14);
+		panel_3.add(um_name_error);
+		
+		JLabel um_phone_error = new JLabel("");
+		um_phone_error.setForeground(Color.RED);
+		um_phone_error.setBounds(375, 167, 183, 14);
+		panel_3.add(um_phone_error);
+		
 		JButton btnNewButton_1 = new JButton("Remove Customer");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				_queryManager.deleteCustomer(new Customer(cust_rem_name.getText(), cust_rem_phone.getText(), "NULL"));
-				rem_status.setText("Removed Customer: " + cust_rem_name.getText());
-				cust_rem_name.setText("");
-				cust_rem_phone.setText("");
+				
+				clearLabel(um_name_error);
+				clearLabel(um_phone_error);
+				
+				boolean allValid = true;
+				allValid = validateNotEmpty(um_name_error, cust_rem_name) && allValid;
+				allValid = validateNotEmpty(um_phone_error, cust_rem_phone) && allValid;
+				
+				if(allValid){
+					_queryManager.deleteCustomer(new Customer(cust_rem_name.getText(), cust_rem_phone.getText(), "NULL"));
+					rem_status.setText("Removed Customer: " + cust_rem_name.getText());
+					cust_rem_name.setText("");
+					cust_rem_phone.setText("");
+				}
 			}
 		});
 		btnNewButton_1.setBounds(168, 204, 196, 23);
@@ -649,9 +669,32 @@ public class EmployeePage extends JFrame {
 	}
 	
 	private void RefreshEmployeeRankings(JLabel bestLabel, JLabel worstLabel, Calendar start, Calendar end){
-		String bestEmployee = _queryManager.getBestEmployee(start, end).getName();
-		String worstEmployee = _queryManager.getWorstEmployee(start, end).getName();
-		bestLabel.setText(bestEmployee);
-		worstLabel.setText(worstEmployee);
+		Employee bestEmployee = _queryManager.getBestEmployee(start, end);
+		Employee worstEmployee = _queryManager.getWorstEmployee(start, end);
+		
+		String bestEmployeeName = "No Data";
+		if(bestEmployee != null){
+			bestEmployeeName = bestEmployee.getName();
+		}
+		
+		String worstEmployeeName = "No Data";
+		if(worstEmployee != null){
+			worstEmployeeName = worstEmployee.getName();
+		}
+		
+		bestLabel.setText(bestEmployeeName);
+		worstLabel.setText(worstEmployeeName);
+	}
+	
+	private boolean validateNotEmpty(JLabel errorLabel, JTextField field){
+		if(field.getText().equals("")){
+			errorLabel.setText("Can not be empty!");
+			return false;
+		}
+		return true;
+	}
+	
+	private void clearLabel(JLabel label){
+		label.setText("");
 	}
 }

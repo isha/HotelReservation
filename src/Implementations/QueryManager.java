@@ -165,8 +165,13 @@ public List<RevenueReport> produceRevenueReport(String sortBy) {
 					+ " GROUP BY R.type;";
 			ArrayList<RoomType> roomTypes = (ArrayList<RoomType>) DatabaseManager.executeReadRoomType(query);
 
-			System.out.println("Returned most popular RoomType: " + roomTypes.get(0).getType());
-			return roomTypes.get(0);
+			RoomType mostPopular = new RoomType("None", 0, 0);
+			
+			if(!roomTypes.isEmpty()){
+				mostPopular = roomTypes.get(0);
+			}
+
+			return mostPopular;
 		} catch (SQLException e) {
 			System.out.println("ERROR: Could not query");
 			e.printStackTrace();
