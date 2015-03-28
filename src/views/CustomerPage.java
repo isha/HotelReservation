@@ -97,7 +97,7 @@ public class CustomerPage extends JFrame{
 		information_panel.add(welcome_text);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(220, 80, 370, 300);
+		scrollPane.setBounds(289, 79, 370, 300);
 		information_panel.add(scrollPane);
 		
 		reservation_table = new JTable();
@@ -111,37 +111,37 @@ public class CustomerPage extends JFrame{
 				RefreshReservations(reservation_table);	
 			}
 		});
-		refreshBtn.setBounds(220, 390, 180, 23);
+		refreshBtn.setBounds(289, 389, 180, 23);
 		information_panel.add(refreshBtn);
 		
 		JLabel lblReservations = new JLabel("Your Reservations");
-		lblReservations.setBounds(220, 50, 278, 30);
+		lblReservations.setBounds(289, 42, 278, 30);
 		information_panel.add(lblReservations);
 		lblReservations.setFont(new Font("Tahoma", Font.BOLD, 14));
 		
 		JLabel lblChangePassword = new JLabel("Change Password");
 		lblChangePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblChangePassword.setBounds(33, 50, 150, 30);
+		lblChangePassword.setBounds(11, 52, 150, 30);
 		information_panel.add(lblChangePassword);
 
 		JLabel lblNewLabel = new JLabel("Old Password");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel.setBounds(34, 93, 83, 14);
+		lblNewLabel.setBounds(12, 95, 83, 14);
 		information_panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("New Password");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(33, 161, 117, 14);
+		lblNewLabel_1.setBounds(11, 163, 117, 14);
 		information_panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("New Password (Retype)");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblNewLabel_2.setBounds(32, 231, 151, 20);
+		lblNewLabel_2.setBounds(10, 233, 151, 20);
 		information_panel.add(lblNewLabel_2);
 		
 		final JLabel new_pass_error = new JLabel("");
 		new_pass_error.setForeground(new Color(255, 0, 0));
-		new_pass_error.setBounds(33, 206, 246, 14);
+		new_pass_error.setBounds(10, 206, 269, 14);
 		information_panel.add(new_pass_error);
 		
 		final JLabel new_pass_re_error = new JLabel("");
@@ -150,20 +150,20 @@ public class CustomerPage extends JFrame{
 		information_panel.add(new_pass_re_error);
 		
 		old_pass = new JPasswordField();
-		old_pass.setBounds(33, 108, 150, 20);
+		old_pass.setBounds(11, 110, 150, 20);
 		information_panel.add(old_pass);
 		
 		new_pass = new JPasswordField();
-		new_pass.setBounds(32, 175, 151, 20);
+		new_pass.setBounds(10, 177, 151, 20);
 		information_panel.add(new_pass);
 		
 		new_pass_conf = new JPasswordField();
-		new_pass_conf.setBounds(32, 252, 151, 20);
+		new_pass_conf.setBounds(10, 254, 151, 20);
 		information_panel.add(new_pass_conf);
 		
 		final JLabel old_pass_error = new JLabel("");
 		old_pass_error.setForeground(Color.RED);
-		old_pass_error.setBounds(33, 139, 246, 14);
+		old_pass_error.setBounds(10, 138, 246, 14);
 		information_panel.add(old_pass_error);
 		
 		JButton changePassBtn = new JButton("Change Password");
@@ -190,7 +190,7 @@ public class CustomerPage extends JFrame{
 				}
 			}
 		});
-		changePassBtn.setBounds(32, 305, 151, 23);
+		changePassBtn.setBounds(10, 307, 151, 23);
 		information_panel.add(changePassBtn);
 		
 //		MAKE RESERVATION

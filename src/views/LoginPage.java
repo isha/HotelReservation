@@ -102,21 +102,21 @@ public class LoginPage extends JFrame{
 		
 		final JLabel emp_eid_error = new JLabel("");
 		emp_eid_error.setForeground(Color.RED);
-		emp_eid_error.setBounds(402, 230, 209, 14);
+		emp_eid_error.setBounds(367, 230, 209, 14);
 		getContentPane().add(emp_eid_error);
 		
 		final JLabel emp_pwd_error = new JLabel("");
 		emp_pwd_error.setForeground(Color.RED);
-		emp_pwd_error.setBounds(367, 280, 271, 14);
+		emp_pwd_error.setBounds(367, 286, 271, 14);
 		getContentPane().add(emp_pwd_error);
 		
 		eid = new JTextField();
-		eid.setBounds(490, 199, 116, 20);
+		eid.setBounds(465, 199, 116, 20);
 		getContentPane().add(eid);
 		eid.setColumns(10);
 		
 		emp_pass = new JPasswordField();
-		emp_pass.setBounds(490, 255, 116, 20);
+		emp_pass.setBounds(465, 259, 116, 20);
 		getContentPane().add(emp_pass);
 		
 		JButton emp_login_btn = new JButton("Login as Employee");
@@ -144,7 +144,7 @@ public class LoginPage extends JFrame{
 				}
 			}
 		});
-		emp_login_btn.setBounds(402, 305, 204, 23);
+		emp_login_btn.setBounds(372, 305, 204, 23);
 		getContentPane().add(emp_login_btn);
 		
 		final JLabel cust_name_error = new JLabel("");
@@ -159,7 +159,7 @@ public class LoginPage extends JFrame{
 		
 		final JLabel cust_pwd_error = new JLabel("");
 		cust_pwd_error.setForeground(Color.RED);
-		cust_pwd_error.setBounds(57, 286, 318, 14);
+		cust_pwd_error.setBounds(47, 286, 318, 14);
 		getContentPane().add(cust_pwd_error);
 		
 		JButton cust_login_btm = new JButton("Login as Customer");
@@ -229,12 +229,12 @@ public class LoginPage extends JFrame{
 		
 		JLabel lblEid = new JLabel("EID");
 		lblEid.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblEid.setBounds(402, 202, 46, 14);
+		lblEid.setBounds(377, 201, 46, 14);
 		getContentPane().add(lblEid);
 		
 		JLabel lblPassword_1 = new JLabel("Password");
 		lblPassword_1.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPassword_1.setBounds(402, 258, 66, 14);
+		lblPassword_1.setBounds(377, 261, 66, 14);
 		getContentPane().add(lblPassword_1);
 		
 		JLabel lblCustomerLogin = new JLabel("Customer Login");
@@ -244,7 +244,7 @@ public class LoginPage extends JFrame{
 		
 		JLabel lblEmployeeLogin = new JLabel("Employee Login");
 		lblEmployeeLogin.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblEmployeeLogin.setBounds(402, 118, 204, 25);
+		lblEmployeeLogin.setBounds(377, 115, 204, 25);
 		getContentPane().add(lblEmployeeLogin);
 	}
 	
