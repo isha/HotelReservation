@@ -159,7 +159,7 @@ public class LoginPage extends JFrame{
 		
 		final JLabel cust_pwd_error = new JLabel("");
 		cust_pwd_error.setForeground(Color.RED);
-		cust_pwd_error.setBounds(47, 286, 276, 14);
+		cust_pwd_error.setBounds(57, 286, 318, 14);
 		getContentPane().add(cust_pwd_error);
 		
 		JButton cust_login_btm = new JButton("Login as Customer");

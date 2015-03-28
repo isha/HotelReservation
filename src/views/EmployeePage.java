@@ -239,6 +239,15 @@ public class EmployeePage extends JFrame {
 		RefreshValuedCustomers(valued_cust_table);
 		scrollPane_2.setViewportView(valued_cust_table);
 		
+		JButton btnRefresh = new JButton("Refresh Customers");
+		btnRefresh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				RefreshValuedCustomers(valued_cust_table);
+			}
+		});
+		btnRefresh.setBounds(418, 8, 161, 23);
+		panel.add(btnRefresh);
+		
 		JButton btnLogout = new JButton("Logout");
 		btnLogout.setFont(new Font("Tahoma", Font.BOLD, 20));
 		btnLogout.addActionListener(new ActionListener() {

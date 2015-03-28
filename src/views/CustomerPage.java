@@ -146,7 +146,7 @@ public class CustomerPage extends JFrame{
 		
 		final JLabel new_pass_re_error = new JLabel("");
 		new_pass_re_error.setForeground(Color.RED);
-		new_pass_re_error.setBounds(32, 283, 246, 14);
+		new_pass_re_error.setBounds(10, 283, 268, 14);
 		information_panel.add(new_pass_re_error);
 		
 		old_pass = new JPasswordField();
