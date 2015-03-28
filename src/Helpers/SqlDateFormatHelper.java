@@ -11,7 +11,7 @@ public class SqlDateFormatHelper {
 		String[] splitDateString = sqlDateString.split("-");
 		
 		int year = Integer.valueOf(splitDateString[0]);
-		int month = Integer.valueOf(splitDateString[1]);
+		int month = Integer.valueOf(splitDateString[1]) - 1;
 		int day = Integer.valueOf(splitDateString[2]);
 		
 		Calendar calendarDate = new GregorianCalendar(year, month, day);
@@ -25,6 +25,7 @@ public class SqlDateFormatHelper {
 		SimpleDateFormat sqlFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 		sqlStringDate = sqlFormat.format(calendar.getTime());
+		java.util.Date test = calendar.getTime();
 		
 		return sqlStringDate;
 	}
