@@ -479,12 +479,12 @@ public class EmployeePage extends JFrame {
 		rem_status.setBounds(168, 251, 196, 14);
 		panel_3.add(rem_status);
 		
-		JLabel um_name_error = new JLabel("");
+		final JLabel um_name_error = new JLabel("");
 		um_name_error.setForeground(Color.RED);
 		um_name_error.setBounds(375, 125, 183, 14);
 		panel_3.add(um_name_error);
 		
-		JLabel um_phone_error = new JLabel("");
+		final JLabel um_phone_error = new JLabel("");
 		um_phone_error.setForeground(Color.RED);
 		um_phone_error.setBounds(375, 167, 183, 14);
 		panel_3.add(um_phone_error);

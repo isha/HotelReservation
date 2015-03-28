@@ -244,12 +244,12 @@ public class CustomerPage extends JFrame{
 		final JButton makeReservationBtn = new JButton("Make Reservation");
 		makeReservationBtn.setEnabled(false);
 		
-		JLabel res_chkn_date_error = new JLabel("");
+		final JLabel res_chkn_date_error = new JLabel("");
 		res_chkn_date_error.setForeground(Color.RED);
 		res_chkn_date_error.setBounds(41, 65, 120, 14);
 		reservation_panel.add(res_chkn_date_error);
 		
-		JLabel res_chko_date_error = new JLabel("");
+		final JLabel res_chko_date_error = new JLabel("");
 		res_chko_date_error.setForeground(Color.RED);
 		res_chko_date_error.setBounds(171, 65, 120, 14);
 		reservation_panel.add(res_chko_date_error);
@@ -351,7 +351,7 @@ public class CustomerPage extends JFrame{
 		prov_field.setBounds(460, 321, 80, 20);
 		reservation_panel.add(prov_field);		
 		
-		JLabel res_expiry_date_error = new JLabel("");
+		final JLabel res_expiry_date_error = new JLabel("");
 		res_expiry_date_error.setForeground(Color.RED);
 		res_expiry_date_error.setBounds(550, 128, 120, 14);
 		reservation_panel.add(res_expiry_date_error);
@@ -364,17 +364,17 @@ public class CustomerPage extends JFrame{
 		lblyyyymmdd.setBounds(80, 24, 81, 14);
 		reservation_panel.add(lblyyyymmdd);
 		
-		JLabel street_num_error = new JLabel("");
+		final JLabel street_num_error = new JLabel("");
 		street_num_error.setForeground(Color.RED);
 		street_num_error.setBounds(460, 190, 150, 14);
 		reservation_panel.add(street_num_error);
 		
-		JLabel room_pick_error = new JLabel("");
+		final JLabel room_pick_error = new JLabel("");
 		room_pick_error.setForeground(Color.RED);
 		room_pick_error.setBounds(207, 85, 192, 14);
 		reservation_panel.add(room_pick_error);
 		
-		JLabel cc_number_error = new JLabel("");
+		final JLabel cc_number_error = new JLabel("");
 		cc_number_error.setForeground(Color.RED);
 		cc_number_error.setBounds(460, 87, 161, 14);
 		reservation_panel.add(cc_number_error);
